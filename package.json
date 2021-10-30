@@ -1,0 +1,34 @@
+{
+  "name": "crabbook",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run watch",
+    "scss": "sass ./src/scss:./src/css",
+    "watch": "npm run scss -- --watch",
+    "clean": "rimraf -rf css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanana1253/CrabBook.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hanana1253/CrabBook/issues"
+  },
+  "homepage": "https://github.com/hanana1253/CrabBook#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "normalize.css": "^8.0.1",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-html": "^6.2.0",
+    "eslint-plugin-import": "^2.25.2",
+    "prettier": "2.4.1",
+    "rimraf": "^3.0.2",
+    "sass": "^1.43.2"
+  }
+}
