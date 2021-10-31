@@ -1,0 +1,37 @@
+@use '../utils/' as *;
+
+.kanban {
+  @include flexbox;
+  border-radius: rem(5px);
+  position: relative;
+  font-family: sans-serif;
+
+  &__add-category {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: rem(10px) rem(15px);
+    background-color: #fff;
+    border-radius: rem(5px);
+  }
+
+  &__category {
+    padding: 0 rem(12px);
+    border: 1px solid red;
+    background-color: lightgray;
+
+    &:not(:last-child) {
+      margin-right: rem(30px);
+    }
+  }
+
+  &__link-card {
+    border: 1px solid blue;
+    width: rem(450px);
+    height: rem(100px);
+
+    &:not(:last-child) {
+      margin-bottom: rem(24px);
+    }
+  }
+}
