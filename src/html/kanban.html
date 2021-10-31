@@ -10,21 +10,17 @@
 
   <body>
     <div class="kanban">
-      <h2 class="a11y-hidden">Kanban Board</h2>
-      <button class="kanban__add-category" type="button">+</button>
-      <div class="kanban__category">
-        <h3 class="kanban__title">Category 1</h3>
-        <div class="kanban__link-card">1</div>
-        <div class="kanban__link-card">2</div>
-        <div class="kanban__link-card">3</div>
-      </div>
-      <div class="kanban__category">
-        <h3 class="kanban__title">Category 1</h3>
-        <div class="kanban__link-card">1</div>
-        <div class="kanban__link-card">2</div>
-        <div class="kanban__link-card">3</div>
-      </div>
+      <button class="kanban__add-column" type="button">+</button>
+      <!-- <div class="kanban__column">
+        <div class="kanban__column-title">Not Started</div>
+        <div class="kanban__items">
+          <div contenteditable class="kanban__item-input">Wash the dishes</div>
+          <div class="kanban__dropzone"></div>
+        </div>
+        <button class="kanban__add-item" type="button">+ Add</button>
+      </div> -->
     </div>
-    <script src="../js/kanban.js"></script>
+    <script type="module" src="../js/kanban2.js"></script>
+    <!-- <script type="module" src="../js/kanban.js"></script> -->
   </body>
 </html>

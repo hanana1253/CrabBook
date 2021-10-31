@@ -1,37 +1,65 @@
 @use '../utils/' as *;
 
 .kanban {
-  @include flexbox;
+  display: flex;
+  padding: rem(30px);
+  // width: rem(750px);
+  // background: #009578;
   border-radius: rem(5px);
-  position: relative;
+}
+
+.kanban * {
   font-family: sans-serif;
+}
 
-  &__add-category {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: rem(10px) rem(15px);
-    background-color: #fff;
-    border-radius: rem(5px);
-  }
+.kanban__add-column {
+  top: 0;
+  right: 0;
+  position: absolute;
+}
 
-  &__category {
-    padding: 0 rem(12px);
-    border: 1px solid red;
-    background-color: lightgray;
+.kanban__column {
+  background-color: lightgray;
+  flex-grow: 1;
+}
 
-    &:not(:last-child) {
-      margin-right: rem(30px);
-    }
-  }
+.kanban__column:not(:last-child) {
+  margin-right: rem(30px);
+}
 
-  &__link-card {
-    border: 1px solid blue;
-    width: rem(450px);
-    height: rem(100px);
+.kanban__column-title {
+  margin-bottom: rem(20px);
+  font-size: rem(30px);
+  color: white;
+  user-select: none;
+}
 
-    &:not(:last-child) {
-      margin-bottom: rem(24px);
-    }
-  }
+.kanban__item-input {
+  height: rem(100px);
+  padding: rem(10px) rem(15px);
+  box-sizing: border-box;
+  background: tomato;
+  border-radius: rem(5px);
+  cursor: pointer;
+}
+
+.kanban__dropzone {
+  height: rem(10px);
+  transition: background 0.15s, height 0.15s;
+}
+
+.kanban__dropzone--active {
+  height: rem(20px);
+  background: rgba(0, 0, 0, 0.25);
+}
+
+.kanban__add-item {
+  width: 100%;
+  padding: rem(10px) 0;
+  font-size: rem(16px);
+  color: white;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: rem(5px);
+  cursor: pointer;
 }
