@@ -1,0 +1,167 @@
+@use '../utils/color' as *;
+
+.kanban__column {
+  width: 400px;
+  background: #ccc;
+  height: 700px;
+}
+
+.linkcard {
+  display: flex;
+  background-color: #eee;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  width: 90%;
+  height: 7rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  cursor: pointer;
+  transition: height 0.2s ease-in-out;
+
+  &__thumbnail {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 100%;
+    background-color: $white;
+    transition: all 0.2s ease-in-out;
+
+    &--img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__content {
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    position: relative;
+    transition: width 0.2s ease-in-out;
+
+    &__title {
+      font-size: 1rem;
+      line-height: 1rem;
+      height: 1.25rem;
+      width: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: bold;
+      color: $black;
+      margin-bottom: 0.125rem;
+    }
+
+    &__tag__container {
+      margin-bottom: 0.125rem;
+      & > .badge {
+        border-radius: 0.5rem;
+        background-color: $primary;
+        color: $white;
+        font-size: 0.825rem;
+        padding: 0.25rem 0.5rem;
+      }
+    }
+
+    &__description {
+      font-size: 0.75rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 1.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* 라인수 */
+      -webkit-box-orient: vertical;
+      word-wrap: break-word;
+    }
+
+    & > .toggle-card {
+      font-size: 1.25rem;
+      position: absolute;
+      top: 0.25rem;
+      right: 0;
+
+      &:hover > .tooltipMenu {
+        visibility: visible;
+      }
+    }
+
+    &__memo {
+      display: none;
+      margin-top: 0.25rem;
+      font-size: 0.75rem;
+
+      &__textarea {
+        width: 100%;
+      }
+    }
+  }
+
+  &--active {
+    height: 11rem;
+  }
+
+  &--active &__thumbnail {
+    width: 20%;
+    height: 40%;
+  }
+
+  &--active &__content {
+    width: 80%;
+
+    &__memo {
+      display: block;
+    }
+  }
+
+  // &--active > &__content__memo {
+  //   display: block;
+  // }
+}
+
+.tooltipMenu {
+  visibility: hidden;
+  position: absolute;
+  min-height: 100%;
+  left: -30px;
+  width: 100px;
+  border: 1px solid $primary;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.tooltipMenu ul li {
+  color: $primary;
+  padding: 10px 20px 10px 20px;
+  font-family: sans-serif;
+  font-size: 15px;
+  width: 100%;
+  background: #fff;
+}
+
+.tooltipMenu ul li:first-child {
+  border-radius: 5px 5px 0 0;
+}
+
+.tooltipMenu ul li:last-child {
+  border-radius: 0 0 5px 5px;
+}
+
+.tooltipMenu ul {
+  margin: 0;
+  border-radius: 5px;
+  box-shadow: 5px 5px 20px grey;
+}
+
+.tooltipMenu ul li:hover {
+  background: $primary;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
