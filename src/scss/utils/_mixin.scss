@@ -4,31 +4,45 @@
 $break: 768px;
 
 @mixin mobile {
-    @media (max-width: #{$break - 1}) {
-        @content;
-    }
+  @media (max-width: #{$break - 1}) {
+    @content;
+  }
 }
 @mixin desktop {
-    @media (min-width: #{$break}) {
-        @content;
-    }
+  @media (min-width: #{$break}) {
+    @content;
+  }
 }
 
 // 루트 요소 기본 단위 --------------------------------------------------------------- /
 $rootUnit: 16px !default;
 
 // 단위 제거 함수 ------------------------------------------------------------------ /
-@function removeUnit($value){
-    // @return ($value / ($value * 0 + 1));
-    @return math.div($value, $value * 0 + 1);
+@function removeUnit($value) {
+  // @return ($value / ($value * 0 + 1));
+  @return math.div($value, $value * 0 + 1);
 }
 
 // px을 rem 단위로 변경하는 함수 ------------------------------------------------------- /
-@function rem($value, $base: $rootUnit){
-    @return (removeUnit(math.div($value, $base))) * 1rem;
+@function rem($value, $base: $rootUnit) {
+  @return (removeUnit(math.div($value, $base))) * 1rem;
 }
 
 // px을 em 단위로 변경하는 함수 ------------------------------------------------------- /
-@function em($value, $base: $rootUnit){
-    @return (removeUnit(math.div($value, $base))) * 1em;
+@function em($value, $base: $rootUnit) {
+  @return (removeUnit(math.div($value, $base))) * 1em;
+}
+
+// 플렉스 박스 믹스인 ---------------------------------------------------------------- /
+@mixin flexbox(
+  $direction: row,
+  $justify-content: flex-start,
+  $align-items: stretch,
+  $flex-wrap: nowrap
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  flex-wrap: $flex-wrap;
 }
