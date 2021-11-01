@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crabbook statistics</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <header>
+      <h1 class="a11y-hidden">크랩북</h1>
+    </header>
+    <main>
+      <h2 class="a11y-hidden">내 스크랩 현황</h2>
+      <div class="statistics-container">
+        <h3 class="a11y-hidden">카테고리별 스크랩 현황</h3>
+        <div class="profil">
+          <canvas class="profil__chart"></canvas>
+          <img class="profil__img" src="" alt="" />
+        </div>
+
+        <h3 class="a11y-hidden">읽은 스크랩 현황</h3>
+        <div class="read">
+          <div class="read__label">2021/10</div>
+          <!-- <div class="read__dropdown">잔디밭</div> -->
+          <canvas class="read__chart jandi"></canvas>
+          <!-- 토글로 날짜별(잔디) 카테고리별 선택 -->
+          <!-- <canvas class="read__chart bar"></canvas> -->
+        </div>
+
+        <h3 class="links-heading">최근 스크랩</h3>
+        <!-- <h3>가장 많이 읽은 스크랩</h3> -->
+        <!-- <div class="links__dropdown">최근</div> -->
+        <ul class="links">
+          <li class="links__item">
+            <div class="linkt__item--date">2020.03.31</div>
+            <div class="links__item--title">All about FE techs</div>
+            <div class="links__item--description">
+              This is all abous FE texhs. the article is about FE. As I said,
+              this article is all about FE techs.
+            </div>
+          </li>
+          <li class="links__item">
+            <div class="linkt__item--date">2020.03.31</div>
+            <div class="links__item--title">All about FE techs</div>
+            <div class="links__item--description">
+              This is all abous FE texhs. the article is about FE. As I said,
+              this article is all about FE techs.
+            </div>
+          </li>
+          <li class="links__item">
+            <div class="linkt__item--date">2020.03.31</div>
+            <div class="links__item--title">All about FE techs</div>
+            <div class="links__item--description">
+              This is all abous FE texhs. the article is about FE. As I said,
+              this article is all about FE techs.
+            </div>
+          </li>
+        </ul>
+      </div>
+    </main>
+    <script type="module" src="../js/components/statistics.js"></script>
+  </body>
+</html>
