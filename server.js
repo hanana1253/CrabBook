@@ -6,54 +6,74 @@ const app = express();
 const PORT = 3001;
 
 // Mock data
-const state = [
+const store = [
+  {
+    id: 0,
+    title: 'uncategorized',
+    items: []
+  },
   {
     id: 1,
     title: 'Category1',
-    img: {
-      url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png',
-      width: null,
-      height: null,
-      type: 'png'
-    }
+    items: [
+      {
+        id: 1001,
+        title: '[JavaScript] - 커링에 대해 알아보자',
+        description: 'JS의 커링이란?',
+        url: 'https://velog.io/@hustle-dev/Javascript-커링에-대해-알아보자',
+        img: {
+          url: 'https://media.vlpt.us/images/hustle-dev/post/37a3fe98-6f34-4c27-8765-4c2c9a1021f2/스크린샷 2021-10-03 오후 12.46.11.png?w=768',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: [],
+        createDate: new Date(),
+        readStatus: false,
+        clickCount: 0,
+        memo: ''
+      },
+      {
+        id: 1002,
+        title: '[JavaScript] - 커링에 대해 알아보자',
+        description: 'JS의 커링이란?',
+        url: 'https://velog.io/@hustle-dev/Javascript-커링에-대해-알아보자',
+        img: {
+          url: 'https://media.vlpt.us/images/hustle-dev/post/37a3fe98-6f34-4c27-8765-4c2c9a1021f2/스크린샷 2021-10-03 오후 12.46.11.png?w=768',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: [],
+        createDate: new Date(),
+        readStatus: false,
+        clickCount: 0,
+        memo: ''
+      }
+    ]
   },
   {
     id: 2,
     title: 'Category2',
-    img: {
-      url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png',
-      width: null,
-      height: null,
-      type: 'png'
-    }
-  },
-  {
-    id: 3,
-    title: 'Category3',
-    img: {
-      url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png',
-      width: null,
-      height: null,
-      type: 'png'
-    }
-  },
-  {
-    id: 4,
-    title: '네이버',
-    description: '네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요',
-    url: 'https://www.naver.com/',
-    img: {
-      url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png',
-      width: null,
-      height: null,
-      type: 'png'
-    },
-    tags: [],
-    createDate: new Date(),
-    readStatus: false,
-    clickCount: 0,
-    category: 'Portal',
-    memo: ''
+    items: [
+      {
+        id: 2001,
+        title: '[JavaScript] - 커링에 대해 알아보자',
+        description: 'JS의 커링이란?',
+        url: 'https://velog.io/@hustle-dev/Javascript-커링에-대해-알아보자',
+        img: {
+          url: 'https://media.vlpt.us/images/hustle-dev/post/37a3fe98-6f34-4c27-8765-4c2c9a1021f2/스크린샷 2021-10-03 오후 12.46.11.png?w=768',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: [],
+        createDate: new Date(),
+        readStatus: false,
+        clickCount: 0,
+        memo: ''
+      }
+    ]
   }
 ];
 
