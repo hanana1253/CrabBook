@@ -7,7 +7,9 @@
     "start": "npm run watch",
     "scss": "sass ./src/scss:./src/css",
     "watch": "npm run scss -- --watch",
-    "clean": "rimraf -rf css"
+    "clean": "rimraf -rf css",
+    "serve": "live-server --port=3000",
+    "start:backend": "nodemon server"
   },
   "repository": {
     "type": "git",
@@ -19,16 +21,22 @@
     "url": "https://github.com/hanana1253/CrabBook/issues"
   },
   "homepage": "https://github.com/hanana1253/CrabBook#readme",
-  "dependencies": {},
   "devDependencies": {
-    "normalize.css": "^8.0.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-html": "^6.2.0",
     "eslint-plugin-import": "^2.25.2",
+    "live-server": "^1.2.1",
+    "nodemon": "^2.0.14",
+    "normalize.css": "^8.0.1",
     "prettier": "2.4.1",
     "rimraf": "^3.0.2",
     "sass": "^1.43.2"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "express": "^4.17.1",
+    "open-graph-scraper": "^4.10.0"
   }
 }
