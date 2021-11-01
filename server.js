@@ -10,7 +10,42 @@ let store = [
   {
     id: 0,
     title: 'uncategorized',
-    items: []
+    items: [
+      {
+        id: 1001,
+        title: '[JavaScript] - 커링에 대해 알아보자',
+        description: 'JS의 커링이란?1',
+        url: 'https://velog.io/@hustle-dev/Javascript-커링에-대해-알아보자',
+        img: {
+          url: 'https://media.vlpt.us/images/hustle-dev/post/37a3fe98-6f34-4c27-8765-4c2c9a1021f2/스크린샷 2021-10-03 오후 12.46.11.png?w=768',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: [],
+        createDate: new Date(),
+        readStatus: false,
+        clickCount: 0,
+        memo: ''
+      },
+      {
+        id: 1002,
+        title: '[JavaScript] - 커링에 대해 알아보자',
+        description: 'JS의 커링이란?2',
+        url: 'https://velog.io/@hustle-dev/Javascript-커링에-대해-알아보자',
+        img: {
+          url: 'https://media.vlpt.us/images/hustle-dev/post/37a3fe98-6f34-4c27-8765-4c2c9a1021f2/스크린샷 2021-10-03 오후 12.46.11.png?w=768',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: [],
+        createDate: new Date(),
+        readStatus: false,
+        clickCount: 0,
+        memo: ''
+      }
+    ]
   },
   {
     id: 1,
@@ -88,6 +123,30 @@ app.post('/store', (req, res) => {
   const newStore = req.body;
   store = [...store, newStore];
 
+  res.send(store);
+});
+
+app.post('/store/link', (req, res) => {
+  const url = req.body;
+
+  // ogs 처리한 정보가 아래 담겨야 합니다.
+  store[0].items = [ ... store[0].items, {
+    id: 2001,
+    title: '[JavaScript] - 커링에 대해 알아보자',
+    description: 'JS의 커링이란?3',
+    url,
+    img: {
+      url: 'https://media.vlpt.us/images/hustle-dev/post/37a3fe98-6f34-4c27-8765-4c2c9a1021f2/스크린샷 2021-10-03 오후 12.46.11.png?w=768',
+      width: null,
+      height: null,
+      type: 'png'
+    },
+    tags: [],
+    createDate: new Date(),
+    readStatus: false,
+    clickCount: 0,
+    memo: ''
+  }];
   res.send(store);
 });
 
