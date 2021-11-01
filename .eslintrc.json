@@ -9,7 +9,8 @@
     "node": true
   },
   "globals": {
-    "_": false
+    "_": false,
+    "axios": false
   },
   "plugins": ["import", "html"],
   "extends": ["airbnb-base", "prettier"],
