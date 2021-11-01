@@ -25,7 +25,6 @@ main {
   position: absolute;
   transition: transform 0.5s;
   width: 100vw;
-  background-color: $lightbrown;
   & * {
     transition: all 0.5s;
   }
@@ -33,7 +32,7 @@ main {
 
 .sidebar {
   @include flexbox(column, flex-start, center);
-  left: calc( -1 * $hiddenSidebarWidth);
+  left: calc(-1 * $hiddenSidebarWidth);
   width: $openSidebarWidth;
   height: 100%;
   padding: rem(30);
@@ -53,11 +52,10 @@ main {
   }
   &:hover &__heading {
     transform: translateX(calc(-150px + $imgWidth/2));
-
   }
   &:hover &__button {
     &--statistics {
-      transform: translate3d(-250px, calc(($buttonWidth*2 + rem(15))), 0);
+      transform: translate3d(-250px, calc(($buttonWidth * 2 + rem(15))), 0);
       background-image: url(../images/icons8-statistics-98.png);
     }
     &--kanban {
@@ -82,12 +80,11 @@ main {
   &.active ~ main {
     transform: translate3d($hiddenSidebarWidth, 0, 0);
   }
-  
-  
+
   &__input {
     background-color: $white;
     border: 2px solid $primary04;
-    margin: rem(90) 0 rem(10) ;
+    margin: rem(90) 0 rem(10);
     width: rem(200);
     height: rem(10);
     text-align: center;
@@ -113,11 +110,11 @@ main {
     background-repeat: no-repeat;
     background-position: center;
     &--statistics {
-      bottom: calc($buttonWidth*3 + rem(15));
+      bottom: calc($buttonWidth * 3 + rem(15));
       background-image: url(../images/icons8-statistics-98.png);
     }
     &--kanban {
-      bottom: calc($buttonWidth*2 + rem(5));
+      bottom: calc($buttonWidth * 2 + rem(5));
       background-image: url(../images/icons8-noticeboard-50.png);
     }
     &--logout {
@@ -128,6 +125,6 @@ main {
 }
 main {
   left: $closedSidebarWidth;
-  height: 100%;
+  // height: 100%;
   padding: 20px;
 }
