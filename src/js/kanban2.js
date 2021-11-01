@@ -3,20 +3,7 @@ const $kanban = document.querySelector('.kanban');
 const $addButton = document.querySelector('.kanban__add-column');
 
 // state, 링크 데이터(임시)
-const state = [
-  {
-    id: 1,
-    title: 'Category1'
-  },
-  {
-    id: 2,
-    title: 'Category2'
-  },
-  {
-    id: 3,
-    title: 'Category3'
-  }
-];
+let state = [];
 
 // Functions
 const createDropZone = () => {
@@ -77,13 +64,13 @@ const createLinkCard = () => {
   return $newCard;
 };
 
-const createCategory = ({ id, title }) => {
+const createCategory = ({ id, title, img: { url } }) => {
   const $newCategory = document.createElement('div');
   $newCategory.dataset.id = id;
   $newCategory.className = 'kanban__column';
   $newCategory.innerHTML = `
   <div class="kanban__column-title">${title}</div>
-  <div class="kanban__column-items"></div>
+  <div class="kanban__column-items"><img src="${url}"></div>
   <button class="kanban__add-item" type="button">+ Add</button>`;
 
   $newCategory
@@ -102,8 +89,20 @@ const createCategory = ({ id, title }) => {
 };
 
 // Event
-let stateNum = 0;
-$addButton.onclick = () => {
-  stateNum = stateNum > 2 ? stateNum + 1 : 0;
-  $kanban.appendChild(createCategory(state[stateNum]));
-};
+// let stateNum = 0;
+// $addButton.onclick = () => {
+//   stateNum = stateNum > 2 ? stateNum + 1 : 0;
+//   $kanban.appendChild(createCategory(state[stateNum]));
+// };
+
+window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const { data: newState } = await axios.get('/state');
+    state = newState;
+    state.forEach(el => {
+      $kanban.appendChild(createCategory(el));
+    });
+  } catch (e) {
+    console.error(e);
+  }
+});
