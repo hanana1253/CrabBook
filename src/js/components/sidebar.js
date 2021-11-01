@@ -1,5 +1,7 @@
-import { state } from "../store/state.js";
-import { createLinkCard } from "./kanban2.js";
+// import { state } from "../store/state.js";
+import { createLinkCard } from './kanban2.js';
+
+const store = [];
 
 const $form = document.querySelector('.sidebar__form');
 const $cardList = document.querySelector('.sidebar__card-list');
