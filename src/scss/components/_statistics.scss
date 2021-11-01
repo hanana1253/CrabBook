@@ -1,0 +1,38 @@
+@use '../utils/' as *;
+
+main {
+  padding: rem(20px);
+}
+.statistics-container {
+  // mobile first 임시
+  // TODO: 브레이크 포인트 얘기
+  max-width: 414px;
+  background: pink;
+}
+
+.read {
+  background: skyblue;
+  &__label {
+  }
+  &__chart {
+  }
+}
+
+.links-heading {
+  background: darkmagenta;
+}
+.links {
+  background: slateblue;
+  &__heading {
+  }
+  &__dropdown {
+  }
+  &__item {
+    &--date {
+    }
+    &--title {
+    }
+    &--description {
+    }
+  }
+}

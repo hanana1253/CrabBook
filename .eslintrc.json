@@ -10,7 +10,8 @@
   },
   "globals": {
     "_": false,
-    "axios": false
+    "axios": false,
+    "Chart": false
   },
   "plugins": ["import", "html"],
   "extends": ["airbnb-base", "prettier"],
