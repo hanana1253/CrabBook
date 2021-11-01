@@ -81,7 +81,7 @@ app.use(express.static('src')); // 서버의 루트 디렉토리 (static 파일�
 app.use(express.json());
 
 app.get('/state', (req, res) => {
-  res.send(state);
+  res.send(store);
 });
 
 // app.post('/todos', (req, res) => {
