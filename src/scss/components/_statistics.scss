@@ -1,38 +1,162 @@
 @use '../utils/' as *;
 
 main {
-  padding: rem(20px);
+}
+button {
+  background: transparent;
 }
 .statistics-container {
+  width: 100%;
   // mobile first 임시
   // TODO: 브레이크 포인트 얘기
-  max-width: 414px;
-  background: pink;
-}
+  // max-width: 414px;
 
-.read {
-  background: skyblue;
-  &__label {
+  .profil {
+    position: relative;
+    width: 100%;
+    margin-bottom: rem(30);
+    // margin: 0 auto;
+    &__chart {
+      width: 100%;
+    }
+    &__img {
+      position: absolute;
+      width: 40%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &__text {
+      position: absolute;
+      top: 72%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      font-weight: 700;
+    }
   }
-  &__chart {
-  }
-}
 
-.links-heading {
-  background: darkmagenta;
-}
-.links {
-  background: slateblue;
-  &__heading {
+  .head-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: rem(10);
   }
-  &__dropdown {
+  .time-head {
+    justify-content: end;
   }
-  &__item {
-    &--date {
+  .jandi {
+    margin-bottom: rem(30);
+    color: $silver;
+
+    &__time-icons {
+      display: flex;
+      align-items: center;
+      &--text {
+        margin: 0 3px;
+      }
     }
-    &--title {
+    &__chart {
+      width: 100%;
     }
-    &--description {
+  }
+
+  .time {
+    color: $silver;
+    margin-bottom: rem(30);
+    &__time-icons {
+      display: flex;
+      align-items: center;
+      &--text {
+        margin: 0 3px;
+      }
+    }
+    &__chart {
+      width: 100%;
+    }
+  }
+
+  .icons {
+    display: flex;
+    flex-direction: row-reverse;
+    color: $gray;
+    font-size: 0.8rem;
+    &__icon {
+      border-radius: 4px;
+      border: 1px solid gray;
+      margin-left: 10px;
+      padding: rem(3);
+    }
+  }
+
+  .icons__icon.active {
+    background: $silver;
+    color: $white;
+    border: none;
+  }
+
+  .links {
+    background: $primary02;
+    border-radius: rem(8);
+    padding: 5%;
+    &__ul {
+    }
+    &__item {
+      position: relative;
+      border: 1px solid $silver;
+      border-radius: 10px;
+      padding: rem(12);
+      margin: rem(12) 0;
+      &--date {
+        position: absolute;
+        top: rem(12);
+        right: rem(12);
+        color: $silver;
+      }
+      &--title {
+        font-size: 1.4rem;
+        font-weight: 500;
+        padding-bottom: rem(10);
+      }
+      &--description {
+      }
+    }
+    &__item:hover {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  // canvas {
+  //   height: 100%;
+  //   width: 100%;
+  // }
+  @include desktop {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr 1.5fr 1fr;
+    gap: 5%;
+    grid-template-areas:
+      'profil profil profil links links'
+      'time time time links links'
+      'jandi jandi jandi jandi jandi';
+    .profil {
+      grid-area: profil;
+      width: 300px;
+      justify-self: center;
+    }
+    .links {
+      grid-area: links;
+    }
+    .time {
+      grid-area: time;
+    }
+    .jandi {
+      grid-area: jandi;
+    }
+    .profil,
+    .links,
+    .time,
+    .jandi {
+      margin: 0;
     }
   }
 }

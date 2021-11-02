@@ -1,15 +1,19 @@
 @use '../utils/' as *;
 
-.kanban {
-  display: flex;
-  padding: rem(30px);
-  // width: rem(750px);
-  // background: #009578;
-  border-radius: rem(5px);
+.crab-book a {
+  display: block;
+  width: rem(251px);
+  margin: rem(14px) auto;
 }
 
 .kanban * {
   font-family: sans-serif;
+  list-style: none;
+}
+
+.kanban {
+  @include flexbox;
+  padding: rem(30px);
 }
 
 .kanban__add-column {
@@ -19,12 +23,31 @@
 }
 
 .kanban__column {
-  background-color: lightgray;
+  background-color: $primary;
   flex-grow: 1;
+  position: relative;
+  box-shadow: rgba(0, 0, 0, 0.8);
+  border-radius: rem(10px);
+  padding: rem(16px) rem(24px) rem(24px);
 }
 
 .kanban__column:not(:last-child) {
   margin-right: rem(30px);
+}
+
+.kanban__column .kanban__column-delete {
+  opacity: 0;
+  top: rem(16px);
+  right: rem(24px);
+  font-size: rem(24px);
+  color: $white;
+  background-color: transparent;
+  position: absolute;
+  transition: opacity 0.15s;
+}
+
+.kanban__column:hover .kanban__column-delete {
+  opacity: 1;
 }
 
 .kanban__column-title {
@@ -48,7 +71,7 @@
   transition: background 0.15s, height 0.15s;
 }
 
-.kanban__dropzone--active {
+.kanban__dropzone.active {
   height: rem(20px);
   background: rgba(0, 0, 0, 0.25);
 }

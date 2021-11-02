@@ -1,0 +1,233 @@
+@use '../utils/color' as *;
+
+.kanban__column {
+  width: 400px;
+  background: #ccc;
+  height: 700px;
+}
+
+.linkcard {
+  background-color: #eee;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  width: 90%;
+  height: 7rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+    rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+  cursor: default;
+  transition: height 0.2s ease-in-out;
+
+  &__thumbnail {
+    float: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    height: 100%;
+    background-color: $white;
+    transition: all 0.2s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+    &__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &:hover {
+      transform: scale(1.03);
+    }
+  }
+
+  &__content {
+    width: 60%;
+    // height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+    position: relative;
+    transition: width 0.2s ease-in-out;
+
+    &__title {
+      font-size: 1rem;
+      line-height: 1rem;
+      height: 1.25rem;
+      width: 90%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-weight: bold;
+      color: $black;
+      margin-bottom: 0.125rem;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        transform: scale(1.02);
+        color: $primary;
+      }
+    }
+
+    &__tag__container {
+      margin-bottom: 0.125rem;
+      & > .badge {
+        border-radius: 0.75rem;
+        background-color: $primary;
+        color: $white;
+        font-size: 0.75rem;
+        line-height: 0.75rem;
+        padding: 0.25rem 0.375rem;
+        box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px,
+          rgba(17, 17, 26, 0.1) 0px 0px 8px;
+      }
+
+      & > .add-badge {
+        background-color: #bbb;
+      }
+    }
+
+    &__description {
+      font-size: 0.75rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      height: 1.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; /* 라인수 */
+      -webkit-box-orient: vertical;
+      word-wrap: break-word;
+    }
+
+    & > .toggle-card {
+      font-size: 1.25rem;
+      position: absolute;
+      top: 0.25rem;
+      right: 0;
+
+      &:hover > .tooltipMenu {
+        visibility: visible;
+      }
+    }
+
+    &__memo {
+      display: none;
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      border-top: 1px solid #ccc;
+      height: auto;
+      position: relative;
+
+      &__title {
+        font-size: 0.875rem;
+        font-weight: bold;
+      }
+
+      &__textarea {
+        margin-top: 0.25rem;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        border-radius: 0.5rem;
+        padding: 0.25rem;
+        box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+        resize: none;
+
+        &:read-only {
+          background-color: #eee;
+        }
+
+        &:not(:read-only) + .edit__button {
+          visibility: visible;
+          background-color: darkgreen;
+        }
+      }
+
+      & > .edit__button {
+        visibility: hidden;
+        position: absolute;
+        bottom: 0.125rem;
+        right: 0.25rem;
+        font-size: 0.75rem;
+        padding: 0.25rem;
+        border-radius: 0.25rem;
+        background-color: #999;
+        color: $white;
+        cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
+          rgba(0, 0, 0, 0.23) 0px 3px 6px;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          transform: scale(1.03);
+        }
+      }
+
+      &:hover > .edit__button {
+        visibility: visible;
+      }
+    }
+  }
+
+  &--active {
+    height: 11rem;
+  }
+
+  &--active &__thumbnail {
+    width: 15%;
+    height: 35%;
+  }
+
+  &--active &__content {
+    width: 85%;
+
+    &__memo {
+      display: block;
+    }
+  }
+
+  // &--active > &__content__memo {
+  //   display: block;
+  // }
+}
+
+.tooltipMenu {
+  visibility: hidden;
+  position: absolute;
+  min-height: 100%;
+  left: -30px;
+  width: 100px;
+  border: 1px solid $primary;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.tooltipMenu ul li {
+  color: $primary;
+  padding: 10px 20px 10px 20px;
+  font-family: sans-serif;
+  font-size: 15px;
+  width: 100%;
+  background: #fff;
+}
+
+.tooltipMenu ul li:first-child {
+  border-radius: 5px 5px 0 0;
+}
+
+.tooltipMenu ul li:last-child {
+  border-radius: 0 0 5px 5px;
+}
+
+.tooltipMenu ul {
+  margin: 0;
+  border-radius: 5px;
+  box-shadow: 5px 5px 20px grey;
+}
+
+.tooltipMenu ul li:hover {
+  background: $primary;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
