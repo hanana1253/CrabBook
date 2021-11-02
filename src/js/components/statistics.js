@@ -10,7 +10,7 @@ const timeWeekChart = document
 const jandiChart = document.querySelector('.jandi__chart').getContext('2d');
 
 // state, 링크 데이터(임시)
-const state = [];
+let state = [];
 
 // Functions
 const countLinksByCategory = () => state.map(({ items }) => items.length);
@@ -24,32 +24,33 @@ const renderChartWithOptions = (type, data, options) =>
 
 // Sample Charts==========================
 // Donough Chart Profil
-const configProfil = {
-  type: 'doughnut',
-  data: {
-    labels: ['Category1', 'Category2', 'Unsorted'],
-    datasets: [
-      {
-        label: 'Scraps by category',
-        data: [4, 3, 2],
-        backgroundColor: [
-          // TODO: generateColors
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)'
-        ],
-        hoverOffset: 4
-      }
-    ]
-  },
-  options: {
-    legend: {
-      display: false
-    },
-    cutout: '80%'
-  }
-};
+// const configProfil = {
+//   type: 'doughnut',
+//   data: {
+//     labels: ['Category1', 'Category2', 'Unsorted'],
+//     datasets: [
+//       {
+//         label: 'Scraps by category',
+//         data: [4, 3, 2],
+//         backgroundColor: [
+//           // TODO: generateColors
+//           'rgb(255, 99, 132)',
+//           'rgb(54, 162, 235)',
+//           'rgb(255, 205, 86)'
+//         ],
+//         hoverOffset: 4
+//       }
+//     ]
+//   },
+//   options: {
+//     legend: {
+//       display: false
+//     },
+//     cutout: '80%'
+//   }
+// };
 // Bar Chart Weekly
+
 const labelsTimeChart = ['Mon', 'Tue', 'Wds', 'Thr', 'Fri', 'Sat', 'Sun'];
 const dataTimeChart = {
   labels: labelsTimeChart,
@@ -112,8 +113,6 @@ const generateData = () => {
   const end = today;
   let dt = new Date(new Date().setDate(end.getDate() - 365)); // 일 년 전부터
   while (dt <= end) {
-    console.log(dt, end);
-    // debugger;
     const iso = dt.toISOString().substring(0, 10);
     data.push({
       x: iso,
@@ -123,8 +122,6 @@ const generateData = () => {
     });
     dt = new Date(dt.setDate(dt.getDate() + 1)); // 다음날
   }
-  // debugger;
-  console.log(data);
   return data;
 };
 const scalesJandi = {
@@ -245,42 +242,46 @@ const configJandi = {
   options: optionsJandi
 };
 
+// REAL DATAS
+const configProfil = {
+  type: 'doughnut',
+  data: {
+    labels: state.map(({ title }) => title),
+    datasets: [
+      {
+        label: 'Scraps by category',
+        data: countLinksByCategory(),
+        backgroundColor: [
+          // TODO: generateColors
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)'
+        ],
+        hoverOffset: 4
+      }
+    ]
+  },
+  options: {
+    cutout: '80%'
+  }
+};
+
 // Event
 window.addEventListener('DOMContentLoaded', async () => {
   // SAMPLE CHARTS
-  renderChart(profilChart, configProfil);
+  // renderChart(profilChart, configProfil);
   renderChart(timeWeekChart, configTimeChart);
   renderChart(jandiChart, configJandi);
-  // try {
-  //   const { data: newState } = await axios.get('/store');
-  //   state = newState;
-  //   // TODO: 함수 빼기
-  //   renderChart(profilChart, {
-  //     type: 'doughnut',
-  //     data: {
-  //       labels: state.map(({ title }) => title),
-  //       datasets: [
-  //         {
-  //           label: 'Scraps by category',
-  //           data: countLinksByCategory(),
-  //           backgroundColor: [
-  //             // TODO: generateColors
-  //             'rgb(255, 99, 132)',
-  //             'rgb(54, 162, 235)',
-  //             'rgb(255, 205, 86)'
-  //           ],
-  //           hoverOffset: 4
-  //         }
-  //       ]
-  //     },
-  //     options: {
-  //       responsive: false,
-  //       cutout: 110
-  //     }
-  //   });
+  try {
+    const { data: newState } = await axios.get('/store');
+    state = newState;
+    console.log(state);
+    // TODO: 함수 빼기
+    console.log(configProfil);
+    renderChart(profilChart, configProfil);
 
-  //   // renderChart(timeWeekChart, configTimeChart);
-  // } catch (e) {
-  //   console.error(e);
-  // }
+    // renderChart(timeWeekChart, configTimeChart);
+  } catch (e) {
+    console.error(e);
+  }
 });
