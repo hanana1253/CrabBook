@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdnjs.com/libraries/svg.js"></script>
+    <title>Link Card</title>
+  </head>
+  <body>
+    <div class="kanban__column"></div>
+    <script type="module">
+      import LinkCard from '../js/components/LinkCard.js';
+
+      const testCard1 = {
+        id: 1001,
+        title: '[JavaScript] - 커링에 대해 알아보자',
+        description:
+          'Lorem, ipsum dolor sit ame consectetur adipisicing elit. Numquam, quam atque, Velit earum deserunt sed dolore, consequuntur eius laboriosam ex ipsam! Consequuntur, laboriosam quibusdam sed dolore deserunt excepturi eius numquam?',
+        url: 'https://velog.io/@hustle-dev/Javascript-커링에-대해-알아보자',
+        img: {
+          url: 'https://media.vlpt.us/images/hustle-dev/post/37a3fe98-6f34-4c27-8765-4c2c9a1021f2/스크린샷 2021-10-03 오후 12.46.11.png?w=768',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: ['dkdkdkdkdk'],
+        createDate: new Date(),
+        readStatus: false,
+        clickCount: 0,
+        memo: '메모테스트 메모테스트 메모테스트 메모테스트 메모테스트 메모테스트 메모테스트 메모테스트 메모테스트 '
+      };
+
+      const testCard2 = {
+        id: 1001,
+        title: '[JavaScript] - 커링에 대해 알아보자',
+        description: 'JS의 커링이란?',
+        url: 'https://velog.io/@hustle-dev/Javascript-커링에-대해-알아보자',
+        img: {
+          url: 'https://media.vlpt.us/images/hustle-dev/post/37a3fe98-6f34-4c27-8765-4c2c9a1021f2/스크린샷 2021-10-03 오후 12.46.11.png?w=768',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: [],
+        createDate: new Date(),
+        readStatus: false,
+        clickCount: 0,
+        memo: ''
+      };
+
+      const $linkCard1 = new LinkCard(testCard1);
+      document
+        .querySelector('.kanban__column')
+        .appendChild($linkCard1.cardElement);
+
+      const $linkCard2 = new LinkCard(testCard2);
+      document
+        .querySelector('.kanban__column')
+        .appendChild($linkCard2.cardElement);
+    </script>
+  </body>
+</html>
