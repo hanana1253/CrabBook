@@ -31,7 +31,7 @@
         <!-- 잔디 -->
         <h3 class="a11y-hidden">읽은 스크랩 현황</h3>
         <div class="jandi">
-          <div class="jandi__head-container">
+          <div class="head-container">
             <div class="jandi__time-icons">
               <button><i class="bx bxs-left-arrow"></i></button>
               <div class="jandi__time-icons--text">2021/11</div>
@@ -50,10 +50,12 @@
         <!-- 그래프 -->
         <h3 class="a11y-hidden">시간대별 스크랩 현황</h3>
         <div class="time">
-          <div class="time__time-icons">
-            <i class="bx bxs-left-arrow"></i>
-            <div class="time__icons--text">2021/11</div>
-            <i class="bx bxs-right-arrow"></i>
+          <div class="head-container time-head">
+            <div class="time__time-icons">
+              <i class="bx bxs-left-arrow"></i>
+              <div class="time__icons--text">2021/11</div>
+              <i class="bx bxs-right-arrow"></i>
+            </div>
           </div>
           <div class="time__chart">
             <canvas class="time__chart--week"></canvas>
@@ -64,9 +66,11 @@
         <!-- <h3>가장 많이 읽은 스크랩</h3> -->
         <!-- <div class="links__dropdown">최근</div> -->
         <div class="links">
-          <div class="icons">
-            <button class="icons__icon recent active">최근글</button>
-            <button class="icons__icon most">Most</button>
+          <div class="head-container">
+            <div class="icons">
+              <button class="icons__icon recent active">최근글</button>
+              <button class="icons__icon most">Most</button>
+            </div>
           </div>
           <ul class="links__ul">
             <li class="links__item">

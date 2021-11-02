@@ -22,7 +22,7 @@ body {
 }
 .sidebar,
 main {
-  position: absolute;
+  // position: absolute;
   transition: transform 0.5s;
   width: 100vw;
   & * {
