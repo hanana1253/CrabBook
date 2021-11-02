@@ -6,7 +6,7 @@ button {
   background: transparent;
 }
 .statistics-container {
-  width: 100%;
+  width: calc(100% - rem(80));
   // mobile first 임시
   // TODO: 브레이크 포인트 얘기
   // max-width: 414px;
