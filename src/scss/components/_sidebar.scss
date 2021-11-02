@@ -58,15 +58,12 @@ main {
   &:hover &__button {
     &--statistics {
       transform: translate3d(-250px, calc(($buttonWidth * 2 + rem(15))), 0);
-      background-image: url(../images/icons8-statistics-98.png);
     }
     &--kanban {
       transform: translate3d(-175px, calc(($buttonWidth + rem(5))), 0);
-      background-image: url(../images/icons8-noticeboard-50.png);
     }
     &--logout {
       transform: translate3d(-100px, 0, 0);
-      background-image: url(../images/unknown.png);
     }
   }
   &:hover &__card-list {
@@ -89,15 +86,12 @@ main {
   &.active &__button {
     &--statistics {
       transform: translate3d(-250px, calc(($buttonWidth * 2 + rem(15))), 0);
-      background-image: url(../images/icons8-statistics-98.png);
     }
     &--kanban {
       transform: translate3d(-175px, calc(($buttonWidth + rem(5))), 0);
-      background-image: url(../images/icons8-noticeboard-50.png);
     }
     &--logout {
       transform: translate3d(-100px, 0, 0);
-      background-image: url(../images/unknown.png);
     }
   }
   &.active &__card-list {
@@ -163,15 +157,12 @@ main {
     background-position: center;
     &--statistics {
       bottom: calc($buttonWidth * 3 + rem(15));
-      background-image: url(../images/icons8-statistics-98.png);
     }
     &--kanban {
       bottom: calc($buttonWidth * 2 + rem(5));
-      background-image: url(../images/icons8-noticeboard-50.png);
     }
     &--logout {
       bottom: calc($buttonWidth);
-      background-image: url(../images/unknown.png);
     }
   }
 }
