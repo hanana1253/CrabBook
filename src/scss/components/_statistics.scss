@@ -10,11 +10,67 @@ main {
   background: pink;
 }
 
-.read {
-  background: skyblue;
-  &__label {
+.profil {
+  position: relative;
+  margin: 0 auto;
+  // width: 80%;
+  &__chart {
+    // background: beige;
+    width: 100%;
+  }
+  &__img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &__text {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: 700;
+  }
+}
+
+.time {
+  background: yellow;
+  color: $silver;
+  &__time-icons {
+    display: flex;
+    &--text {
+      margin: 0 3px;
+    }
   }
   &__chart {
+    background: beige;
+    width: 100%;
+  }
+}
+
+.read {
+  background: skyblue;
+  &__time-icons {
+    display: flex;
+    &--text {
+      margin: 0 3px;
+    }
+  }
+  &__chart {
+    background: skyblue;
+    width: 100%;
+  }
+}
+
+.info-icons {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row-reverse;
+  &__icon {
+    border-radius: 4px;
+    border: 1px solid gray;
+    margin-right: 10px;
   }
 }
 
@@ -23,7 +79,7 @@ main {
 }
 
 .links-heading {
-  background: darkmagenta;
+  background: beige;
 }
 .links {
   background: slateblue;
@@ -39,4 +95,9 @@ main {
     &--description {
     }
   }
+}
+
+canvas {
+  height: 100%;
+  width: 100%;
 }
