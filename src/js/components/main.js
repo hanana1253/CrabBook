@@ -1,6 +1,15 @@
 import render from '../view/render.js';
 import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
 
+// DOM Nodes
+const $sidebar = document.querySelector('.sidebar');
+const $form = document.querySelector('.sidebar__form');
+const $cardList = document.querySelector('.sidebar__card-list');
+
+// Variables
+const validUrlRegExp =
+  /((((https?\:\/\/)?)((www).)?\.[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+
 // state
 let store = [];
 
@@ -30,8 +39,12 @@ const deleteCategory = async id => {
 };
 
 const fetchCategory = async () => {
+  document
+    .querySelector('[data-id="0"]')
+    .querySelector('.kanban__column-items')
+    .appendChild(createDropZone());
+
   try {
-    document.querySelector('[data-id="0"]').appendChild(createDropZone());
     const { data: newStore } = await axios.get('/store');
 
     setStore(newStore);
@@ -51,6 +64,16 @@ const addCategory = async () => {
     setStore(newStore);
   } catch (e) {
     console.error(e);
+  }
+};
+
+const addLink = async url => {
+  try {
+    const { data: newStore } = await axios.post('/store/link', { url });
+
+    setStore(newStore);
+  } catch (e) {
+    console.log(e);
   }
 };
 
@@ -103,4 +126,32 @@ window.onclick = e => {
   if (!e.target.matches('.kanban__column-delete')) return;
 
   deleteCategory(e.target.parentNode.dataset.id);
+};
+
+// 사이드바 이벤트
+$sidebar.ondragover = e => {
+  e.preventDefault();
+  if (!e.target.matches('.sidebar *')) return;
+  $sidebar.classList.add('active');
+};
+
+$sidebar.ondragleave = e => {
+  e.preventDefault();
+  if (e.target.matches('.sidebar *')) return;
+  $sidebar.classList.remove('active');
+};
+
+$form.onsubmit = e => {
+  e.preventDefault();
+  const $input = e.target.querySelector('.sidebar__input');
+  if (!validUrlRegExp.test($input.value)) {
+    $input.classList.add('sidebar__input--error');
+    document.querySelector('.sidebar__error-msg').textContent =
+      '유효하지 않은 URL입니다.';
+    return;
+  }
+  $input.classList.remove('sidebar__input--error');
+  document.querySelector('.sidebar__error-msg').textContent = '';
+  addLink($input.value);
+  $input.value = '';
 };

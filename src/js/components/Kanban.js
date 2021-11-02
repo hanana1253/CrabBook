@@ -1,15 +1,15 @@
 const createDropZone = () => {
-  const $newDropZone = document.createElement('div');
-  $newDropZone.className = 'kanban__dropzone';
+  const $dropZone = document.createElement('div');
+  $dropZone.className = 'kanban__dropzone';
 
   ['ondragover', 'ondragleave'].forEach(eventProperty => {
-    $newDropZone[eventProperty] = e => {
+    $dropZone[eventProperty] = e => {
       e.preventDefault();
-      $newDropZone.classList.toggle('active', eventProperty === 'ondragover');
+      $dropZone.classList.toggle('active', eventProperty === 'ondragover');
     };
   });
 
-  return $newDropZone;
+  return $dropZone;
 };
 
 const createCategory = ({ id, title }) => {

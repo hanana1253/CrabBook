@@ -1,10 +1,15 @@
+const $sidebarCardList = document.querySelector('.sidebar__card-list');
+
 export default (categories, cards) => {
   const $domFramgment = document.createDocumentFragment();
 
   cards[0].forEach($card => $domFramgment.appendChild($card));
 
-  document.querySelector('.sidebar__card-list').innerHTML = '';
-  document.querySelector('.sidebar__card-list').appendChild($domFramgment);
+  [...$sidebarCardList.children].forEach(($linkCard, index) => {
+    if (index > 0) $linkCard.remove();
+  });
+
+  $sidebarCardList.appendChild($domFramgment);
 
   const $domFramgment2 = document.createDocumentFragment();
 
