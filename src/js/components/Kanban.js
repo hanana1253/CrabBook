@@ -1,3 +1,5 @@
+import LinkCard from './linkCard.js';
+
 const createDropZone = () => {
   const $dropZone = document.createElement('div');
   $dropZone.className = 'kanban__dropzone';
@@ -28,13 +30,13 @@ const createCategory = ({ id, title }) => {
   return $category;
 };
 
-const createLinkCard = ({ description }) => {
+const createLinkCard = data => {
   const id = Math.floor(Math.random() * 100);
-  const $linkCard = document.createElement('li');
+  const linkCard = new LinkCard(data);
+  const $linkCard = linkCard.cardElement;
   $linkCard.draggable = true;
-  $linkCard.className = 'kanban__item';
+  $linkCard.classList.add('kanban__item');
   $linkCard.dataset.id = id;
-  $linkCard.innerHTML = `<div class="kanban__item-input">${description}</div>`;
 
   $linkCard.appendChild(createDropZone());
 
