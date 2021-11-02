@@ -1,13 +1,32 @@
 import { createLinkCard } from './kanban2.js';
 
 let store = [];
+// const $sidebar = document.querySelector('.sidebar');
 const $form = document.querySelector('.sidebar__form');
 const $cardList = document.querySelector('.sidebar__card-list');
+const validUrlRegExp =
+  /((((https?\:\/\/)?)((www).)?\.[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
+
+// $sidebar.ondragover = e => {
+//   e.preventDefault();
+//   console.log('dkdkd');
+// }
 $form.onsubmit = e => {
   e.preventDefault();
-  addLink(e.target.querySelector('.sidebar__input').value);
+  const $input = e.target.querySelector('.sidebar__input');
+  if (!validUrlRegExp.test($input.value)) {
+    $input.classList.add('sidebar__input--error');
+    document.querySelector('.sidebar__error-msg').textContent =
+      '유효하지 않은 URL입니다.';
+    return;
+  }
+  $input.classList.remove('sidebar__input--error');
+  document.querySelector('.sidebar__error-msg').textContent = '';
+  addLink($input.value);
+  $input.value = '';
 };
+
 
 const addLink = async url => {
   try {
