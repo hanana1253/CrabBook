@@ -1,17 +1,22 @@
 import { createLinkCard } from './kanban2.js';
 
 let store = [];
-// const $sidebar = document.querySelector('.sidebar');
+const $sidebar = document.querySelector('.sidebar');
 const $form = document.querySelector('.sidebar__form');
 const $cardList = document.querySelector('.sidebar__card-list');
 const validUrlRegExp =
   /((((https?\:\/\/)?)((www).)?\.[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
 
-// $sidebar.ondragover = e => {
-//   e.preventDefault();
-//   console.log('dkdkd');
-// }
+$sidebar.ondragover = e => {
+  e.preventDefault();
+  $sidebar.classList.add('active');
+}
+$sidebar.ondragleave = e => {
+  e.preventDefault();
+  $sidebar.classList.remove('active');
+};
+
 $form.onsubmit = e => {
   e.preventDefault();
   const $input = e.target.querySelector('.sidebar__input');
