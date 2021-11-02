@@ -28,6 +28,25 @@
           <div class="profil__text">14/53</div>
         </div>
 
+        <!-- 잔디 -->
+        <h3 class="a11y-hidden">읽은 스크랩 현황</h3>
+        <div class="jandi">
+          <div class="jandi__head-container">
+            <div class="jandi__time-icons">
+              <button><i class="bx bxs-left-arrow"></i></button>
+              <div class="jandi__time-icons--text">2021/11</div>
+              <button><i class="bx bxs-right-arrow"></i></button>
+            </div>
+            <div class="icons">
+              <button class="icons__icon scrap active">스크랩</button>
+              <button class="icons__icon read">읽은글</button>
+            </div>
+          </div>
+
+          <canvas class="jandi__chart scrap"></canvas>
+          <!-- <canvas class="jandi__chart read"></canvas> -->
+        </div>
+
         <!-- 그래프 -->
         <h3 class="a11y-hidden">시간대별 스크랩 현황</h3>
         <div class="time">
@@ -41,54 +60,41 @@
           </div>
         </div>
 
-        <!-- 잔디 -->
-        <h3 class="a11y-hidden">읽은 스크랩 현황</h3>
-        <div class="read">
-          <div class="read__time-icons">
-            <i class="bx bxs-left-arrow"></i>
-            <div class="read__icons--text">2021/11</div>
-            <i class="bx bxs-right-arrow"></i>
-          </div>
-          <div class="info-icons">
-            <div class="info-icons__icon scrap">스크랩</div>
-            <div class="info-icons__icon read">읽은글</div>
-          </div>
-          <canvas class="read__chart jandi"></canvas>
-        </div>
-
-        <h3 class="links-heading">최근 스크랩</h3>
+        <h3 class="links-heading a11y-hidden">최근 스크랩</h3>
         <!-- <h3>가장 많이 읽은 스크랩</h3> -->
         <!-- <div class="links__dropdown">최근</div> -->
-        <ul class="links">
-          <div class="links__icons">
-            <div class="links__icons recent">최근글</div>
-            <div class="links__icons most">Most</div>
+        <div class="links">
+          <div class="icons">
+            <button class="icons__icon recent active">최근글</button>
+            <button class="icons__icon most">Most</button>
           </div>
-          <li class="links__item">
-            <div class="linkt__item--date">2020.03.31</div>
-            <div class="links__item--title">All about FE techs</div>
-            <div class="links__item--description">
-              This is all abous FE texhs. the article is about FE. As I said,
-              this article is all about FE techs.
-            </div>
-          </li>
-          <li class="links__item">
-            <div class="linkt__item--date">2020.03.31</div>
-            <div class="links__item--title">All about FE techs</div>
-            <div class="links__item--description">
-              This is all abous FE texhs. the article is about FE. As I said,
-              this article is all about FE techs.
-            </div>
-          </li>
-          <li class="links__item">
-            <div class="linkt__item--date">2020.03.31</div>
-            <div class="links__item--title">All about FE techs</div>
-            <div class="links__item--description">
-              This is all abous FE texhs. the article is about FE. As I said,
-              this article is all about FE techs.
-            </div>
-          </li>
-        </ul>
+          <ul class="links__ul">
+            <li class="links__item">
+              <div class="links__item--date">2020.03.31</div>
+              <div class="links__item--title">All about FE techs</div>
+              <div class="links__item--description">
+                This is all abous FE texhs. the article is about FE. As I said,
+                this article is all about FE techs.
+              </div>
+            </li>
+            <li class="links__item">
+              <div class="links__item--date">2020.03.31</div>
+              <div class="links__item--title">All about FE techs</div>
+              <div class="links__item--description">
+                This is all abous FE texhs. the article is about FE. As I said,
+                this article is all about FE techs.
+              </div>
+            </li>
+            <li class="links__item">
+              <div class="links__item--date">2020.03.31</div>
+              <div class="links__item--title">All about FE techs</div>
+              <div class="links__item--description">
+                This is all abous FE texhs. the article is about FE. As I said,
+                this article is all about FE techs.
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </main>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

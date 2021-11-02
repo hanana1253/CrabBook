@@ -8,7 +8,7 @@ const profilChart = document.querySelector('.profil__chart').getContext('2d');
 const timeWeekChart = document
   .querySelector('.time__chart--week')
   .getContext('2d');
-const readChart = document.querySelector('.read__chart').getContext('2d');
+const jandi__chart = document.querySelector('.jandi__chart').getContext('2d');
 
 // state, 링크 데이터(임시)
 let state = [];
@@ -24,6 +24,7 @@ const renderChartWithOptions = (type, data, options) =>
   new Chart(type, data, options);
 
 // Sample Charts==========================
+// Bar Charts Weekly
 const labelsTimeChart = ['Mon', 'Tue', 'Wds', 'Thr', 'Fri', 'Sat', 'Sun'];
 const dataTimeChart = {
   labels: labelsTimeChart,
@@ -67,6 +68,9 @@ const configTimeChart = {
 
 // Event
 window.addEventListener('DOMContentLoaded', async () => {
+  // SAMPLE CHARTS
+  renderChart(timeWeekChart, configTimeChart);
+
   try {
     const { data: newState } = await axios.get('/store');
     state = newState;
@@ -95,7 +99,7 @@ window.addEventListener('DOMContentLoaded', async () => {
       }
     });
 
-    renderChart(timeWeekChart, configTimeChart);
+    // renderChart(timeWeekChart, configTimeChart);
   } catch (e) {
     console.error(e);
   }

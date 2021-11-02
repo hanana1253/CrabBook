@@ -3,101 +3,130 @@
 main {
   padding: rem(20px);
 }
+button {
+  background: transparent;
+}
 .statistics-container {
   // mobile first 임시
   // TODO: 브레이크 포인트 얘기
-  max-width: 414px;
+  // max-width: 414px;
   background: pink;
-}
-
-.profil {
-  position: relative;
-  margin: 0 auto;
-  // width: 80%;
-  &__chart {
-    // background: beige;
-    width: 100%;
-  }
-  &__img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  &__text {
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-    font-weight: 700;
-  }
-}
-
-.time {
-  background: yellow;
-  color: $silver;
-  &__time-icons {
-    display: flex;
-    &--text {
-      margin: 0 3px;
+  .profil {
+    position: relative;
+    margin: 0 auto;
+    // width: 80%;
+    &__chart {
+      // background: beige;
+      width: 100%;
+    }
+    &__img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    &__text {
+      position: absolute;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      font-weight: 700;
     }
   }
-  &__chart {
-    background: beige;
-    width: 100%;
-  }
-}
 
-.read {
-  background: skyblue;
-  &__time-icons {
-    display: flex;
-    &--text {
-      margin: 0 3px;
+  .time {
+    background: yellow;
+    color: $silver;
+    &__time-icons {
+      display: flex;
+      align-items: center;
+      &--text {
+        margin: 0 3px;
+      }
+    }
+    &__chart {
+      background: beige;
+      width: 100%;
     }
   }
-  &__chart {
+
+  .jandi {
+    margin-top: rem(20);
     background: skyblue;
+    color: $silver;
+    &__head-container {
+      display: flex;
+      justify-content: space-between;
+    }
+    &__time-icons {
+      display: flex;
+      align-items: center;
+      &--text {
+        margin: 0 3px;
+      }
+    }
+    &__chart {
+      background: green;
+      width: 100%;
+    }
+  }
+
+  .icons {
+    display: flex;
+    flex-direction: row-reverse;
+    color: $gray;
+    font-size: 0.8rem;
+    &__icon {
+      border-radius: 4px;
+      border: 1px solid gray;
+      margin-left: 10px;
+
+      padding: rem(3);
+    }
+  }
+
+  .icons__icon.active {
+    background: $silver;
+    color: $white;
+    border: none;
+  }
+
+  .links {
+    background: slateblue;
+
+    &__ul {
+    }
+    &__item {
+      position: relative;
+      border: 1px solid $silver;
+      border-radius: 10px;
+      padding: rem(12);
+      margin: rem(12) 0;
+      &--date {
+        position: absolute;
+        top: rem(12);
+        right: rem(12);
+        color: $silver;
+      }
+      &--title {
+        font-size: 1.4rem;
+        font-weight: 500;
+        padding-bottom: rem(10);
+      }
+      &--description {
+      }
+    }
+    &__item:hover {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  canvas {
+    height: 100%;
     width: 100%;
   }
-}
-
-.info-icons {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-direction: row-reverse;
-  &__icon {
-    border-radius: 4px;
-    border: 1px solid gray;
-    margin-right: 10px;
+  @include desktop {
+    display: grid;
   }
-}
-
-.jandi {
-  height: rem(100);
-}
-
-.links-heading {
-  background: beige;
-}
-.links {
-  background: slateblue;
-  &__heading {
-  }
-  &__dropdown {
-  }
-  &__item {
-    &--date {
-    }
-    &--title {
-    }
-    &--description {
-    }
-  }
-}
-
-canvas {
-  height: 100%;
-  width: 100%;
 }
