@@ -8,6 +8,7 @@
 
 .kanban * {
   font-family: sans-serif;
+  list-style: none;
 }
 
 .kanban {
@@ -70,7 +71,7 @@
   transition: background 0.15s, height 0.15s;
 }
 
-.kanban__dropzone--active {
+.kanban__dropzone.active {
   height: rem(20px);
   background: rgba(0, 0, 0, 0.25);
 }
