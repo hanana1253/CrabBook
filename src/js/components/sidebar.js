@@ -7,13 +7,14 @@ const $cardList = document.querySelector('.sidebar__card-list');
 const validUrlRegExp =
   /((((https?\:\/\/)?)((www).)?\.[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
-
 $sidebar.ondragover = e => {
   e.preventDefault();
+  if (!e.target.matches('.sidebar *')) return;
   $sidebar.classList.add('active');
-}
+};
 $sidebar.ondragleave = e => {
   e.preventDefault();
+  if (e.target.matches('.sidebar *')) return;
   $sidebar.classList.remove('active');
 };
 
@@ -31,7 +32,6 @@ $form.onsubmit = e => {
   addLink($input.value);
   $input.value = '';
 };
-
 
 const addLink = async url => {
   try {
