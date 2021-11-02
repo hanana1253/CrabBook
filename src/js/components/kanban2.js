@@ -2,10 +2,23 @@
 const $kanban = document.querySelector('.kanban');
 const $addButton = document.querySelector('.kanban__add-column');
 
-// state, 링크 데이터(임시)
-let state = [];
+// state
+let store = [];
 
 // Functions
+const renderCategory = () => {
+  $kanban.innerHTML = '<h2 class="kanban__title a11y-hidden">칸반 보드</h2>';
+
+  // categoryData.forEach(eachData => $kanban.appendChild(eachData));
+  store.forEach((categoryData, index) => {
+    index === 0
+      ? document
+          .querySelector('.sidebar__card-list')
+          .append(createCategory(categoryData))
+      : $kanban.appendChild(createCategory(categoryData));
+  });
+};
+
 const createDropZone = () => {
   const $newDropZone = document.createElement('div');
   $newDropZone.className = 'kanban__dropzone';
@@ -20,7 +33,7 @@ const createDropZone = () => {
     $newDropZone.classList.remove('kanban__dropzone--active');
   };
 
-  $newDropZone.ondrop = e => {
+  $newDropZone.ondrop = async e => {
     e.preventDefault();
     $newDropZone.classList.remove('kanban__dropzone--active');
 
@@ -33,27 +46,42 @@ const createDropZone = () => {
     const cardId = e.dataTransfer.getData('text/plain');
     const $droppedCard = document.querySelector(`[data-id="${cardId}"]`);
 
-    const insertAfter = $newDropZone.parentElement.matches('.kanban__item')
-      ? $newDropZone.parentElement
-      : $newDropZone;
-
     if ($droppedCard.contains($newDropZone)) return;
 
-    insertAfter.after($droppedCard);
+    const startId = $droppedCard.closest('.kanban__column').dataset.id;
+    const targetId = $categoryElement.dataset.id;
 
-    // console.log($newDropZone.parentElement.classList);
+    const startOrder = [
+      ...$droppedCard
+        .closest('.kanban__column-items')
+        .querySelectorAll('.kanban__item')
+    ].indexOf($droppedCard);
+
+    const targetOrder = droppedIndex;
+
+    try {
+      const { data: newStore } = await axios.patch(
+        `/store/${startId}/${startOrder}`,
+        { targetId, targetOrder }
+      );
+
+      store = newStore;
+      renderCategory();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return $newDropZone;
 };
 
-const createLinkCard = () => {
+export const createLinkCard = ({ description }) => {
   const id = Math.floor(Math.random() * 100);
   const $newCard = document.createElement('div');
   $newCard.draggable = true;
   $newCard.className = 'kanban__item';
   $newCard.dataset.id = id;
-  $newCard.innerHTML = `<div class="kanban__item-input">hihi</div>`;
+  $newCard.innerHTML = `<div class="kanban__item-input">${description}</div>`;
 
   $newCard.appendChild(createDropZone());
 
@@ -64,45 +92,80 @@ const createLinkCard = () => {
   return $newCard;
 };
 
-const createCategory = ({ id, title, img: { url } }) => {
+const generateCategoryId = () =>
+  Math.max(...store.map(category => category.id), 0) + 1;
+
+const fetchCategory = async () => {
+  try {
+    const { data: newStore } = await axios.get('/store');
+    store = newStore;
+
+    store.forEach((categoryData, index) => {
+      index === 0
+        ? document
+            .querySelector('.sidebar__card-list')
+            .append(createCategory(categoryData))
+        : $kanban.appendChild(createCategory(categoryData));
+    });
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const addCategory = async () => {
+  try {
+    const { data: newStore } = await axios.post('/store', {
+      id: generateCategoryId(),
+      title: 'New Category',
+      items: []
+    });
+
+    store = newStore;
+    renderCategory();
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const deleteCategory = async id => {
+  try {
+    const { data: newStore } = await axios.delete(`/store/${id}`);
+
+    store = newStore;
+    renderCategory();
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+const createCategory = ({ id, title, items }) => {
   const $newCategory = document.createElement('div');
   $newCategory.dataset.id = id;
   $newCategory.className = 'kanban__column';
   $newCategory.innerHTML = `
-  <div class="kanban__column-title">${title}</div>
-  <div class="kanban__column-items"><img src="${url}"></div>
-  <button class="kanban__add-item" type="button">+ Add</button>`;
+  <button class="kanban__column-delete" type="button">X</button>
+  <h3 class="kanban__column-title">${title}</h3>
+  <div class="kanban__column-items"></div>`;
+  // <button class="kanban__add-item" type="button">+ Add</button>`;
+
+  $newCategory.querySelector('.kanban__column-delete').onclick = e => {
+    deleteCategory(e.target.parentNode.dataset.id);
+  };
 
   $newCategory
     .querySelector('.kanban__column-items')
     .appendChild(createDropZone());
 
-  $newCategory
-    .querySelector('.kanban__column-items')
-    .appendChild(createLinkCard());
-
-  $newCategory
-    .querySelector('.kanban__column-items')
-    .appendChild(createLinkCard());
+  items.forEach(item => {
+    $newCategory
+      .querySelector('.kanban__column-items')
+      .appendChild(createLinkCard(item));
+  });
 
   return $newCategory;
 };
 
 // Event
-// let stateNum = 0;
-// $addButton.onclick = () => {
-//   stateNum = stateNum > 2 ? stateNum + 1 : 0;
-//   $kanban.appendChild(createCategory(state[stateNum]));
-// };
+$addButton.onclick = addCategory;
 
-window.addEventListener('DOMContentLoaded', async () => {
-  try {
-    const { data: newState } = await axios.get('/state');
-    state = newState;
-    state.forEach(el => {
-      $kanban.appendChild(createCategory(el));
-    });
-  } catch (e) {
-    console.error(e);
-  }
-});
+window.addEventListener('DOMContentLoaded', fetchCategory);
