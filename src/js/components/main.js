@@ -205,13 +205,21 @@ window.addEventListener('DOMContentLoaded', async () => {
 //   // addLink(pastedData);
 // });
 
-document.querySelector('.sidebar__button--statistics').onclick = () => {
-  document.querySelector('.kanban').classList.add('hidden');
-  document.querySelector('.statistics').classList.remove('hidden');
+document.querySelector('.sidebar__button--statistics').onclick = e => {
+  if (e.target.classList.contains('hidden')) return;
+  document.querySelector('.kanban').classList.toggle('hidden');
+  document.querySelector('.recommend').classList.toggle('hidden');
+  document.querySelector('.statistics').classList.toggle('hidden');
+
   fetchCharts();
 };
 
-document.querySelector('.sidebar__button--kanban').onclick = () => {
-  document.querySelector('.statistics').classList.add('hidden');
-  document.querySelector('.kanban').classList.remove('hidden');
+document.querySelector('.sidebar__button--kanban').onclick = e => {
+  if (e.target.classList.contains('hidden')) return;
+
+  document.querySelector('.kanban').classList.toggle('hidden');
+  document.querySelector('.recommend').classList.toggle('hidden');
+  document.querySelector('.statistics').classList.toggle('hidden');
+  // TODO: NEED CONFIRM
+  render.mainPage();
 };
