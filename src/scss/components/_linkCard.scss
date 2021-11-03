@@ -1,7 +1,7 @@
 @use '../utils/color' as *;
 
 .linkcard {
-  background-color: #eee;
+  background-color: #fff;
   width: 100%;
   height: 7rem;
   padding: 0.5rem;
@@ -22,11 +22,14 @@
     background-color: $white;
     transition: all 0.2s ease-in-out;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-radius: 10px;
 
     &__img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      border-radius: 10px;
+      box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px inset;
     }
 
     &:hover {
@@ -35,18 +38,14 @@
   }
 
   &__content {
-    width: 60%;
-    // height: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 0.5rem;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    padding-left: 43%;
     position: relative;
-    transition: width 0.2s ease-in-out;
+    transition: padding-left 0.2s ease-in-out;
 
     &__title {
-      font-size: 1rem;
-      line-height: 1rem;
-      height: 1.25rem;
+      font-size: 1.1rem;
       width: 90%;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -63,6 +62,7 @@
     }
 
     &__tag__container {
+      margin-top: 0.25rem;
       margin-bottom: 0.125rem;
       & > .badge {
         border-radius: 0.75rem;
@@ -81,10 +81,9 @@
     }
 
     &__description {
-      font-size: 0.75rem;
+      font-size: 0.875rem;
       overflow: hidden;
       text-overflow: ellipsis;
-      height: 1.75rem;
       display: -webkit-box;
       -webkit-line-clamp: 2; /* 라인수 */
       -webkit-box-orient: vertical;
@@ -104,7 +103,7 @@
 
     &__memo {
       display: none;
-      margin-top: 0.5rem;
+      padding-top: 0.25rem;
       font-size: 0.75rem;
       border-top: 1px solid #ccc;
       height: auto;
@@ -171,23 +170,19 @@
   }
 
   &--active &__content {
-    width: 85%;
+    padding-left: 18%;
 
     &__memo {
       display: block;
     }
   }
-
-  // &--active > &__content__memo {
-  //   display: block;
-  // }
 }
 
 .tooltipMenu {
   visibility: hidden;
   position: absolute;
   min-height: 100%;
-  left: -30px;
+  left: -70px;
   width: 100px;
   border: 1px solid $primary;
   border-radius: 5px;

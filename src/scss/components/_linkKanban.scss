@@ -4,25 +4,42 @@
   display: block;
   width: rem(251px);
   margin: rem(14px) auto 0;
+  height: rem(65px);
 }
 
 .kanban {
   @include flexbox;
   padding: rem(30px);
+  overflow-x: scroll;
+  width: 100%;
+  height: calc(100% - 100px);
 
-  &__add-column {
-    top: 0;
-    right: 0;
-    position: absolute;
+  &__add-button {
+    min-width: rem(400px);
+    min-height: rem(150px);
+    max-height: 100%;
+    height: fit-content;
+    border-radius: rem(10px);
+    border: 2px dashed $primary07;
+    font-size: rem(40px);
+    color: $primary07;
+    background-color: $primary00;
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+      rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
   }
 
   .kanban__column {
-    min-width: rem(500px);
-    background-color: $primary;
+    min-width: rem(400px);
+    min-height: rem(150px);
+    max-height: 100%;
+    height: fit-content;
+
+    background-color: $primary00;
     position: relative;
-    box-shadow: rgba(0, 0, 0, 0.8);
     border-radius: rem(10px);
     padding: rem(16px) rem(24px) rem(24px);
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+      rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
 
     &:not(:last-child) {
       margin-right: rem(30px);
@@ -33,7 +50,7 @@
       top: rem(16px);
       right: rem(24px);
       font-size: rem(24px);
-      color: $white;
+      color: $primary;
       background-color: transparent;
       position: absolute;
       transition: opacity 0.15s;
@@ -46,17 +63,24 @@
     &-title {
       margin-bottom: rem(20px);
       font-size: rem(30px);
-      color: white;
+      font-weight: 400;
+      color: $primary;
       user-select: none;
+    }
+
+    &-items {
+      max-height: calc(100vh - 250px);
+      overflow-x: hidden;
+      overflow-y: scroll;
     }
   }
 
   &__dropzone {
-    height: rem(10px);
+    height: rem(15px);
     transition: background 0.15s, height 0.15s;
 
     &.active {
-      height: rem(20px);
+      height: rem(50px);
       background: rgba(0, 0, 0, 0.25);
     }
   }

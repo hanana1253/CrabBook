@@ -34,6 +34,7 @@ const setStore = newStore => {
   );
 
   render.mainPage($categories, $cards);
+  document.querySelector('.kanban__add-button').onclick = addCategory;
 };
 
 const deleteCategory = async id => {
@@ -87,8 +88,6 @@ const addLink = async url => {
 
 // Event
 window.addEventListener('DOMContentLoaded', fetchCategory);
-
-document.querySelector('.kanban__add-column').onclick = addCategory;
 
 window.ondrop = async e => {
   if (!e.target.matches('.kanban__dropzone')) return;
