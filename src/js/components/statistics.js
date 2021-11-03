@@ -244,15 +244,13 @@ const fetchCharts = () => {
 
   document.querySelector(
     '.profil__text'
-  ).textContent = `${state.visitesLinks.length} / ${state.allLinks.length}`;
+  ).textContent = `${state.visitedLinks.length} / ${state.allLinks.length}`;
 
   const charts = [
     { canvas: profilChart, data: configProfil },
     { canvas: timeWeekChart, data: configTimeChart },
     { canvas: jandiChart, data: createConfigJandi() }
   ];
-
-  console.log('hiii');
 
   render.myPage(charts);
 };
