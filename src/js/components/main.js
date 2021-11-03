@@ -4,6 +4,7 @@ import render from '../view/render.js';
 import '../../scss/style.scss';
 import state from '../store/state.js';
 import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
+import fetchCharts from './statistics.js';
 
 // DOM Nodes
 const $sidebar = document.querySelector('.sidebar');
@@ -205,3 +206,14 @@ window.addEventListener('DOMContentLoaded', async () => {
 //   alert(`붙여 넣은 데이터: ${pastedData}`);
 //   // addLink(pastedData);
 // });
+
+document.querySelector('.sidebar__button--statistics').onclick = () => {
+  document.querySelector('.kanban').classList.add('hidden');
+  document.querySelector('.statistics').classList.remove('hidden');
+  fetchCharts();
+};
+
+document.querySelector('.sidebar__button--kanban').onclick = () => {
+  document.querySelector('.statistics').classList.add('hidden');
+  document.querySelector('.kanban').classList.remove('hidden');
+};

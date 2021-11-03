@@ -27,7 +27,9 @@ export default (() => {
     document.querySelector('.kanban').appendChild($domFramgment);
   };
 
-  const renderMypage = () => {};
+  const renderMypage = chartDatas => {
+    chartDatas.forEach(({ canvas, data }) => new Chart(canvas, data));
+  };
 
   const renderRecommend = async $recommendSiteCard => {
     // TODO: 스피너만들기
@@ -41,9 +43,9 @@ export default (() => {
       renderCategory(categories.slice(1), cards.slice(1));
     },
 
-    myPage(categories, cards) {
-      renderSidebar(cards[0]);
-      renderMypage();
+    myPage(chartDatas, cards) {
+      // renderSidebar(cards && cards[0]);
+      renderMypage(chartDatas);
     },
 
     renderTest($recommendSiteCard) {
