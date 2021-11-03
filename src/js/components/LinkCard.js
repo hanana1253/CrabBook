@@ -126,7 +126,7 @@ export default class LinkCard {
     // Add Event linstener
     let isShift = false;
     $textarea.onkeyup = e => {
-      if (e.key === 16) isShift = false;
+      if (e.key === 'Shift') isShift = false;
     };
 
     $textarea.onkeydown = e => {
