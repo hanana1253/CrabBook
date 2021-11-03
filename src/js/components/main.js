@@ -165,37 +165,37 @@ $form.onsubmit = e => {
 };
 
 
-window.addEventListener('DOMContentLoaded', async () => {
-  if (state.hashtags.length < 2) {
-    const $noHashtagP = document.createElement('p');
-    $noHashtagP.innerHTML = '<p>Hashtag를 입력하고</p> <p>추천사이트를 받아보세요</p>';
-    $noHashtagP.classList.add('noHashtag');
-    render.renderTest($noHashtagP) ;
-    return;
-  };
-  // helper.js에 빼면 안 작동하는데...
-  const getRandomElements = (array, numOfElems = 2) =>
-    [...array].sort(() => Math.random() - 0.5).slice(0, numOfElems);
+// window.addEventListener('DOMContentLoaded', async () => {
+//   if (state.hashtags.length < 2) {
+//     const $noHashtagP = document.createElement('p');
+//     $noHashtagP.innerHTML = '<p>Hashtag를 입력하고</p> <p>추천사이트를 받아보세요</p>';
+//     $noHashtagP.classList.add('noHashtag');
+//     render.renderTest($noHashtagP) ;
+//     return;
+//   };
+//   // helper.js에 빼면 안 작동하는데...
+//   const getRandomElements = (array, numOfElems = 2) =>
+//     [...array].sort(() => Math.random() - 0.5).slice(0, numOfElems);
 
-  // recommend.js에서 import하기
-  const getRecommendSiteCard = async keywords => {
-    if (keywords.length < 2) return null;
+//   // recommend.js에서 import하기
+//   const getRecommendSiteCard = async keywords => {
+//     if (keywords.length < 2) return null;
     
-    try {
-      console.log(getRandomElements(keywords));
-      const { data: cardData } = await axios.get(
-        `/recommend/${getRandomElements(keywords).join('+')}`
-      );
-      return createLinkCard(cardData);
-    } catch (e) {
-      console.error(e);
-    }
-  };
+//     try {
+//       console.log(getRandomElements(keywords));
+//       const { data: cardData } = await axios.get(
+//         `/recommend/${getRandomElements(keywords).join('+')}`
+//       );
+//       return createLinkCard(cardData);
+//     } catch (e) {
+//       console.error(e);
+//     }
+//   };
   
-  const $recommendSiteCard = await getRecommendSiteCard(state.hashtags);
-  // keyword 2개 이하인 경우 return
-  render.renderTest($recommendSiteCard);
-});
+//   const $recommendSiteCard = await getRecommendSiteCard(state.hashtags);
+//   // keyword 2개 이하인 경우 return
+//   render.renderTest($recommendSiteCard);
+// });
 
 // window.addEventListener('paste', e => {
 //   // Stop data actually being pasted into div
