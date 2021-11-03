@@ -148,7 +148,7 @@ main {
     border: 2px solid $primary04;
     border-radius: 5px;
     max-height: 50vh;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
   &__button {
     position: absolute;

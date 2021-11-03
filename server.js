@@ -13,7 +13,7 @@ let store = [
     title: 'uncategorized',
     items: [
       {
-        id: 2001,
+        id: 1,
         title: '네이버',
         description:
           '네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요',
@@ -37,7 +37,7 @@ let store = [
     title: 'New Category',
     items: [
       {
-        id: 2001,
+        id: 2,
         title: '네이버',
         description:
           '네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요',
@@ -55,7 +55,7 @@ let store = [
         memo: ''
       },
       {
-        id: 2001,
+        id: 3,
         title: 'Daum',
         description: '나의 관심 콘텐츠를 가장 즐겁게 볼 수 있는 Daum',
         url: 'https://www.daum.net/',
@@ -78,7 +78,7 @@ let store = [
     title: 'New Category',
     items: [
       {
-        id: 2001,
+        id: 4,
         title: '네이버',
         description:
           '네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요',
@@ -145,7 +145,7 @@ app.get('/recommend/:keywordString', (req, res) => {
         ogImage: img
       } = result;
       const recommendCardData = {
-        id: url,
+        id: 0,
         title,
         description,
         url,
@@ -171,7 +171,9 @@ app.post('/store', (req, res) => {
 });
 
 app.post('/store/link', (req, res) => {
-  ogs(req.body)
+  const { url, id } = req.body;
+
+  ogs({ url })
     .then(data => {
       const {
         ogTitle: title,
@@ -183,7 +185,7 @@ app.post('/store/link', (req, res) => {
       store[0].items = [
         ...store[0].items,
         {
-          id: Math.floor(Math.random() * 1000),
+          id,
           title,
           description,
           url,
@@ -197,7 +199,6 @@ app.post('/store/link', (req, res) => {
           tags: [],
           createDate: new Date(new Date().toString().slice(0, 16)),
           readStatus: false,
-          clickCount: 0,
           memo: ''
         }
       ];
@@ -208,15 +209,47 @@ app.post('/store/link', (req, res) => {
     });
 });
 
-// app.patch('/todos', (req, res) => {
-//   const { completed } = req.body;
+app.post('/store/:toBePlacedCategoryId/:toBePlacedCardIndex', (req, res) => {
+  const { toBePlacedCategoryId, toBePlacedCardIndex } = req.params;
 
-//   todos = todos.map(todo => ({ ...todo, completed }));
+  const { url, id } = req.body;
 
-//   res.send(todos);
-// });
+  ogs({ url })
+    .then(data => {
+      const {
+        ogTitle: title,
+        ogUrl: url,
+        ogDescription: description,
+        ogImage: img
+      } = data.result;
 
-// // PATCH /todos/:id {completed} or {content} ---- (:id) <- 파라미터
+      store.forEach(({ id: categoryId, items }) => {
+        if (categoryId === +toBePlacedCategoryId)
+          items.splice(+toBePlacedCardIndex, 0, {
+            id,
+            title,
+            description,
+            url,
+            img: {
+              url: '',
+              width: null,
+              height: null,
+              type: '',
+              ...img
+            },
+            tags: [],
+            createDate: new Date(new Date().toString().slice(0, 16)),
+            readStatus: false,
+            memo: ''
+          });
+      });
+      res.send(store);
+    })
+    .catch(e => {
+      console.error(e);
+    });
+});
+
 app.patch('/store/:currentCategoryId/:currentCardIndex', (req, res) => {
   const { currentCategoryId, currentCardIndex } = req.params;
   const { toBePlacedCategoryId, toBePlacedCardIndex } = req.body;
@@ -237,6 +270,17 @@ app.patch('/store/:currentCategoryId/:currentCardIndex', (req, res) => {
 
   store.forEach(({ id, items }) => {
     if (id === +toBePlacedCategoryId) items.splice(index, 0, droppedItem[0]);
+  });
+
+  res.send(store);
+});
+
+app.patch('/store/:categoryId', (req, res) => {
+  const { categoryId } = req.params;
+  const { title } = req.body;
+
+  store.forEach(category => {
+    if (category.id === +categoryId) category.title = title;
   });
 
   res.send(store);
