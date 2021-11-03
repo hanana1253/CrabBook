@@ -47,14 +47,28 @@ export default (() => {
     document.querySelector('.recommend').appendChild($recommendSiteCard);
   };
 
+  const recentScraps = data => {
+    document.querySelector('.links__ul').innerHTML = data
+      .map(
+        ({ createDate, title, description }) => `
+    <li class="links__item">
+      <div class="links__item--date">${createDate}</div>
+      <div class="links__item--title">${title}</div>
+      <div class="links__item--description">${description}</div>
+    </li>`
+      )
+      .join('');
+  };
+
   return {
     mainPage(categories, cards) {
       renderSidebar(cards[0]);
       renderCategory(categories.slice(1), cards.slice(1));
     },
 
-    myPage(chartDatas, cards) {
+    myPage(chartDatas, scrapData) {
       // renderSidebar(cards && cards[0]);
+      recentScraps(scrapData);
       renderMypage(chartDatas);
     },
 

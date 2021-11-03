@@ -10,7 +10,7 @@
 .kanban {
   @include flexbox;
   padding: rem(30px);
-  overflow-x: scroll;
+  overflow-x: auto;
   width: 100%;
   height: calc(100% - 100px);
 
@@ -29,6 +29,7 @@
   }
 
   .kanban__column {
+    position: relative;
     min-width: rem(400px);
     min-height: rem(150px);
     max-height: 100%;
@@ -60,7 +61,8 @@
       opacity: 1;
     }
 
-    &-title {
+    &-title,
+    .edit {
       margin-bottom: rem(20px);
       font-size: rem(30px);
       font-weight: 400;
@@ -68,10 +70,19 @@
       user-select: none;
     }
 
+    .edit {
+      position: absolute;
+      top: rem(16px);
+      left: rem(24px);
+      background-color: $primary01;
+      border: 2 px solid $primary;
+      outline: 0;
+    }
+
     &-items {
       max-height: calc(100vh - 250px);
       overflow-x: hidden;
-      overflow-y: scroll;
+      overflow-y: auto;
     }
   }
 
