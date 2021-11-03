@@ -1,12 +1,80 @@
 <!DOCTYPE html>
 <html lang="ko">
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-</head>
-<body>
-  
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crab Book</title>
+    <link
+      href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <!-- <link rel="stylesheet" href="../css/style.css" /> -->
+  </head>
+
+  <body>
+    <div class="container">
+      <section class="sidebar">
+        <h2 class="sidebar__heading">
+          <span class="a11y-hidden">사이드바</span>
+        </h2>
+        <form class="sidebar__form" method="POST" action="서버로보내기">
+          <label class="a11y-hidden">링크 붙여넣기</label>
+          <input
+            class="sidebar__input"
+            type="text"
+            placeholder="URL을 입력하세요"
+          />
+          <p class="sidebar__error-msg"></p>
+        </form>
+        <div class="kanban__column" data-id="0">
+          <ul class="sidebar__card-list kanban__column-items">
+            <!-- uncategorized link cards -->
+          </ul>
+        </div>
+        <button
+          class="sidebar__button sidebar__button--statistics"
+          type="button"
+        >
+          <span class="a11y-hidden">통계자료로 이동</span>
+          <i class="bx bxs-doughnut-chart bx-md"></i>
+        </button>
+        <button class="sidebar__button sidebar__button--kanban" type="button">
+          <span class="a11y-hidden">칸반보드로 이동</span>
+          <i class="bx bx-notepad bx-md"></i>
+        </button>
+        <button class="sidebar__button sidebar__button--logout" type="button">
+          <span class="a11y-hidden">로그아웃</span>
+          <i class="bx bx-log-out bx-md"></i>
+        </button>
+      </section>
+      <header class="header">
+        <h1 class="crab-book">
+          <a href="#">
+            <img src="./images/logo.png" alt="Crab Book" />
+          </a>
+          <!-- <a href="#" class="">ㅎㅇ</a> -->
+          <!-- <a href="#" class="">ㅎㅇ</a> -->
+        </h1>
+      </header>
+
+      <button class="kanban__add-column" type="button">+</button>
+      <main class="kanban">
+        <!-- <h2 class="kanban__title a11y-hidden">칸반 보드</h2> -->
+        <!-- <div class="kanban__column">
+          <div class="kanban__column-title">Not Started</div>
+          <div class="kanban__items">
+            <div contenteditable class="kanban__item-input">Wash the dishes</div>
+            <div class="kanban__dropzone"></div>
+          </div>
+          <button class="kanban__add-item" type="button">+ Add</button>
+        </div> -->
+      </main>
+      <footer class="footer"></footer>
+    </div>
+
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="module" src="../js/components/main.js"></script> -->
+    <!-- <script type="module" src="../js/components/sidebar.js"></script> -->
+  </body>
 </html>

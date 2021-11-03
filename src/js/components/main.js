@@ -1,4 +1,6 @@
+import axios from 'axios';
 import render from '../view/render.js';
+import '../../scss/style.scss';
 import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
 
 // DOM Nodes
