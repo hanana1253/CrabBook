@@ -22,7 +22,7 @@ const getCountReadLinksByCategory = () =>
 
 // TODO: generateColors
 
-const configProfil = () => ({
+const createConfigProfil = () => ({
   type: 'doughnut',
   data: {
     labels: state.categories.map(({ title }) => title),
@@ -45,11 +45,9 @@ const configProfil = () => ({
   }
 });
 
-// TODO: NOW read chart
-
 // const DATA_COUNT = 7;
 // const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
-const tmp = () => ({
+const createConfigRead = () => ({
   type: 'bar',
   data: {
     labels: state.categories.map(({ title }) => title),
@@ -242,8 +240,8 @@ const fetchCharts = () => {
   ).textContent = `${state.visitedLinks.length} / ${state.allLinks.length}`;
 
   const charts = [
-    { canvas: profilChart, data: configProfil() },
-    { canvas: readWeekChart, data: tmp() },
+    { canvas: profilChart, data: createConfigProfil() },
+    { canvas: readWeekChart, data: createConfigRead() },
     { canvas: jandiChart, data: createConfigJandi() }
   ];
 
