@@ -29,6 +29,12 @@ export default (() => {
 
   const renderMypage = () => {};
 
+  const renderRecommend = async $recommendSiteCard => {
+    // TODO: 스피너만들기
+    document.querySelector('.recommend').innerHTML = '';
+    document.querySelector('.recommend').appendChild($recommendSiteCard);
+  };
+
   return {
     mainPage(categories, cards) {
       renderSidebar(cards[0]);
@@ -38,6 +44,10 @@ export default (() => {
     myPage(categories, cards) {
       renderSidebar(cards[0]);
       renderMypage();
+    },
+
+    renderTest($recommendSiteCard) {
+      renderRecommend($recommendSiteCard);
     }
   };
 })();

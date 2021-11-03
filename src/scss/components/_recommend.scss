@@ -1,0 +1,17 @@
+@use '../utils/' as *;
+.recommend {
+  background-color: yellow;
+  width: 80vw;
+  position: fixed;
+  bottom: rem(20);
+  box-shadow: 2px 2px 10px gray;
+  .linkcard {
+    margin: 0;
+    .toggle-card, &__content__tag__container, &__content__memo, .kanban__dropzone{
+      display: none;
+    }
+    &__content__description {
+      height: 3rem;
+    }
+  }
+}
