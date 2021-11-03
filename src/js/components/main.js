@@ -1,4 +1,6 @@
+import axios from 'axios';
 import render from '../view/render.js';
+import '../../scss/style.scss';
 import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
 
 // DOM Nodes
@@ -155,3 +157,22 @@ $form.onsubmit = e => {
   addLink($input.value);
   $input.value = '';
 };
+
+// window.addEventListener('paste', e => {
+//   // Stop data actually being pasted into div
+//   e.stopPropagation();
+//   e.preventDefault();
+
+//   // Get pasted data via clipboard API
+//   const clipboardData = e.clipboardData || window.clipboardData;
+//   const pastedData = clipboardData.getData('Text');
+
+//   if (!validUrlRegExp.test(pastedData)) {
+//     alert('유효하지 않은 URL입니다.');
+//     return;
+//   }
+
+//   // @todo: Do something
+//   alert(`붙여 넣은 데이터: ${pastedData}`);
+//   // addLink(pastedData);
+// });
