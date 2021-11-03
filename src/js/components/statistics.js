@@ -1,7 +1,8 @@
 // import Chart from '../../../node_modules/chart.js';
 // import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 import mock from '../store/mock.js';
-
+import render from '../view/renderSo.js';
+import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
 // const Chart = require('chart.js');
 // const { Chart } = require('chart.js');
 
@@ -13,16 +14,14 @@ const timeWeekChart = document
 const jandiChart = document.querySelector('.jandi__chart').getContext('2d');
 
 // state, 링크 데이터(임시)
-let state = [];
+let store = [];
 
 // Functions
-const countLinksByCategory = () => state.map(({ items }) => items.length);
+const countLinksByCategory = () => store.map(({ items }) => items.length);
 
 // TODO: generateColors
 
-const createChart = (type, data) => new Chart(type, data);
-const renderChartWithOptions = (type, data, options) =>
-  new Chart(type, data, options);
+const createChart = (canvas, data) => new Chart(canvas, data);
 
 // Sample Charts==========================
 // Donough Chart Profil
@@ -252,8 +251,8 @@ window.addEventListener('DOMContentLoaded', async () => {
   createChart(jandiChart, configJandi);
   try {
     const { data: newState } = await axios.get('/store');
-    state = newState;
-    console.log('real : ', state);
+    store = newState;
+    console.log('real : ', store);
     // state = mock;
     // console.log('mock', state);
 
@@ -261,7 +260,7 @@ window.addEventListener('DOMContentLoaded', async () => {
     const configProfil = {
       type: 'doughnut',
       data: {
-        labels: state.map(({ title }) => title),
+        labels: store.map(({ title }) => title),
         datasets: [
           {
             label: 'Scraps by category',
@@ -280,7 +279,24 @@ window.addEventListener('DOMContentLoaded', async () => {
         cutout: '80%'
       }
     };
-    createChart(profilChart, configProfil);
+    // createChart(profilChart, configProfil);
+
+    const charts = [
+      { canvas: profilChart, data: configProfil },
+      { canvas: timeWeekChart, data: configTimeChart },
+      { canvas: jandiChart, data: configJandi }
+    ];
+
+    // 마지막 요소 5개 가져오기
+    // const MAXCARDS = 5;
+    // const countRecentLinks = store.length <= MAXCARDS ? store.length : MAXCARDS;
+
+    // const $sortedCards = store
+    //   .slice(-countRecentLinks, -1)
+    //   .reverse()
+    //   .map(({ items }) => items.map(cardData => createLinkCard(cardData)));
+
+    render(charts);
 
     // renderChart(timeWeekChart, configTimeChart);
   } catch (e) {
