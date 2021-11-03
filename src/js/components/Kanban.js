@@ -1,4 +1,4 @@
-import LinkCard from './linkCard.js';
+import LinkCard from './LinkCard.js';
 
 const createDropZone = () => {
   const $dropZone = document.createElement('div');
