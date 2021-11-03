@@ -5,6 +5,7 @@ import '../../scss/style.scss';
 import state from '../store/state.js';
 import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
 import fetchCharts from './statistics.js';
+import { getRandomElements } from '../utils/helper.js';
 
 // DOM Nodes
 const $sidebar = document.querySelector('.sidebar');
@@ -164,15 +165,25 @@ $form.onsubmit = e => {
   $input.value = '';
 };
 
+
 window.addEventListener('DOMContentLoaded', async () => {
-  // helper함수에서 import하기
+  if (state.hashtags.length < 2) {
+    const $noHashtagP = document.createElement('p');
+    $noHashtagP.innerHTML = '<p>Hashtag를 입력하고</p> <p>추천사이트를 받아보세요</p>';
+    $noHashtagP.classList.add('noHashtag');
+    render.renderTest($noHashtagP) ;
+    return;
+  };
+  // helper.js에 빼면 안 작동하는데...
   const getRandomElements = (array, numOfElems = 2) =>
     [...array].sort(() => Math.random() - 0.5).slice(0, numOfElems);
 
   // recommend.js에서 import하기
   const getRecommendSiteCard = async keywords => {
     if (keywords.length < 2) return null;
+    
     try {
+      console.log(getRandomElements(keywords));
       const { data: cardData } = await axios.get(
         `/recommend/${getRandomElements(keywords).join('+')}`
       );
@@ -181,10 +192,9 @@ window.addEventListener('DOMContentLoaded', async () => {
       console.error(e);
     }
   };
-
+  
   const $recommendSiteCard = await getRecommendSiteCard(state.hashtags);
   // keyword 2개 이하인 경우 return
-  if ($recommendSiteCard === null) return;
   render.renderTest($recommendSiteCard);
 });
 

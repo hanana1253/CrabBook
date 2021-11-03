@@ -111,7 +111,6 @@ app.get('/store', (req, res) => {
   res.send(store);
 });
 
-
 app.get('/recommend/:keywordString', (req, res) => {
   const { keywordString } = req.params;
 
@@ -138,7 +137,7 @@ app.get('/recommend/:keywordString', (req, res) => {
   (async () => {
     try {
       const recommendUrl = await returnRandomRecommendedUrl(keywordString);
-      const { result } = await ogs({ url: recommendUrl})
+      const { result } = await ogs({ url: recommendUrl });
       const {
         ogTitle: title,
         ogUrl: url,
@@ -146,7 +145,7 @@ app.get('/recommend/:keywordString', (req, res) => {
         ogImage: img
       } = result;
       const recommendCardData = {
-        id: 2001,
+        id: url,
         title,
         description,
         url,
@@ -156,7 +155,7 @@ app.get('/recommend/:keywordString', (req, res) => {
         readStatus: false,
         clickCount: 0,
         memo: ''
-      }
+      };
       res.send(recommendCardData);
     } catch (e) {
       console.log(e);
