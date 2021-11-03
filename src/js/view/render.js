@@ -23,6 +23,12 @@ export default (() => {
       $domFramgment.appendChild($category);
     });
 
+    // Append category button
+    const $addbutton = document.createElement('button');
+    $addbutton.classList.add('kanban__add-button');
+    $addbutton.innerHTML = `<i class="bx bx-plus-circle"></i>`;
+    $domFramgment.appendChild($addbutton);
+
     document.querySelector('.kanban').innerHTML =
       '<h2 class="kanban__title a11y-hidden">칸반 보드</h2>';
 
