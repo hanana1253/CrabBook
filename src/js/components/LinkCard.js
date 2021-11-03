@@ -48,7 +48,7 @@ export default class LinkCard {
     $thumbnail.classList.add('linkcard__thumbnail');
     $thumbnail.innerHTML = `
       <img class="linkcard__thumbnail__img"
-          src="${this._img.url}"
+          src="${this._img.url || '/images/thumbnail.png'}"
           alt="${this._title}"
       />`;
     // Add Event linstener
