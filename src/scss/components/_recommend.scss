@@ -1,13 +1,59 @@
 @use '../utils/' as *;
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+$buttonSize: rem(40);
+$recommendHeight: 20vh;
+
+.recommend,
+.recommend * {
+  transition: 0.4s all cubic-bezier(1, 0, 0, 1);
+}
 .recommend {
-  background-color: yellow;
-  width: 80vw;
+  border-radius: 50%;
+  width: $buttonSize;
+  aspect-ratio: 1;
   position: fixed;
-  bottom: rem(20);
+  right: rem(30);
+  bottom: rem(30);
   box-shadow: 2px 2px 10px gray;
+  &__button {
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid $primary;
+    position: absolute;
+    right: 0;
+    width: $buttonSize;
+    height: $buttonSize;
+    img {
+      width: 100%;
+    }
+  }
+  &.loading {
+    .recommend__button {
+      & > img {
+        animation: spin 500ms infinite linear;
+      }
+    }
+  }
+  &.active {
+    width: 50vw;
+    height: $recommendHeight;
+    border-radius: rem(5px);
+    .recommend__button {
+      transform: scale(0.8) translate($buttonSize/2, -$buttonSize/2);
+    }
+  }
   .linkcard {
     margin: 0;
-    .toggle-card, &__content__tag__container, &__content__memo, .kanban__dropzone{
+    .toggle-card,
+    &__content__tag__container,
+    &__content__memo,
+    .kanban__dropzone {
       display: none;
     }
     &__content__description {
