@@ -17,7 +17,9 @@ export default (() => {
     const $domFramgment = document.createDocumentFragment();
 
     categories.forEach(($category, index) => {
-      cards[index].forEach($card => $category.appendChild($card));
+      cards[index].forEach($card =>
+        $category.querySelector('ul').appendChild($card)
+      );
       $domFramgment.appendChild($category);
     });
 

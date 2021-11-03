@@ -36,7 +36,7 @@ export default class LinkCard {
    * @returns {DOMElement}
    */
   get cardElement() {
-    return this.createLinkCard();
+    return this.createLinkCardItem();
   }
 
   /**
@@ -68,12 +68,12 @@ export default class LinkCard {
       <a href="${this._url}" target="_blank" class="linkcard__content__title">
         ${this._title}
       </a>
+      <div class="linkcard__content__description">
+        ${this._description}
+      </div>
       <div class="linkcard__content__tag__container">
         ${this._tags.map(tag => `<button class="badge">${tag}</button>`)}
         <button class="badge add-badge">+</button>
-      </div>
-      <div class="linkcard__content__description">
-        ${this._description}
       </div>
       <button class="toggle-card">
         <i class="bx bx-dots-vertical-rounded"></i>
@@ -161,7 +161,7 @@ export default class LinkCard {
    * Create Link Card Element
    * @returns {DOMElement}
    */
-  createLinkCard() {
+  createLinkCardItem() {
     const $linkCard = document.createElement('article');
     $linkCard.classList.add('linkcard');
 
@@ -172,6 +172,9 @@ export default class LinkCard {
     // Add Memo
     $linkCard.appendChild(this.createLinkMemo($linkCard));
 
-    return $linkCard;
+    const $linkCardItem = document.createElement('li');
+    $linkCardItem.appendChild($linkCard);
+
+    return $linkCardItem;
   }
 }
