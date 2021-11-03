@@ -145,7 +145,7 @@ app.get('/recommend/:keywordString', (req, res) => {
         ogImage: img
       } = result;
       const recommendCardData = {
-        id: 2001,
+        id: url,
         title,
         description,
         url,

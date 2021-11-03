@@ -31,17 +31,15 @@ const createCategory = ({ id, title }) => {
 };
 
 const createLinkCard = data => {
-  const id = Math.floor(Math.random() * 100);
   const $fragment = document.createDocumentFragment();
-
   const linkCard = new LinkCard(data);
   const $linkCard = linkCard.cardElement;
   $linkCard.draggable = true;
   $linkCard.classList.add('kanban__item');
-  $linkCard.dataset.id = id;
+  $linkCard.dataset.id = data.id;
 
   $linkCard.ondragstart = e => {
-    e.dataTransfer.setData('text/plain', id);
+    e.dataTransfer.setData('text/plain', data.id);
   };
 
   $fragment.appendChild($linkCard);
