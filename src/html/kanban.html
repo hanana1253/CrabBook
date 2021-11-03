@@ -9,6 +9,9 @@
       href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
       rel="stylesheet"
     />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.6.0/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@next/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1.0/dist/chartjs-chart-matrix.min.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
   </head>
 
@@ -58,10 +61,10 @@
         </h1>
       </header>
 
-      <button class="kanban__add-column" type="button">+</button>
-      <main class="kanban">
-        <!-- <h2 class="kanban__title a11y-hidden">칸반 보드</h2> -->
-        <!-- <div class="kanban__column">
+      <!-- <button class="kanban__add-column" type="button">+</button> -->
+      <!-- <main class="kanban"> -->
+      <!-- <h2 class="kanban__title a11y-hidden">칸반 보드</h2> -->
+      <!-- <div class="kanban__column">
           <div class="kanban__column-title">Not Started</div>
           <div class="kanban__items">
             <div contenteditable class="kanban__item-input">Wash the dishes</div>
@@ -69,12 +72,96 @@
           </div>
           <button class="kanban__add-item" type="button">+ Add</button>
         </div> -->
+      <!-- </main> -->
+      <main class="statistics">
+        <h2 class="a11y-hidden">내 스크랩 현황</h2>
+        <div class="statistics-container">
+          <h3 class="a11y-hidden">카테고리별 스크랩 현황</h3>
+          <div class="profil">
+            <canvas class="profil__chart"></canvas>
+            <img class="profil__img" src="../images/logo_crab.svg" />
+            <div class="profil__text">14/53</div>
+          </div>
+
+          <!-- 잔디 -->
+          <h3 class="a11y-hidden">읽은 스크랩 현황</h3>
+          <div class="jandi">
+            <div class="head-container">
+              <div class="jandi__time-icons">
+                <button><i class="bx bxs-left-arrow"></i></button>
+                <div class="jandi__time-icons--text">2021/11</div>
+                <button><i class="bx bxs-right-arrow"></i></button>
+              </div>
+              <div class="icons">
+                <button class="icons__icon scrap active">스크랩</button>
+                <button class="icons__icon read">읽은글</button>
+              </div>
+            </div>
+
+            <canvas class="jandi__chart scrap"></canvas>
+            <!-- <canvas class="jandi__chart read"></canvas> -->
+          </div>
+
+          <!-- 그래프 -->
+          <h3 class="a11y-hidden">시간대별 스크랩 현황</h3>
+          <div class="time">
+            <div class="head-container time-head">
+              <div class="time__time-icons">
+                <i class="bx bxs-left-arrow"></i>
+                <div class="time__icons--text">2021/11</div>
+                <i class="bx bxs-right-arrow"></i>
+              </div>
+            </div>
+            <div class="time__chart">
+              <canvas class="time__chart--week"></canvas>
+            </div>
+          </div>
+
+          <h3 class="links-heading a11y-hidden">최근 스크랩</h3>
+          <!-- <h3>가장 많이 읽은 스크랩</h3> -->
+          <!-- <div class="links__dropdown">최근</div> -->
+          <div class="links">
+            <div class="head-container">
+              <div class="icons">
+                <button class="icons__icon recent active">최근글</button>
+                <button class="icons__icon most">Most</button>
+              </div>
+            </div>
+            <ul class="links__ul">
+              <li class="links__item">
+                <div class="links__item--date">2020.03.31</div>
+                <div class="links__item--title">All about FE techs</div>
+                <div class="links__item--description">
+                  This is all abous FE texhs. the article is about FE. As I
+                  said, this article is all about FE techs.
+                </div>
+              </li>
+              <li class="links__item">
+                <div class="links__item--date">2020.03.31</div>
+                <div class="links__item--title">All about FE techs</div>
+                <div class="links__item--description">
+                  This is all abous FE texhs. the article is about FE. As I
+                  said, this article is all about FE techs.
+                </div>
+              </li>
+              <li class="links__item">
+                <div class="links__item--date">2020.03.31</div>
+                <div class="links__item--title">All about FE techs</div>
+                <div class="links__item--description">
+                  This is all abous FE texhs. the article is about FE. As I
+                  said, this article is all about FE techs.
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </main>
       <footer class="footer"></footer>
     </div>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script type="module" src="../js/components/main.js"></script>
+    <script type="module" src="../js/components/statistics.js"></script>
     <!-- <script type="module" src="../js/components/sidebar.js"></script> -->
   </body>
 </html>
