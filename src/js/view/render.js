@@ -1,3 +1,5 @@
+import { createLinkCard } from '../components/Kanban';
+
 export default (() => {
   const $sidebarCardList = document.querySelector('.sidebar__card-list');
 
@@ -35,10 +37,16 @@ export default (() => {
     document.querySelector('.kanban').appendChild($domFramgment);
   };
 
-  const renderMypage = chartDatas => {
-    chartDatas.forEach(({ canvas, data }) => {
-      new Chart(canvas, data);
+  const renderMypage = (cards, chartDatas) => {
+    const $cards = document.createDocumentFragment();
+    cards.forEach(cardData => {
+      $cards.appendChild(cardData);
     });
+
+    document.querySelector('.links__ul').appendChild($cards);
+    // chartDatas.forEach(({ canvas, data }) => {
+    //   new Chart(canvas, data);
+    // });
   };
 
   const renderRecommend = async $recommendSiteCard => {

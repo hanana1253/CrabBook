@@ -2,7 +2,8 @@
 // import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 // import mock from '../store/mock.js';
 import state from '../store/state.js';
-import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
+import render from '../view/render.js';
+import { createLinkCard } from './Kanban.js';
 // const Chart = require('chart.js');
 // const { Chart } = require('chart.js');
 
@@ -19,6 +20,8 @@ const getCountReadLinksByCategory = () =>
   state.categories.map(
     ({ items }) => items.filter(({ readStatus }) => readStatus).length
   );
+
+const getRecentLinks = () => state.allLinks.slice(-5).reverse();
 
 // TODO: generateColors
 
@@ -54,15 +57,15 @@ const createConfigRead = () => ({
     datasets: [
       {
         label: 'scrap',
-        type: 'line',
-        borderColor: '#8e5ea2',
+        type: 'bar',
+        borderColor: '#e29998',
         data: getCountLinksByCategory(),
         fill: false
       },
       {
         label: 'read',
-        type: 'bar',
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        type: 'line',
+        backgroundColor: '#9e2927',
         data: getCountReadLinksByCategory()
       }
     ]
@@ -248,7 +251,9 @@ const fetchCharts = () => {
     new Chart(canvas, data);
   });
 
-  // render.myPage(charts);
+  // console.log(getRecentLinks());
+  const cards = getRecentLinks().map(card => createLinkCard(card));
+  render.myPage(cards);
 };
 
 // Event
