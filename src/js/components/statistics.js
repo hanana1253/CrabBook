@@ -1,65 +1,80 @@
 // import Chart from '../../../node_modules/chart.js';
 // import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
 // import mock from '../store/mock.js';
-import render from '../view/render.js';
 import state from '../store/state.js';
 import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
 // const Chart = require('chart.js');
 // const { Chart } = require('chart.js');
 
 // DOM Nodes
-const profilChart = document.querySelector('.profil__chart').getContext('2d');
-const timeWeekChart = document
-  .querySelector('.time__chart--week')
-  .getContext('2d');
-const jandiChart = document.querySelector('.jandi__chart').getContext('2d');
+const profilChart = document.querySelector('.profil__chart');
+const readWeekChart = document.querySelector('.read__chart--week');
+const jandiChart = document.querySelector('.jandi__chart');
 
 // Functions
-const countLinksByCategory = () =>
+const getCountLinksByCategory = () =>
   state.categories.map(({ items }) => items.length);
+
+const getCountReadLinksByCategory = () =>
+  state.categories.map(
+    ({ items }) => items.filter(({ readStatus }) => readStatus).length
+  );
 
 // TODO: generateColors
 
-const labelsTimeChart = ['Mon', 'Tue', 'Wds', 'Thr', 'Fri', 'Sat', 'Sun'];
-const dataTimeChart = {
-  labels: labelsTimeChart,
-  datasets: [
-    {
-      label: 'Weekly chart',
-      data: [65, 59, 80, 81, 56, 55, 40],
-      backgroundColor: [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(255, 205, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(201, 203, 207, 0.2)'
-      ],
-      borderColor: [
-        'rgb(255, 99, 132)',
-        'rgb(255, 159, 64)',
-        'rgb(255, 205, 86)',
-        'rgb(75, 192, 192)',
-        'rgb(54, 162, 235)',
-        'rgb(153, 102, 255)',
-        'rgb(201, 203, 207)'
-      ],
-      borderWidth: 1
-    }
-  ]
-};
-const configTimeChart = {
-  type: 'bar',
-  data: dataTimeChart,
-  options: {
-    scales: {
-      y: {
-        beginAtZero: true
+const createConfigProfil = () => ({
+  type: 'doughnut',
+  data: {
+    labels: state.categories.map(({ title }) => title),
+    datasets: [
+      {
+        label: 'Scraps by category',
+        data: getCountLinksByCategory(),
+        backgroundColor: [
+          // TODO: generateColors
+          'rgb(255, 99, 132)',
+          'rgb(54, 162, 235)',
+          'rgb(255, 205, 86)'
+        ],
+        hoverOffset: 4
       }
-    }
+    ]
+  },
+  options: {
+    cutout: '80%'
   }
-};
+});
+
+// const DATA_COUNT = 7;
+// const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
+const createConfigRead = () => ({
+  type: 'bar',
+  data: {
+    labels: state.categories.map(({ title }) => title),
+    datasets: [
+      {
+        label: 'scrap',
+        type: 'line',
+        borderColor: '#8e5ea2',
+        data: getCountLinksByCategory(),
+        fill: false
+      },
+      {
+        label: 'read',
+        type: 'bar',
+        backgroundColor: 'rgba(0,0,0,0.2)',
+        data: getCountReadLinksByCategory()
+      }
+    ]
+  },
+  options: {
+    title: {
+      display: true,
+      text: '읽은 글과 스크랩한 글'
+    },
+    legend: { display: false }
+  }
+});
 
 // Jandi Chart
 const isoDayOfWeek = date => {
@@ -199,7 +214,7 @@ const createOptionsJandi = () => ({
         },
         label(context) {
           const v = context.dataset.data[context.dataIndex];
-          return ['d: ' + v.d, 'v: ' + v.v.toFixed(2)];
+          return ['day: ' + v.d, 'scrap: ' + v.v.toFixed(2)];
         }
       }
     }
@@ -219,48 +234,25 @@ const createConfigJandi = () => ({
 
 const fetchCharts = () => {
   // 1. 차트를 만들기 위한 charts 배열
-  const configProfil = {
-    type: 'doughnut',
-    data: {
-      labels: state.categories.map(({ title }) => title),
-      datasets: [
-        {
-          label: 'Scraps by category',
-          data: countLinksByCategory(),
-          backgroundColor: [
-            // TODO: generateColors
-            'rgb(255, 99, 132)',
-            'rgb(54, 162, 235)',
-            'rgb(255, 205, 86)'
-          ],
-          hoverOffset: 4
-        }
-      ]
-    },
-    options: {
-      cutout: '80%'
-    }
-  };
 
   document.querySelector(
     '.profil__text'
   ).textContent = `${state.visitedLinks.length} / ${state.allLinks.length}`;
 
   const charts = [
-    { canvas: profilChart, data: configProfil },
-    { canvas: timeWeekChart, data: configTimeChart },
+    { canvas: profilChart, data: createConfigProfil() },
+    { canvas: readWeekChart, data: createConfigRead() },
     { canvas: jandiChart, data: createConfigJandi() }
   ];
 
-  render.myPage(charts);
+  charts.forEach(({ canvas, data }) => {
+    // canvas.getContext('2d').restore();
+    new Chart(canvas, data);
+  });
+
+  // render.myPage(charts);
 };
 
-// fetchCharts();
-
 // Event
-
-// document.querySelector('.sidebar__button--statistics').onclick = () => {
-//   fetchCharts();
-// };
 
 export default fetchCharts;
