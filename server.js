@@ -1,5 +1,6 @@
 const express = require('express');
 const ogs = require('open-graph-scraper');
+const cheerio = require('cheerio-httpcli');
 
 const app = express();
 
@@ -20,6 +21,40 @@ app.use(express.json());
 app.get('/store', (req, res) => {
   res.send(store);
 });
+
+app.get('/recommend/:keywords', (req, res) => {
+  const { keywords: keywordString } = req.params;
+
+  const returnRandomRecommendedUrl = keywordstring => {
+    const url = `https://www.google.com/search?q=${keywordstring}&oq=${keywordstring}&aqs=chrome..69i57.6936j0j7&sourceid=chrome&ie=UTF-8`;
+    const params = {};
+
+    return new Promise((resolve, reject) => {
+      const linkList = [];
+      cheerio.fetch(url, params, (err, $) => {
+        if (err) {
+          reject(err);
+        } else {
+          $('#rso > div > div > div > div > a').each(function (idx) {
+            const hrefs = $(this).attr('href');
+            linkList[idx] = hrefs;
+          });
+          resolve([...linkList].sort(() => Math.random() - 0.5)[0]);
+        }
+      });
+    });
+  };
+  
+  (async () => {
+    try {
+      const url = await returnRandomRecommendedUrl(keywordString);
+      res.send(url);
+    } catch (e) {
+      console.log(e);
+    }
+  })();
+});
+
 
 app.post('/store', (req, res) => {
   const newStore = req.body;
