@@ -233,8 +233,6 @@ const createConfigJandi = () => ({
 });
 
 const fetchCharts = () => {
-  // 1. 차트를 만들기 위한 charts 배열
-
   document.querySelector(
     '.profil__text'
   ).textContent = `${state.visitedLinks.length} / ${state.allLinks.length}`;
