@@ -1,6 +1,5 @@
 import axios from 'axios';
 import render from '../view/render.js';
-
 import '../../scss/style.scss';
 import state from '../store/state.js';
 import { createDropZone, createCategory, createLinkCard } from './Kanban.js';

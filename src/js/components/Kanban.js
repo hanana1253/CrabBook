@@ -31,19 +31,21 @@ const createCategory = ({ id, title }) => {
 };
 
 const createLinkCard = data => {
+  const $fragment = document.createDocumentFragment();
   const linkCard = new LinkCard(data);
   const $linkCard = linkCard.cardElement;
   $linkCard.draggable = true;
   $linkCard.classList.add('kanban__item');
   $linkCard.dataset.id = data.id;
 
-  $linkCard.appendChild(createDropZone());
-
   $linkCard.ondragstart = e => {
     e.dataTransfer.setData('text/plain', data.id);
   };
 
-  return $linkCard;
+  $fragment.appendChild($linkCard);
+  $fragment.appendChild(createDropZone());
+
+  return $fragment;
 };
 
 export { createDropZone, createCategory, createLinkCard };

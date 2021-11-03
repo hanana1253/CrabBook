@@ -32,7 +32,7 @@ export default (() => {
       return categories.flatMap(({ items }) => items);
     },
 
-    get visitesLinks() {
+    get visitedLinks() {
       return this.allLinks.filter(({ readStatus }) => readStatus);
     },
 
