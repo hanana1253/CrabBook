@@ -27,10 +27,11 @@ app.get('/store', (req, res) => {
   res.send(store);
 });
 
-app.get('/recommend/:keywords', (req, res) => {
-  const { keywords: keywordString } = req.params;
 
-  const returnRandomRecommendedUrl = keywordstring => {
+app.get('/recommend/:keywordString', (req, res) => {
+  const { keywordString } = req.params;
+
+  const returnRandomRecommendedUrl = (keywordstring = 'html') => {
     const url = `https://www.google.com/search?q=${keywordstring}&oq=${keywordstring}&aqs=chrome..69i57.6936j0j7&sourceid=chrome&ie=UTF-8`;
     const params = {};
 
@@ -49,17 +50,35 @@ app.get('/recommend/:keywords', (req, res) => {
       });
     });
   };
-  
+
   (async () => {
     try {
-      const url = await returnRandomRecommendedUrl(keywordString);
-      res.send(url);
+      const recommendUrl = await returnRandomRecommendedUrl(keywordString);
+      const { result } = await ogs({ url: recommendUrl})
+      const {
+        ogTitle: title,
+        ogUrl: url,
+        ogDescription: description,
+        ogImage: img
+      } = result;
+      const recommendCardData = {
+        id: 2001,
+        title,
+        description,
+        url,
+        img,
+        tags: [],
+        createDate: new Date(),
+        readStatus: false,
+        clickCount: 0,
+        memo: ''
+      }
+      res.send(recommendCardData);
     } catch (e) {
       console.log(e);
     }
   })();
 });
-
 
 app.post('/store', (req, res) => {
   const newStore = req.body;

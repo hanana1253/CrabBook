@@ -1,6 +1,7 @@
-// import axios from 'axios';
+import axios from 'axios';
 import render from '../view/render.js';
-// import '../../scss/style.scss';
+
+import '../../scss/style.scss';
 import state from '../store/state.js';
 import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
 
@@ -161,6 +162,30 @@ $form.onsubmit = e => {
   addLink($input.value);
   $input.value = '';
 };
+
+window.addEventListener('DOMContentLoaded', async () => {
+  // helper함수에서 import하기
+  const getRandomElements = (array, numOfElems = 2) =>
+    [...array].sort(() => Math.random() - 0.5).slice(0, numOfElems);
+
+  // recommend.js에서 import하기
+  const getRecommendSiteCard = async keywords => {
+    if (keywords.length < 2) return null;
+    try {
+      const { data: cardData } = await axios.get(
+        `/recommend/${getRandomElements(keywords).join('+')}`
+      );
+      return createLinkCard(cardData);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const $recommendSiteCard = await getRecommendSiteCard(state.hashtags);
+  // keyword 2개 이하인 경우 return
+  if ($recommendSiteCard === null) return;
+  render.renderTest($recommendSiteCard);
+});
 
 // window.addEventListener('paste', e => {
 //   // Stop data actually being pasted into div
