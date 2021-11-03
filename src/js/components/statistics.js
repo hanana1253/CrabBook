@@ -1,7 +1,8 @@
 // import Chart from '../../../node_modules/chart.js';
 // import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
-import mock from '../store/mock.js';
-import render from '../view/renderSo.js';
+// import mock from '../store/mock.js';
+import render from '../view/render.js';
+import state from '../store/state.js';
 import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
 // const Chart = require('chart.js');
 // const { Chart } = require('chart.js');
@@ -13,44 +14,11 @@ const timeWeekChart = document
   .getContext('2d');
 const jandiChart = document.querySelector('.jandi__chart').getContext('2d');
 
-// state, 링크 데이터(임시)
-let store = [];
-
 // Functions
-const countLinksByCategory = () => store.map(({ items }) => items.length);
+const countLinksByCategory = () =>
+  state.categories.map(({ items }) => items.length);
 
 // TODO: generateColors
-
-const createChart = (canvas, data) => new Chart(canvas, data);
-
-// Sample Charts==========================
-// Donough Chart Profil
-// const configProfil = {
-//   type: 'doughnut',
-//   data: {
-//     labels: ['Category1', 'Category2', 'Unsorted'],
-//     datasets: [
-//       {
-//         label: 'Scraps by category',
-//         data: [4, 3, 2],
-//         backgroundColor: [
-//           // TODO: generateColors
-//           'rgb(255, 99, 132)',
-//           'rgb(54, 162, 235)',
-//           'rgb(255, 205, 86)'
-//         ],
-//         hoverOffset: 4
-//       }
-//     ]
-//   },
-//   options: {
-//     legend: {
-//       display: false
-//     },
-//     cutout: '80%'
-//   }
-// };
-// Bar Chart Weekly
 
 const labelsTimeChart = ['Mon', 'Tue', 'Wds', 'Thr', 'Fri', 'Sat', 'Sun'];
 const dataTimeChart = {
@@ -92,37 +60,42 @@ const configTimeChart = {
     }
   }
 };
+
 // Jandi Chart
 const isoDayOfWeek = date => {
   let weekday = date.getDay(); // 0...6 sun~
   weekday = ((weekday + 6) % 7) + 1; // start from monday
   return weekday + ''; // String
 };
-// setup date 365 squares
+// 365 네모 만들기
 const generateData = () => {
-  const d = new Date();
-  const today = new Date(
-    d.getFullYear(),
-    d.getMonth(),
-    d.getDate(),
-    0,
-    0,
-    0,
-    0
-  );
+  const today = new Date(new Date().toString().slice(0, 16));
   const data = [];
   const end = today;
-  let dt = new Date(new Date().setDate(end.getDate() - 365)); // 일 년 전부터
+  // 일 년 전부 터
+  let dt = new Date(
+    new Date(new Date(new Date().setDate(end.getDate() - 364)))
+      .toString()
+      .slice(0, 16)
+  );
+  let i = 0;
+  const scraps = state.getDailyScrapsPerYear();
+  const offset = new Date(dt).getTimezoneOffset() * 60000;
   while (dt <= end) {
-    const iso = dt.toISOString().substring(0, 10);
+    const iso = new Date(dt - offset).toISOString().substring(0, 10);
     data.push({
       x: iso,
       y: isoDayOfWeek(dt),
       d: iso,
-      v: Math.random() * 50 // 얼마나 많은 횟수가 들어갔나 임시 넣기
+      v: scraps[364 - i] // 얼마나 많은 횟수가 들어갔나
     });
-    dt = new Date(dt.setDate(dt.getDate() + 1)); // 다음날
+    i += 1;
+    // 다음날
+    dt = new Date(
+      new Date(new Date(dt.setDate(dt.getDate() + 1))).toString().slice(0, 16)
+    );
   }
+
   return data;
 };
 const scalesJandi = {
@@ -180,7 +153,8 @@ const scalesJandi = {
     }
   }
 };
-const dataJandi = {
+
+const createDataJandi = () => ({
   datasets: [
     {
       label: 'My Matrix',
@@ -212,8 +186,8 @@ const dataJandi = {
       }
     }
   ]
-};
-const optionsJandi = {
+});
+const createOptionsJandi = () => ({
   aspectRatio: 5,
   plugins: {
     legend: false,
@@ -236,70 +210,55 @@ const optionsJandi = {
       top: 10
     }
   }
-};
-const configJandi = {
+});
+const createConfigJandi = () => ({
   type: 'matrix',
-  data: dataJandi,
-  options: optionsJandi
+  data: createDataJandi(),
+  options: createOptionsJandi()
+});
+
+const fetchCharts = () => {
+  // 1. 차트를 만들기 위한 charts 배열
+  const configProfil = {
+    type: 'doughnut',
+    data: {
+      labels: state.categories.map(({ title }) => title),
+      datasets: [
+        {
+          label: 'Scraps by category',
+          data: countLinksByCategory(),
+          backgroundColor: [
+            // TODO: generateColors
+            'rgb(255, 99, 132)',
+            'rgb(54, 162, 235)',
+            'rgb(255, 205, 86)'
+          ],
+          hoverOffset: 4
+        }
+      ]
+    },
+    options: {
+      cutout: '80%'
+    }
+  };
+
+  document.querySelector(
+    '.profil__text'
+  ).textContent = `${state.visitesLinks.length} / ${state.allLinks.length}`;
+
+  const charts = [
+    { canvas: profilChart, data: configProfil },
+    { canvas: timeWeekChart, data: configTimeChart },
+    { canvas: jandiChart, data: createConfigJandi() }
+  ];
+
+  render.myPage(charts);
 };
+
+// fetchCharts();
 
 // Event
-window.addEventListener('DOMContentLoaded', async () => {
-  // SAMPLE CHARTS
-  // renderChart(profilChart, configProfil);
-  createChart(timeWeekChart, configTimeChart);
-  createChart(jandiChart, configJandi);
-  try {
-    const { data: newState } = await axios.get('/store');
-    store = newState;
-    console.log('real : ', store);
-    // state = mock;
-    // console.log('mock', state);
 
-    // REAL DATAS
-    const configProfil = {
-      type: 'doughnut',
-      data: {
-        labels: store.map(({ title }) => title),
-        datasets: [
-          {
-            label: 'Scraps by category',
-            data: countLinksByCategory(),
-            backgroundColor: [
-              // TODO: generateColors
-              'rgb(255, 99, 132)',
-              'rgb(54, 162, 235)',
-              'rgb(255, 205, 86)'
-            ],
-            hoverOffset: 4
-          }
-        ]
-      },
-      options: {
-        cutout: '80%'
-      }
-    };
-    // createChart(profilChart, configProfil);
-
-    const charts = [
-      { canvas: profilChart, data: configProfil },
-      { canvas: timeWeekChart, data: configTimeChart },
-      { canvas: jandiChart, data: configJandi }
-    ];
-
-    // 마지막 요소 5개 가져오기
-    // const MAXCARDS = 5;
-    // const countRecentLinks = store.length <= MAXCARDS ? store.length : MAXCARDS;
-
-    // const $sortedCards = store
-    //   .slice(-countRecentLinks, -1)
-    //   .reverse()
-    //   .map(({ items }) => items.map(cardData => createLinkCard(cardData)));
-
-    render(charts);
-
-    // renderChart(timeWeekChart, configTimeChart);
-  } catch (e) {
-    console.error(e);
-  }
-});
+document.querySelector('.sidebar__button--statistics').onclick = () => {
+  fetchCharts();
+};

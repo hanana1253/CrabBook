@@ -27,7 +27,9 @@ export default (() => {
     document.querySelector('.kanban').appendChild($domFramgment);
   };
 
-  const renderMypage = () => {};
+  const renderMypage = chartDatas => {
+    chartDatas.forEach(({ canvas, data }) => new Chart(canvas, data));
+  };
 
   return {
     mainPage(categories, cards) {
@@ -35,9 +37,9 @@ export default (() => {
       renderCategory(categories.slice(1), cards.slice(1));
     },
 
-    myPage(categories, cards) {
-      renderSidebar(cards[0]);
-      renderMypage();
+    myPage(chartDatas) {
+      // renderSidebar(cards[0]);
+      renderMypage(chartDatas);
     }
   };
 })();
