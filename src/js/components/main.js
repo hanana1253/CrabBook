@@ -1,33 +1,37 @@
-import axios from 'axios';
+// import axios from 'axios';
 import render from '../view/render.js';
-import '../../scss/style.scss';
+// import '../../scss/style.scss';
+import state from '../store/state.js';
 import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
 
 // DOM Nodes
 const $sidebar = document.querySelector('.sidebar');
 const $form = document.querySelector('.sidebar__form');
-const $cardList = document.querySelector('.sidebar__card-list');
 
 // Variables
 const validUrlRegExp =
-  /((((https?\:\/\/)?)((www).)?\.[A-Za-z0-9.-]+)((?:\/[\+~%\/.\w-_]*)?\??(?:[-\+=&;%@.\w_]*)#?(?:[\w]*))?)/;
+  /((((https?:\/\/)?)((www).)?\.[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))?)/;
 
 // state
-let store = [];
+// let store = [];
 
 // Functions
 const generateCategoryId = () =>
-  Math.max(...store.map(category => category.id), 0) + 1;
+  Math.max(...state.categories.map(category => category.id), 0) + 1;
+
+const generateLinkCardId = () => {};
 
 const setStore = newStore => {
-  store = newStore;
+  state.setCategories(newStore);
 
-  const $categories = store.map(categoryData => createCategory(categoryData));
-  const $cards = store.map(({ items }) =>
+  const $categories = state.categories.map(categoryData =>
+    createCategory(categoryData)
+  );
+  const $cards = state.categories.map(({ items }) =>
     items.map(cardData => createLinkCard(cardData))
   );
 
-  render($categories.slice(1), $cards);
+  render.mainPage($categories, $cards);
 };
 
 const deleteCategory = async id => {
@@ -75,7 +79,7 @@ const addLink = async url => {
 
     setStore(newStore);
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 };
 
