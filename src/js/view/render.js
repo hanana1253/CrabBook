@@ -28,7 +28,9 @@ export default (() => {
   };
 
   const renderMypage = chartDatas => {
-    chartDatas.forEach(({ canvas, data }) => new Chart(canvas, data));
+    chartDatas.forEach(({ canvas, data }) => {
+      new Chart(canvas, data);
+    });
   };
 
   const renderRecommend = async $recommendSiteCard => {

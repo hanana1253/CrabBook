@@ -41,9 +41,7 @@ button {
     justify-content: space-between;
     margin-bottom: rem(10);
   }
-  .time-head {
-    justify-content: end;
-  }
+
   .jandi {
     margin-bottom: rem(30);
     color: $silver;
@@ -59,8 +57,10 @@ button {
       width: 100%;
     }
   }
-
-  .time {
+  .read-head {
+    justify-content: end;
+  }
+  .read {
     color: $silver;
     margin-bottom: rem(30);
     &__time-icons {
@@ -136,7 +136,7 @@ button {
     gap: 5%;
     grid-template-areas:
       'profil profil profil links links'
-      'time time time links links'
+      'read read read links links'
       'jandi jandi jandi jandi jandi';
     .profil {
       grid-area: profil;
@@ -146,15 +146,15 @@ button {
     .links {
       grid-area: links;
     }
-    .time {
-      grid-area: time;
+    .read {
+      grid-area: read;
     }
     .jandi {
       grid-area: jandi;
     }
     .profil,
     .links,
-    .time,
+    .read,
     .jandi {
       margin: 0;
     }
