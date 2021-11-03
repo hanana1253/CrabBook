@@ -1,5 +1,8 @@
-// import { Chart } from 'chart.js';
+// import Chart from '../../../node_modules/chart.js';
 // import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
+import mock from '../store/mock.js';
+
+// const Chart = require('chart.js');
 // const { Chart } = require('chart.js');
 
 // DOM Nodes
@@ -16,9 +19,8 @@ let state = [];
 const countLinksByCategory = () => state.map(({ items }) => items.length);
 
 // TODO: generateColors
-// 랜덤컬러? 사용자 지정?
-const renderChart = (type, data) => new Chart(type, data);
 
+const createChart = (type, data) => new Chart(type, data);
 const renderChartWithOptions = (type, data, options) =>
   new Chart(type, data, options);
 
@@ -242,43 +244,43 @@ const configJandi = {
   options: optionsJandi
 };
 
-// REAL DATAS
-const configProfil = {
-  type: 'doughnut',
-  data: {
-    labels: state.map(({ title }) => title),
-    datasets: [
-      {
-        label: 'Scraps by category',
-        data: countLinksByCategory(),
-        backgroundColor: [
-          // TODO: generateColors
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)'
-        ],
-        hoverOffset: 4
-      }
-    ]
-  },
-  options: {
-    cutout: '80%'
-  }
-};
-
 // Event
 window.addEventListener('DOMContentLoaded', async () => {
   // SAMPLE CHARTS
   // renderChart(profilChart, configProfil);
-  renderChart(timeWeekChart, configTimeChart);
-  renderChart(jandiChart, configJandi);
+  createChart(timeWeekChart, configTimeChart);
+  createChart(jandiChart, configJandi);
   try {
     const { data: newState } = await axios.get('/store');
     state = newState;
-    console.log(state);
-    // TODO: 함수 빼기
-    console.log(configProfil);
-    renderChart(profilChart, configProfil);
+    console.log('real : ', state);
+    // state = mock;
+    // console.log('mock', state);
+
+    // REAL DATAS
+    const configProfil = {
+      type: 'doughnut',
+      data: {
+        labels: state.map(({ title }) => title),
+        datasets: [
+          {
+            label: 'Scraps by category',
+            data: countLinksByCategory(),
+            backgroundColor: [
+              // TODO: generateColors
+              'rgb(255, 99, 132)',
+              'rgb(54, 162, 235)',
+              'rgb(255, 205, 86)'
+            ],
+            hoverOffset: 4
+          }
+        ]
+      },
+      options: {
+        cutout: '80%'
+      }
+    };
+    createChart(profilChart, configProfil);
 
     // renderChart(timeWeekChart, configTimeChart);
   } catch (e) {
