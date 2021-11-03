@@ -19,7 +19,7 @@ let store = [
           '네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요',
         url: 'https://www.naver.com/',
         img: {
-          url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_20212852414260.png',
+          url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png',
           width: null,
           height: null,
           type: 'png'
@@ -43,7 +43,7 @@ let store = [
           '네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요',
         url: 'https://www.naver.com/',
         img: {
-          url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_20212852414260.png',
+          url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png',
           width: null,
           height: null,
           type: 'png'
@@ -84,7 +84,7 @@ let store = [
           '네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요',
         url: 'https://www.naver.com/',
         img: {
-          url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_2020212852414260.png',
+          url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png',
           width: null,
           height: null,
           type: 'png'
@@ -110,7 +110,6 @@ app.use(express.json());
 app.get('/store', (req, res) => {
   res.send(store);
 });
-
 
 app.get('/recommend/:keywordString', (req, res) => {
   const { keywordString } = req.params;
@@ -138,7 +137,7 @@ app.get('/recommend/:keywordString', (req, res) => {
   (async () => {
     try {
       const recommendUrl = await returnRandomRecommendedUrl(keywordString);
-      const { result } = await ogs({ url: recommendUrl})
+      const { result } = await ogs({ url: recommendUrl });
       const {
         ogTitle: title,
         ogUrl: url,
@@ -156,7 +155,7 @@ app.get('/recommend/:keywordString', (req, res) => {
         readStatus: false,
         clickCount: 0,
         memo: ''
-      }
+      };
       res.send(recommendCardData);
     } catch (e) {
       console.log(e);
