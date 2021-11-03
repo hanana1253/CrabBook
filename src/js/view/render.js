@@ -31,15 +31,25 @@ export default (() => {
     chartDatas.forEach(({ canvas, data }) => new Chart(canvas, data));
   };
 
+  const renderRecommend = async $recommendSiteCard => {
+    // TODO: 스피너만들기
+    document.querySelector('.recommend').innerHTML = '';
+    document.querySelector('.recommend').appendChild($recommendSiteCard);
+  };
+
   return {
     mainPage(categories, cards) {
       renderSidebar(cards[0]);
       renderCategory(categories.slice(1), cards.slice(1));
     },
 
-    myPage(chartDatas) {
-      // renderSidebar(cards[0]);
+    myPage(chartDatas, cards) {
+      // renderSidebar(cards && cards[0]);
       renderMypage(chartDatas);
+    },
+
+    renderTest($recommendSiteCard) {
+      renderRecommend($recommendSiteCard);
     }
   };
 })();

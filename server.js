@@ -1,5 +1,6 @@
 const express = require('express');
 const ogs = require('open-graph-scraper');
+const cheerio = require('cheerio-httpcli');
 
 const app = express();
 
@@ -108,6 +109,59 @@ app.use(express.json());
 
 app.get('/store', (req, res) => {
   res.send(store);
+});
+
+
+app.get('/recommend/:keywordString', (req, res) => {
+  const { keywordString } = req.params;
+
+  const returnRandomRecommendedUrl = (keywordstring = 'html') => {
+    const url = `https://www.google.com/search?q=${keywordstring}&oq=${keywordstring}&aqs=chrome..69i57.6936j0j7&sourceid=chrome&ie=UTF-8`;
+    const params = {};
+
+    return new Promise((resolve, reject) => {
+      const linkList = [];
+      cheerio.fetch(url, params, (err, $) => {
+        if (err) {
+          reject(err);
+        } else {
+          $('#rso > div > div > div > div > a').each(function (idx) {
+            const hrefs = $(this).attr('href');
+            linkList[idx] = hrefs;
+          });
+          resolve([...linkList].sort(() => Math.random() - 0.5)[0]);
+        }
+      });
+    });
+  };
+
+  (async () => {
+    try {
+      const recommendUrl = await returnRandomRecommendedUrl(keywordString);
+      const { result } = await ogs({ url: recommendUrl})
+      const {
+        ogTitle: title,
+        ogUrl: url,
+        ogDescription: description,
+        ogImage: img
+      } = result;
+      const recommendCardData = {
+        id: 2001,
+        title,
+        description,
+        url,
+        img,
+        tags: [],
+        createDate: new Date(),
+        readStatus: false,
+        clickCount: 0,
+        memo: ''
+      }
+      res.send(recommendCardData);
+    } catch (e) {
+      console.log(e);
+    }
+  })();
 });
 
 app.post('/store', (req, res) => {

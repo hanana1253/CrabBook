@@ -252,6 +252,8 @@ const fetchCharts = () => {
     { canvas: jandiChart, data: createConfigJandi() }
   ];
 
+  console.log('hiii');
+
   render.myPage(charts);
 };
 
@@ -259,6 +261,8 @@ const fetchCharts = () => {
 
 // Event
 
-document.querySelector('.sidebar__button--statistics').onclick = () => {
-  fetchCharts();
-};
+// document.querySelector('.sidebar__button--statistics').onclick = () => {
+//   fetchCharts();
+// };
+
+export default fetchCharts;

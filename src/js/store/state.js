@@ -1,7 +1,7 @@
 export default (() => {
   let categories = [];
 
-  let hashtags = [];
+  let hashtags = ['html', 'css'];
 
   const diffDays = (date1, date2) =>
     Math.floor(Math.abs(date1 - date2) / (1000 * 3600 * 24));
@@ -16,7 +16,12 @@ export default (() => {
     },
 
     get hashtags() {
-      return hashtags;
+      hashtags = this.allLinks.reduce(
+        (acc, { tags: cur }) => [...new Set([...acc, ...cur])],
+        []
+      );
+      // return hashtags;
+      return ['html', 'css'];
     },
 
     setHashtags(newHashtags) {

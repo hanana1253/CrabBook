@@ -1,8 +1,10 @@
-// import axios from 'axios';
+import axios from 'axios';
 import render from '../view/render.js';
-// import '../../scss/style.scss';
+
+import '../../scss/style.scss';
 import state from '../store/state.js';
 import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
+import fetchCharts from './statistics.js';
 
 // DOM Nodes
 const $sidebar = document.querySelector('.sidebar');
@@ -162,6 +164,30 @@ $form.onsubmit = e => {
   $input.value = '';
 };
 
+window.addEventListener('DOMContentLoaded', async () => {
+  // helper함수에서 import하기
+  const getRandomElements = (array, numOfElems = 2) =>
+    [...array].sort(() => Math.random() - 0.5).slice(0, numOfElems);
+
+  // recommend.js에서 import하기
+  const getRecommendSiteCard = async keywords => {
+    if (keywords.length < 2) return null;
+    try {
+      const { data: cardData } = await axios.get(
+        `/recommend/${getRandomElements(keywords).join('+')}`
+      );
+      return createLinkCard(cardData);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const $recommendSiteCard = await getRecommendSiteCard(state.hashtags);
+  // keyword 2개 이하인 경우 return
+  if ($recommendSiteCard === null) return;
+  render.renderTest($recommendSiteCard);
+});
+
 // window.addEventListener('paste', e => {
 //   // Stop data actually being pasted into div
 //   e.stopPropagation();
@@ -180,3 +206,14 @@ $form.onsubmit = e => {
 //   alert(`붙여 넣은 데이터: ${pastedData}`);
 //   // addLink(pastedData);
 // });
+
+document.querySelector('.sidebar__button--statistics').onclick = () => {
+  document.querySelector('.kanban').classList.add('hidden');
+  document.querySelector('.statistics').classList.remove('hidden');
+  fetchCharts();
+};
+
+document.querySelector('.sidebar__button--kanban').onclick = () => {
+  document.querySelector('.statistics').classList.add('hidden');
+  document.querySelector('.kanban').classList.remove('hidden');
+};
