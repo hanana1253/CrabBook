@@ -11,6 +11,11 @@ let store = [
     id: 0,
     title: 'uncategorized',
     items: []
+  },
+  {
+    id: 1,
+    title: 'New Category',
+    items: []
   }
 ];
 
@@ -31,22 +36,27 @@ app.post('/store', (req, res) => {
 app.post('/store/link', (req, res) => {
   ogs(req.body)
     .then(data => {
-      const { result } = data;
       const {
         ogTitle: title,
         ogUrl: url,
         ogDescription: description,
         ogImage: img
-      } = result;
+      } = data.result;
 
       store[0].items = [
         ...store[0].items,
         {
-          id: 2001,
+          id: Math.floor(Math.random() * 1000),
           title,
           description,
           url,
-          img,
+          img: {
+            url: '',
+            width: null,
+            height: null,
+            type: '',
+            ...img
+          },
           tags: [],
           createDate: new Date(),
           readStatus: false,
@@ -81,9 +91,15 @@ app.patch('/store/:currentCategoryId/:currentCardIndex', (req, res) => {
       droppedItem = items.splice(currentCardIndex, 1);
   });
 
+  const index =
+    currentCategoryId === toBePlacedCategoryId &&
+    toBePlacedCardIndex >= 2 &&
+    currentCardIndex < toBePlacedCardIndex
+      ? toBePlacedCardIndex - 1
+      : toBePlacedCardIndex;
+
   store.forEach(({ id, items }) => {
-    if (id === +toBePlacedCategoryId)
-      items.splice(toBePlacedCardIndex, 0, droppedItem[0]);
+    if (id === +toBePlacedCategoryId) items.splice(index, 0, droppedItem[0]);
   });
 
   res.send(store);
