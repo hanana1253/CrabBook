@@ -32,8 +32,8 @@ const setStore = newStore => {
   const $categories = state.categories.map(categoryData =>
     createCategory(categoryData)
   );
-  const $cards = state.categories.map(({ items }) =>
-    items.map(cardData => createLinkCard(cardData))
+  const $cards = state.categories.map(({ id: categoryId, items }) =>
+    items.map(cardData => createLinkCard({ ...cardData, categoryId }))
   );
 
   render.mainPage($categories, $cards);
@@ -143,7 +143,7 @@ window.ondrop = async e => {
     $recommendDiv.innerHTML = '';
     $recommendDiv.appendChild($button);
     $recommendDiv.classList.remove('active');
-    
+
     setStore(newStore);
   } catch (e) {
     console.error(e);
@@ -204,7 +204,6 @@ document.querySelector('.recommend__button').onclick = async e => {
     }
 
     try {
-      console.log(getRandomElements(keywords));
       const { data: cardData } = await axios.get(
         `/recommend/${getRandomElements(keywords).join('+')}`
       );
