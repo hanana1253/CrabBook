@@ -48,7 +48,7 @@ let store = [
           height: null,
           type: 'png'
         },
-        tags: [],
+        tags: ['portal', 'daum'],
         createDate: new Date(2021, 7, 3),
         readStatus: false,
         clickCount: 0,
