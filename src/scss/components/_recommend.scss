@@ -48,14 +48,19 @@ $recommendHeight: 20vh;
       transform: scale(0.8) translate($buttonSize/2, -$buttonSize/2);
     }
     .linkcard__content{
+
       &__title {
         display: inline-block;
         width: 100%
       }
     }
   }
+  .kanban__item {
+    list-style: none;
+  }
   .linkcard {
     margin: 0;
+    
     .toggle-card,
     &__content__tag__container,
     &__content__memo,
