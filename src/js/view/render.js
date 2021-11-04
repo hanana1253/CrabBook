@@ -59,7 +59,7 @@ export default (() => {
   const renderRecentLinks = cards => {
     const $cards = document.createDocumentFragment();
     cards.forEach(cardData => {
-      $cards.appendChild(cardData);
+      $cards.appendChild(cardData.firstElementChild);
     });
 
     document.querySelector('.links__ul').innerHTML = '';
