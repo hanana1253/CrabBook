@@ -140,15 +140,15 @@ app.get('/recommend/:keywordString', (req, res) => {
       const { result } = await ogs({ url: recommendUrl });
       const {
         ogTitle: title,
-        ogUrl: url,
+        ogUrl,
         ogDescription: description,
         ogImage: img
       } = result;
       const recommendCardData = {
-        id: url,
+        id: 0,
         title,
         description,
-        url,
+        url: recommendUrl,
         img,
         tags: [],
         createDate: new Date(),
@@ -177,7 +177,7 @@ app.post('/store/link', (req, res) => {
     .then(data => {
       const {
         ogTitle: title,
-        ogUrl: url,
+        ogUrl,
         ogDescription: description,
         ogImage: img
       } = data.result;
@@ -218,7 +218,7 @@ app.post('/store/:toBePlacedCategoryId/:toBePlacedCardIndex', (req, res) => {
     .then(data => {
       const {
         ogTitle: title,
-        ogUrl: url,
+        ogUrl,
         ogDescription: description,
         ogImage: img
       } = data.result;
@@ -292,9 +292,12 @@ app.patch('/store/:categoryId([0-9]+)', (req, res) => {
 app.patch('/store/:categoryId([0-9]+)/:cardId/content', (req, res) => {
   const { categoryId, cardId } = req.params;
   const content = req.body;
-  const targetCategoryIndex = store.findIndex(category => category.id === +categoryId);
-  store[targetCategoryIndex].items = store[targetCategoryIndex]
-    .items.map(card => card.id === +cardId ? ({ ... card, ...content }): card); 
+  const targetCategoryIndex = store.findIndex(
+    category => category.id === +categoryId
+  );
+  store[targetCategoryIndex].items = store[targetCategoryIndex].items.map(
+    card => (card.id === +cardId ? { ...card, ...content } : card)
+  );
 
   res.send(store);
 });
@@ -304,12 +307,13 @@ app.patch('/store/:categoryId([0-9]+)/:cardId([0-9]+)/tag', (req, res) => {
   const { tag } = req.body;
   store
     .find(({ id }) => id === +categoryId)
-    .items.find(({ id }) => id === +cardId).tags.push(tag);
+    .items.find(({ id }) => id === +cardId)
+    .tags.push(tag);
 
   res.send(store);
 });
 
-// // DELETE /todos/id
+// DELETE 
 app.delete('/store/:id([0-9]+)', (req, res) => {
   const { id } = req.params;
 
@@ -317,13 +321,6 @@ app.delete('/store/:id([0-9]+)', (req, res) => {
 
   res.send(store);
 });
-
-// // DELETE /todos/completed
-// app.delete('/todos/completed', (req, res) => {
-//   todos = todos.filter(todo => !todo.completed);
-
-//   res.send(todos);
-// });
 
 app.listen(PORT, () =>
   console.log(`Server listening at http://localhost:${PORT}`)
