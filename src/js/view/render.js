@@ -1,5 +1,3 @@
-import { createLinkCard } from '../components/Kanban';
-
 export default (() => {
   const $sidebarCardList = document.querySelector('.sidebar__card-list');
 
@@ -37,38 +35,35 @@ export default (() => {
     document.querySelector('.kanban').appendChild($domFramgment);
   };
 
-  const renderMypage = (cards, chartDatas) => {
+  const renderChart = chartData => {
+    const $allChartContainer = [
+      ...document.querySelectorAll('.chart-container')
+    ];
+
+    const className = [
+      'profil__chart',
+      'jandi__chart scrap',
+      'read__chart--week'
+    ];
+
+    $allChartContainer.forEach(($chartContainer, index) => {
+      $chartContainer.innerHTML = `<canvas class="${className[index]}"></canvas>`;
+    });
+
+    chartData.forEach(
+      ({ data }, index) =>
+        new Chart($allChartContainer[index].firstElementChild, data)
+    );
+  };
+
+  const renderRecentLinks = cards => {
     const $cards = document.createDocumentFragment();
     cards.forEach(cardData => {
       $cards.appendChild(cardData);
     });
 
+    document.querySelector('.links__ul').innerHTML = '';
     document.querySelector('.links__ul').appendChild($cards);
-
-    // TODO: need to update data
-
-    // chartDatas.forEach(({ canvas, data }) => {
-    //   new Chart(canvas, data);
-    // });
-  };
-
-  const renderRecommend = async $recommendSiteCard => {
-    // TODO: 스피너만들기
-    document.querySelector('.recommend').innerHTML = '';
-    document.querySelector('.recommend').appendChild($recommendSiteCard);
-  };
-
-  const recentScraps = data => {
-    document.querySelector('.links__ul').innerHTML = data
-      .map(
-        ({ createDate, title, description }) => `
-    <li class="links__item">
-      <div class="links__item--date">${createDate}</div>
-      <div class="links__item--title">${title}</div>
-      <div class="links__item--description">${description}</div>
-    </li>`
-      )
-      .join('');
   };
 
   return {
@@ -77,18 +72,9 @@ export default (() => {
       renderCategory(categories.slice(1), cards.slice(1));
     },
 
-    myPage(cards, chartDatas) {
-      // renderSidebar(cards && cards[0]);
-      renderMypage(cards);
-    },
-    // myPage(chartDatas, scrapData) {
-    //   // renderSidebar(cards && cards[0]);
-    //   recentScraps(scrapData);
-    //   renderMypage(chartDatas);
-    // },
-
-    renderTest($recommendSiteCard) {
-      renderRecommend($recommendSiteCard);
+    myPage(chartData, cards) {
+      renderChart(chartData);
+      renderRecentLinks(cards);
     }
   };
 })();

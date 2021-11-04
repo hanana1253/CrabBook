@@ -145,7 +145,7 @@ app.get('/recommend/:keywordString', (req, res) => {
         ogImage: img
       } = result;
       const recommendCardData = {
-        id: url,
+        id: 0,
         title,
         description,
         url,
@@ -292,9 +292,12 @@ app.patch('/store/:categoryId([0-9]+)', (req, res) => {
 app.patch('/store/:categoryId([0-9]+)/:cardId/content', (req, res) => {
   const { categoryId, cardId } = req.params;
   const content = req.body;
-  const targetCategoryIndex = store.findIndex(category => category.id === +categoryId);
-  store[targetCategoryIndex].items = store[targetCategoryIndex]
-    .items.map(card => card.id === +cardId ? ({ ... card, ...content }): card); 
+  const targetCategoryIndex = store.findIndex(
+    category => category.id === +categoryId
+  );
+  store[targetCategoryIndex].items = store[targetCategoryIndex].items.map(
+    card => (card.id === +cardId ? { ...card, ...content } : card)
+  );
 
   res.send(store);
 });
@@ -304,7 +307,8 @@ app.patch('/store/:categoryId([0-9]+)/:cardId([0-9]+)/tag', (req, res) => {
   const { tag } = req.body;
   store
     .find(({ id }) => id === +categoryId)
-    .items.find(({ id }) => id === +cardId).tags.push(tag);
+    .items.find(({ id }) => id === +cardId)
+    .tags.push(tag);
 
   res.send(store);
 });
