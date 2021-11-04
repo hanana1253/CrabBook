@@ -1,4 +1,5 @@
 @use '../utils/' as *;
+@use 'sass:math';
 
 @keyframes spin {
   100% {
@@ -45,13 +46,13 @@ $recommendHeight: 20vh;
     height: $recommendHeight;
     border-radius: rem(5px);
     .recommend__button {
-      transform: scale(0.8) translate($buttonSize/2, -$buttonSize/2);
+      transform: scale(0.8)
+        translate(math.div($buttonSize, 2), math.div(-$buttonSize, 2));
     }
-    .linkcard__content{
-
+    .linkcard__content {
       &__title {
         display: inline-block;
-        width: 100%
+        width: 100%;
       }
     }
   }
@@ -60,7 +61,7 @@ $recommendHeight: 20vh;
   }
   .linkcard {
     margin: 0;
-    
+
     .toggle-card,
     &__content__tag__container,
     &__content__memo,
