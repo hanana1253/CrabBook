@@ -149,7 +149,13 @@ app.get('/recommend/:keywordString', (req, res) => {
         title,
         description,
         url,
-        img,
+        img: {
+          url: '',
+          width: null,
+          height: null,
+          type: '',
+          ...img
+        },
         tags: [],
         createDate: new Date(),
         readStatus: false,
