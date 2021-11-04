@@ -2,11 +2,6 @@ import state from '../store/state.js';
 import render from '../view/render.js';
 import { createLinkCard } from './Kanban.js';
 
-// DOM Nodes
-const profilChart = document.querySelector('.profil__chart');
-const readWeekChart = document.querySelector('.read__chart--week');
-const jandiChart = document.querySelector('.jandi__chart');
-
 // Functions
 const getCountLinksByCategory = () =>
   state.categories.map(({ items }) => items.length);
@@ -227,37 +222,19 @@ const createConfigJandi = () => ({
   options: createOptionsJandi()
 });
 
-let chartInstances = [];
-
 // fetchCharts는 한 번만
 const fetchCharts = () => {
   document.querySelector(
     '.profil__text'
   ).textContent = `${state.visitedLinks.length} / ${state.allLinks.length}`;
 
-  const charts = [
-    { canvas: profilChart, data: createConfigProfil() },
-    { canvas: readWeekChart, data: createConfigRead() },
-    { canvas: jandiChart, data: createConfigJandi() }
+  const chartData = [
+    { data: createConfigProfil() },
+    { data: createConfigJandi() },
+    { data: createConfigRead() }
   ];
 
-  charts.forEach(({ canvas, data }) => {
-    // canvas.getContext('2d').restore();
-    const chart = new Chart(canvas, data);
-    chartInstances = [...chartInstances, chart];
-  });
-
-  // console.log(chartInstances);
-
-  // console.log(getRecentLinks());
-  const cards = state.recentLinks.map(createLinkCard);
-  render.myPage(cards, chartInstances);
-  // charts.forEach(({ canvas, data }) => {
-  // canvas.getContext('2d').restore();
-  // new Chart(canvas, data);
-  // });
-
-  // render.myPage(charts, state.recentLinks);
+  render.myPage(chartData, state.recentLinks.map(createLinkCard));
 };
 
 // Event
