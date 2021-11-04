@@ -13,7 +13,7 @@ button {
 }
 .statistics-container {
   width: 100%;
-
+  min-height: calc(100vh - 62px - rem(14px) * 2);
   // mobile first 임시
   // TODO: 브레이크 포인트 얘기 : min-width?
   // max-width: 414px;
@@ -33,14 +33,36 @@ button {
       left: 50%;
       transform: translate(-50%, -50%);
     }
-    &__text {
-      font-size: 5vw;
+  }
+
+  .records {
+    background-color: $primary00;
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+      rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+    border-radius: rem(8);
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 1.5vw;
+
+    &__label {
+      font-size: 2vw;
       font-weight: 700;
-      background-color: $primary00;
-      box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
-        rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+      border: 1px solid $primary05;
       border-radius: rem(8);
-      padding: 5%;
+      text-align: center;
+
+      &--title {
+        padding: 5%;
+        background-color: $primary05;
+      }
+      &--scrap,
+      &--read {
+        padding: 5%;
+        font-size: rem(20);
+        font-weight: 700;
+      }
     }
   }
 
@@ -108,31 +130,31 @@ button {
       rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
     border-radius: rem(8);
     padding: 5%;
-    &__ul {
-    }
-    &__item {
-      position: relative;
-      border: 1px solid $silver;
-      border-radius: 10px;
-      padding: rem(12);
-      margin: rem(12) 0;
-      &--date {
-        position: absolute;
-        top: rem(12);
-        right: rem(12);
-        color: $silver;
-      }
-      &--title {
-        font-size: 1.4rem;
-        font-weight: 500;
-        padding-bottom: rem(10);
-      }
-      &--description {
-      }
-    }
-    &__item:hover {
-      background: rgba(0, 0, 0, 0.2);
-    }
+    // &__ul {
+    // }
+    // &__item {
+    //   position: relative;
+    //   border: 1px solid $silver;
+    //   border-radius: 10px;
+    //   padding: rem(12);
+    //   margin: rem(12) 0;
+    //   &--date {
+    //     position: absolute;
+    //     top: rem(12);
+    //     right: rem(12);
+    //     color: $silver;
+    //   }
+    //   &--title {
+    //     font-size: 1.4rem;
+    //     font-weight: 500;
+    //     padding-bottom: rem(10);
+    //   }
+    //   &--description {
+    //   }
+    // }
+    // &__item:hover {
+    //   background: rgba(0, 0, 0, 0.2);
+    // }
   }
 
   .links .linkcard {
@@ -153,23 +175,22 @@ button {
   // }
   @include desktop {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
     gap: 5%;
     grid-template-areas:
-      'profil profilText profilText links links'
-      'read read read links links'
-      'jandi jandi jandi jandi jandi';
+      'profil records links links'
+      'read read links links'
+      'jandi jandi jandi jandi';
     .profil {
       &__chart {
         grid-area: profil;
       }
-      &__text {
-        grid-area: profilText;
-        font-size: rem(40);
-      }
       width: 300px;
       justify-self: center;
+    }
+    .records {
+      grid-area: records;
     }
     .links {
       grid-area: links;

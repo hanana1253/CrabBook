@@ -36,21 +36,16 @@ const createConfigProfil = () => ({
     labels: state.categories.map(({ title }) => title),
     datasets: [
       {
-        label: 'Scraps by category',
+        label: '카테고리별 스크랩 현황',
         data: getCountLinksByCategory(),
         backgroundColor: backgroundColorset,
-        // backgroundColor: [
-        //   // TODO: generateColors
-        //   'rgb(255, 99, 132)',
-        //   'rgb(54, 162, 235)',
-        //   'rgb(255, 205, 86)'
-        // ],
         hoverOffset: 4
       }
     ]
   },
   options: {
-    cutout: '30%'
+    cutout: '30%',
+    responsive: true
   }
 });
 
@@ -62,14 +57,14 @@ const createConfigRead = () => ({
     labels: state.categories.map(({ title }) => title),
     datasets: [
       {
-        label: 'scrap',
+        label: '스크랩',
         type: 'bar',
         borderColor: '#e29998',
         data: getCountLinksByCategory(),
         fill: false
       },
       {
-        label: 'read',
+        label: '읽은 글',
         type: 'line',
         backgroundColor: '#9e2927',
         data: getCountReadLinksByCategory()
@@ -77,10 +72,6 @@ const createConfigRead = () => ({
     ]
   },
   options: {
-    title: {
-      display: true,
-      text: '읽은 글과 스크랩한 글'
-    },
     legend: { display: false }
   }
 });
@@ -240,11 +231,11 @@ const createConfigJandi = () => ({
 
 let chartInstances = [];
 
-// fetchCharts는 한 번만
 const fetchCharts = () => {
-  document.querySelector(
-    '.profil__text'
-  ).textContent = `${state.visitedLinks.length} / ${state.allLinks.length}`;
+  document.querySelector('.records__label--scrap').textContent =
+    state.allLinks.length;
+  document.querySelector('.records__label--read').textContent =
+    state.visitedLinks.length;
 
   const charts = [
     { canvas: profilChart, data: createConfigProfil() },
@@ -258,9 +249,6 @@ const fetchCharts = () => {
     chartInstances = [...chartInstances, chart];
   });
 
-  // console.log(chartInstances);
-
-  // console.log(getRecentLinks());
   const cards = state.recentLinks.map(createLinkCard);
   render.myPage(cards, chartInstances);
   // charts.forEach(({ canvas, data }) => {
