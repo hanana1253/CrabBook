@@ -138,6 +138,12 @@ window.ondrop = async e => {
             toBePlacedCardIndex
           });
 
+    const $recommendDiv = document.querySelector('.recommend');
+    const $button = $recommendDiv.firstElementChild;
+    $recommendDiv.innerHTML = '';
+    $recommendDiv.appendChild($button);
+    $recommendDiv.classList.remove('active');
+    
     setStore(newStore);
   } catch (e) {
     console.error(e);
@@ -153,13 +159,13 @@ window.onclick = e => {
 // 사이드바 이벤트
 $sidebar.ondragover = e => {
   e.preventDefault();
-  if (!e.target.matches('.sidebar *')) return;
+  if (!e.target.matches('.sidebar, .sidebar *')) return;
   $sidebar.classList.add('active');
 };
 
 $sidebar.ondragleave = e => {
   e.preventDefault();
-  if (e.target.matches('.sidebar *')) return;
+  // if (e.target.matches('.sidebar, .sidebar *')) return;
   $sidebar.classList.remove('active');
 };
 
@@ -178,38 +184,6 @@ $form.onsubmit = e => {
   $input.value = '';
 };
 
-// window.addEventListener('DOMContentLoaded', async () => {
-//   if (state.hashtags.length < 2) {
-//     const $noHashtagP = document.createElement('p');
-//     $noHashtagP.innerHTML = '<p>Hashtag를 입력하고</p> <p>추천사이트를 받아보세요</p>';
-//     $noHashtagP.classList.add('noHashtag');
-//     render.renderTest($noHashtagP) ;
-//     return;
-//   };
-//   // helper.js에 빼면 안 작동하는데...
-//   const getRandomElements = (array, numOfElems = 2) =>
-//     [...array].sort(() => Math.random() - 0.5).slice(0, numOfElems);
-
-//   // recommend.js에서 import하기
-//   const getRecommendSiteCard = async keywords => {
-//     if (keywords.length < 2) return null;
-
-//     try {
-//       console.log(getRandomElements(keywords));
-//       const { data: cardData } = await axios.get(
-//         `/recommend/${getRandomElements(keywords).join('+')}`
-//       );
-//       return createLinkCard(cardData);
-//     } catch (e) {
-//       console.error(e);
-//     }
-//   };
-
-//   const $recommendSiteCard = await getRecommendSiteCard(state.hashtags);
-//   // keyword 2개 이하인 경우 return
-//   render.renderTest($recommendSiteCard);
-// });
-
 document.querySelector('.recommend__button').onclick = async e => {
   const $recommendDiv = e.target.closest('.recommend');
   if ($recommendDiv.classList.contains('active')) {
@@ -219,9 +193,6 @@ document.querySelector('.recommend__button').onclick = async e => {
     $recommendDiv.classList.remove('active');
     return;
   }
-
-  const getRandomElements = (array, numOfElems = 2) =>
-    [...array].sort(() => Math.random() - 0.5).slice(0, numOfElems);
 
   // recommend.js에서 import하기
   const getRecommendSiteCard = async keywords => {
