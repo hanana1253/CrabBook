@@ -2,9 +2,9 @@
 
 .crab-book a {
   display: block;
-  width: rem(251px);
-  margin: rem(14px) auto 0;
-  height: rem(65px);
+  width: 251px;
+  padding: rem(14px);
+  margin: 0 auto;
 }
 
 .kanban {
@@ -12,7 +12,8 @@
   padding: rem(30px);
   overflow-x: auto;
   width: 100%;
-  height: calc(100% - 100px);
+  background-color: yellow;
+  min-height: calc(100vh - 62px - rem(14px)*2);
 
   &__add-button {
     min-width: rem(400px);
