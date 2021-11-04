@@ -16,7 +16,7 @@ $recommendHeight: 20vh;
 .recommend {
   border-radius: 50%;
   width: $buttonSize;
-  aspect-ratio: 1;
+  height: $buttonSize;
   position: fixed;
   right: rem(30);
   bottom: rem(30);
@@ -47,13 +47,19 @@ $recommendHeight: 20vh;
     .recommend__button {
       transform: scale(0.8) translate($buttonSize/2, -$buttonSize/2);
     }
+    .linkcard__content{
+      &__title {
+        display: inline-block;
+        width: 100%
+      }
+    }
   }
   .linkcard {
     margin: 0;
     .toggle-card,
     &__content__tag__container,
     &__content__memo,
-    .kanban__dropzone {
+    & ~ .kanban__dropzone {
       display: none;
     }
     &__content__description {
