@@ -62,7 +62,8 @@ const createConfigRead = () => ({
     ]
   },
   options: {
-    legend: { display: false }
+    legend: { display: false },
+    responsive: true
   }
 });
 

@@ -7,8 +7,9 @@ button {
 }
 
 .statistics {
-  width: calc(100% - rem(80));
-  height: calc(100vh - 10vh);
+  min-width: 600px;
+  overflow-x: auto;
+  width: 100%;
   padding-left: rem(80);
 }
 .statistics-container {
@@ -43,11 +44,12 @@ button {
     font-size: 1.5vw;
 
     &__label {
-      font-size: 2vw;
+      font-size: rem(20);
       font-weight: 700;
-      border: 1px solid $primary05;
+      border: 3px solid $primary05;
       border-radius: rem(8);
       text-align: center;
+      margin: rem(12);
 
       &--title {
         padding: 5%;
@@ -140,7 +142,7 @@ button {
     display: none;
   }
 
-  @media only screen and (min-width: 520px) {
+  @include desktop {
     height: 100%;
     display: grid;
     grid-template-columns: 1.5fr 1fr;
@@ -160,9 +162,21 @@ button {
     }
     .records {
       grid-area: records;
+      &__label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: rem(24);
+        padding-right: 5%;
+        &--scrap,
+        &--read {
+          padding: 2%;
+        }
+      }
     }
     .links {
       grid-area: links;
+      min-width: 350px;
     }
     .read {
       grid-area: read;
@@ -178,7 +192,7 @@ button {
       margin: 0;
     }
   }
-  @media only screen and (min-width: 1320px) {
+  @media only screen and (min-width: 1520px) {
     height: 100%;
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr 1fr;
@@ -197,6 +211,15 @@ button {
     }
     .records {
       grid-area: records;
+      &__label {
+        display: block;
+        padding-right: 0;
+        font-size: rem(24);
+        &--scrap,
+        &--read {
+          padding: 5%;
+        }
+      }
     }
     .links {
       grid-area: links;
