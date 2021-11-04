@@ -36,6 +36,14 @@ export default (() => {
       return this.allLinks.filter(({ readStatus }) => readStatus);
     },
 
+    get recentLinks() {
+      const today = new Date(new Date().toString().slice(0, 16));
+
+      return this.allLinks.filter(
+        ({ createDate }) => diffDays(new Date(createDate), today) <= 5
+      );
+    },
+
     getDailyScrapsPerYear() {
       const arr = Array(366).fill(0);
       const today = new Date(new Date().toString().slice(0, 16));

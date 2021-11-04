@@ -134,6 +134,18 @@ button {
     }
   }
 
+  .links .linkcard {
+    &__content {
+      &__memo,
+      &__tag__container {
+        display: none;
+      }
+    }
+  }
+  .links .toggle-card {
+    display: none;
+  }
+
   // canvas {
   //   height: 100%;
   //   width: 100%;

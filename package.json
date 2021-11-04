@@ -4,15 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run watch",
-    "scss": "sass ./src/scss:./src/css",
+    "start": "run-p start:backend start:frontend",
     "build": "webpack -w",
-    "watch": "npm run scss -- --watch",
     "clean": "rimraf -rf css",
-    "serve": "live-server --port=3000",
     "start:frontend": "webpack serve",
-    "start:backend": "nodemon server",
-    "start:all": "run-p start:backend start:frontend"
+    "start:backend": "nodemon server"
   },
   "repository": {
     "type": "git",
@@ -41,6 +37,7 @@
     "live-server": "^1.2.1",
     "nodemon": "^2.0.14",
     "normalize.css": "^8.0.1",
+    "npm-run-all": "^4.1.5",
     "open-graph-scraper": "^4.10.0",
     "prettier": "2.4.1",
     "rimraf": "^3.0.2",
@@ -60,6 +57,7 @@
     "cheerio-httpcli": "^0.8.2",
     "core-js": "^3.19.0",
     "express": "^4.17.1",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "date-fns": "^2.25.0"
   }
 }

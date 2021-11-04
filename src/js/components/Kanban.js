@@ -21,7 +21,18 @@ const createCategory = ({ id, title }) => {
   $category.innerHTML = `
     <button class="kanban__column-delete" type="button">X</button>
     <h3 class="kanban__column-title">${title}</h3>
-    <ul class="kanban__column-items"></ul>`;
+    <ul class="kanban__column-items"></ul>
+    `;
+
+  const $input = document.createElement('input');
+  $input.className = 'edit';
+  $input.hidden = true;
+
+  $input.onblur = e => {
+    e.target.hidden = true;
+  };
+
+  $category.appendChild($input);
 
   $category
     .querySelector('.kanban__column-items')
@@ -31,7 +42,6 @@ const createCategory = ({ id, title }) => {
 };
 
 const createLinkCard = data => {
-  const $fragment = document.createDocumentFragment();
   const linkCard = new LinkCard(data);
   const $linkCard = linkCard.cardElement;
   $linkCard.draggable = true;
@@ -42,10 +52,9 @@ const createLinkCard = data => {
     e.dataTransfer.setData('text/plain', data.id);
   };
 
-  $fragment.appendChild($linkCard);
-  $fragment.appendChild(createDropZone());
+  if (data.id !== 0) $linkCard.appendChild(createDropZone());
 
-  return $fragment;
+  return $linkCard;
 };
 
 export { createDropZone, createCategory, createLinkCard };

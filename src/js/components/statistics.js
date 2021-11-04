@@ -1,11 +1,6 @@
-// import Chart from '../../../node_modules/chart.js';
-// import { MatrixController, MatrixElement } from 'chartjs-chart-matrix';
-// import mock from '../store/mock.js';
 import state from '../store/state.js';
 import render from '../view/render.js';
 import { createLinkCard } from './Kanban.js';
-// const Chart = require('chart.js');
-// const { Chart } = require('chart.js');
 
 // DOM Nodes
 const profilChart = document.querySelector('.profil__chart');
@@ -21,7 +16,7 @@ const getCountReadLinksByCategory = () =>
     ({ items }) => items.filter(({ readStatus }) => readStatus).length
   );
 
-const getRecentLinks = () => state.allLinks.slice(-5).reverse();
+// const getRecentLinks = () => state.allLinks.slice(-5).reverse();
 
 // TODO: generateColors
 
@@ -252,11 +247,17 @@ const fetchCharts = () => {
     chartInstances = [...chartInstances, chart];
   });
 
-  console.log(chartInstances);
+  // console.log(chartInstances);
 
   // console.log(getRecentLinks());
-  const cards = getRecentLinks().map(card => createLinkCard(card));
+  const cards = state.recentLinks.map(createLinkCard);
   render.myPage(cards, chartInstances);
+  // charts.forEach(({ canvas, data }) => {
+  // canvas.getContext('2d').restore();
+  // new Chart(canvas, data);
+  // });
+
+  // render.myPage(charts, state.recentLinks);
 };
 
 // Event

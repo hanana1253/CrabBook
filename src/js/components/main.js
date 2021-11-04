@@ -21,7 +21,8 @@ const validUrlRegExp =
 const generateCategoryId = () =>
   Math.max(...state.categories.map(category => category.id), 0) + 1;
 
-const generateLinkCardId = () => {};
+const generateLinkCardId = () =>
+  Math.max(...state.allLinks.map(link => link.id), 0) + 1;
 
 const setStore = newStore => {
   state.setCategories(newStore);
@@ -49,7 +50,7 @@ const deleteCategory = async id => {
 
 const fetchCategory = async () => {
   document
-    .querySelector('[data-id="0"]')
+    .querySelector('.sidebar__form ~ [data-id="0"]')
     .querySelector('.kanban__column-items')
     .appendChild(createDropZone());
 
@@ -78,7 +79,10 @@ const addCategory = async () => {
 
 const addLink = async url => {
   try {
-    const { data: newStore } = await axios.post('/store/link', { url });
+    const { data: newStore } = await axios.post('/store/link', {
+      url,
+      id: generateLinkCardId()
+    });
 
     setStore(newStore);
   } catch (e) {
@@ -95,7 +99,7 @@ window.ondrop = async e => {
   e.target.classList.remove('active');
 
   const cardId = e.dataTransfer.getData('text/plain');
-  const $toBePlacedCard = document.querySelector(`[data-id="${cardId}"]`);
+  const $toBePlacedCard = document.querySelector(`li[data-id="${cardId}"]`);
 
   if ($toBePlacedCard.contains(e.target)) return;
 
@@ -118,10 +122,19 @@ window.ondrop = async e => {
   ].indexOf(e.target);
 
   try {
-    const { data: newStore } = await axios.patch(
-      `/store/${currentCategoryId}/${currentCardIndex}`,
-      { toBePlacedCategoryId, toBePlacedCardIndex }
-    );
+    const { data: newStore } =
+      +cardId === 0
+        ? await axios.post(
+            `/store/${toBePlacedCategoryId}/${toBePlacedCardIndex}`,
+            {
+              url: $toBePlacedCard.querySelector('a').href,
+              id: generateLinkCardId()
+            }
+          )
+        : await axios.patch(`/store/${currentCategoryId}/${currentCardIndex}`, {
+            toBePlacedCategoryId,
+            toBePlacedCardIndex
+          });
 
     setStore(newStore);
   } catch (e) {
@@ -270,4 +283,34 @@ document.querySelector('.sidebar__button--kanban').onclick = e => {
   document.querySelector('.statistics').classList.toggle('hidden');
   // TODO: NEED CONFIRM
   render.mainPage();
+};
+
+window.ondblclick = e => {
+  if (!e.target.matches('.kanban__column-title')) return;
+
+  const $input = e.target.parentNode.querySelector('.edit');
+  $input.value = e.target.textContent;
+  $input.hidden = false;
+  $input.focus();
+};
+
+window.onkeydown = async e => {
+  if (!e.target.matches('.edit') || e.key !== 'Enter') return;
+
+  const categoryId = e.target.closest('.kanban__column').dataset.id;
+
+  if (e.target.value.trim() === '') {
+    e.target.hidden = true;
+    return;
+  }
+
+  try {
+    const { data: newStore } = await axios.patch(`/store/${categoryId}`, {
+      title: e.target.value.trim()
+    });
+
+    setStore(newStore);
+  } catch (e) {
+    console.error(e);
+  }
 };
