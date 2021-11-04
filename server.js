@@ -48,7 +48,7 @@ let store = [
           height: null,
           type: 'png'
         },
-        tags: [],
+        tags: ['portal', 'daum'],
         createDate: new Date(2021, 7, 3),
         readStatus: false,
         clickCount: 0,
@@ -140,7 +140,7 @@ app.get('/recommend/:keywordString', (req, res) => {
       const { result } = await ogs({ url: recommendUrl });
       const {
         ogTitle: title,
-        ogUrl,
+        requestUrl: url,
         ogDescription: description,
         ogImage: img
       } = result;
@@ -148,8 +148,14 @@ app.get('/recommend/:keywordString', (req, res) => {
         id: 0,
         title,
         description,
-        url: recommendUrl,
-        img,
+        url,
+        img: {
+          url: '',
+          width: null,
+          height: null,
+          type: '',
+          ...img
+        },
         tags: [],
         createDate: new Date(),
         readStatus: false,
@@ -177,7 +183,7 @@ app.post('/store/link', (req, res) => {
     .then(data => {
       const {
         ogTitle: title,
-        ogUrl,
+        requestUrl: url,
         ogDescription: description,
         ogImage: img
       } = data.result;
@@ -218,7 +224,7 @@ app.post('/store/:toBePlacedCategoryId/:toBePlacedCardIndex', (req, res) => {
     .then(data => {
       const {
         ogTitle: title,
-        ogUrl,
+        requestUrl: url,
         ogDescription: description,
         ogImage: img
       } = data.result;
@@ -313,11 +319,11 @@ app.patch('/store/:categoryId([0-9]+)/:cardId([0-9]+)/tag', (req, res) => {
   res.send(store);
 });
 
-// DELETE 
+// DELETE
 app.delete('/store/:id([0-9]+)', (req, res) => {
   const { id } = req.params;
 
-  store = store.filter(todo => todo.id !== +id);
+  store = store.filter(category => category.id !== +id);
 
   res.send(store);
 });
