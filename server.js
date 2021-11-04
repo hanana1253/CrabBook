@@ -289,17 +289,17 @@ app.patch('/store/:categoryId([0-9]+)', (req, res) => {
   res.send(store);
 });
 
-app.patch('/store/:categoryId([0-9]+)/:cardId/memo', (req, res) => {
+app.patch('/store/:categoryId([0-9]+)/:cardId/content', (req, res) => {
   const { categoryId, cardId } = req.params;
-  const { memo } = req.body;
-  store
-    .find(({ id }) => id === +categoryId)
-    .items.find(({ id }) => id === +cardId).memo = memo;
+  const content = req.body;
+  const targetCategoryIndex = store.findIndex(category => category.id === +categoryId);
+  store[targetCategoryIndex].items = store[targetCategoryIndex]
+    .items.map(card => card.id === +cardId ? ({ ... card, ...content }): card); 
 
   res.send(store);
 });
 
-app.patch('/store/:categoryId([0-9]+)/:cardId/tag', (req, res) => {
+app.patch('/store/:categoryId([0-9]+)/:cardId([0-9]+)/tag', (req, res) => {
   const { categoryId, cardId } = req.params;
   const { tag } = req.body;
   store
