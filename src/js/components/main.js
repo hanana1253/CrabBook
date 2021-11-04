@@ -254,8 +254,6 @@ document.querySelector('.sidebar__button--kanban').onclick = () => {
   $kanban.classList.toggle('hidden');
   $statistics.classList.toggle('hidden');
   document.querySelector('.recommend').classList.toggle('hidden');
-
-  render.mainPage();
 };
 
 window.ondblclick = e => {
@@ -267,7 +265,7 @@ window.ondblclick = e => {
   $input.focus();
 };
 
-window.onkeydown = async e => {
+window.onkeyup = async e => {
   if (!e.target.matches('.edit') || e.key !== 'Enter') return;
 
   const categoryId = e.target.closest('.kanban__column').dataset.id;

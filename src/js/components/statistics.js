@@ -2,11 +2,6 @@ import state from '../store/state.js';
 import render from '../view/render.js';
 import { createLinkCard } from './Kanban.js';
 
-// DOM Nodes
-const profilChart = document.querySelector('.profil__chart');
-const readWeekChart = document.querySelector('.read__chart--week');
-const jandiChart = document.querySelector('.jandi__chart');
-
 // Functions
 const getCountLinksByCategory = () =>
   state.categories.map(({ items }) => items.length);
@@ -16,9 +11,16 @@ const getCountReadLinksByCategory = () =>
     ({ items }) => items.filter(({ readStatus }) => readStatus).length
   );
 
-// const getRecentLinks = () => state.allLinks.slice(-5).reverse();
-
-// TODO: generateColors
+const backgroundColorset = [
+  '#dc8583',
+  '#d15c5a',
+  '#c63431',
+  '#9e2927',
+  '#761f1d',
+  '#4f1413',
+  '#3b0f0e',
+  '#270a09'
+];
 
 const createConfigProfil = () => ({
   type: 'doughnut',
@@ -26,39 +28,33 @@ const createConfigProfil = () => ({
     labels: state.categories.map(({ title }) => title),
     datasets: [
       {
-        label: 'Scraps by category',
+        label: '카테고리별 스크랩 현황',
         data: getCountLinksByCategory(),
-        backgroundColor: [
-          // TODO: generateColors
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)'
-        ],
+        backgroundColor: backgroundColorset,
         hoverOffset: 4
       }
     ]
   },
   options: {
-    cutout: '80%'
+    cutout: '30%',
+    responsive: true
   }
 });
 
-// const DATA_COUNT = 7;
-// const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
 const createConfigRead = () => ({
   type: 'bar',
   data: {
     labels: state.categories.map(({ title }) => title),
     datasets: [
       {
-        label: 'scrap',
+        label: '스크랩',
         type: 'bar',
         borderColor: '#e29998',
         data: getCountLinksByCategory(),
         fill: false
       },
       {
-        label: 'read',
+        label: '읽은 글',
         type: 'line',
         backgroundColor: '#9e2927',
         data: getCountReadLinksByCategory()
@@ -66,17 +62,13 @@ const createConfigRead = () => ({
     ]
   },
   options: {
-    title: {
-      display: true,
-      text: '읽은 글과 스크랩한 글'
-    },
     legend: { display: false }
   }
 });
 
 // Jandi Chart
 const isoDayOfWeek = date => {
-  let weekday = date.getDay(); // 0...6 sun~
+  let weekday = date.getDay(); // 0...6 sun
   weekday = ((weekday + 6) % 7) + 1; // start from monday
   return weekday + ''; // String
 };
@@ -176,7 +168,6 @@ const createDataJandi = () => ({
         const value = c.dataset.data[c.dataIndex].v;
         const alpha = (value || 0.5) / 5;
         return `rgba(158, 41, 39, ${alpha || 0.1})`;
-        // return Chart.helpers.color('green').alpha(alpha).rgbString();
       },
       borderColor(c) {
         const value = c.dataset.data[c.dataIndex].v;
@@ -227,37 +218,19 @@ const createConfigJandi = () => ({
   options: createOptionsJandi()
 });
 
-let chartInstances = [];
-
-// fetchCharts는 한 번만
 const fetchCharts = () => {
-  document.querySelector(
-    '.profil__text'
-  ).textContent = `${state.visitedLinks.length} / ${state.allLinks.length}`;
+  document.querySelector('.records__label--scrap').textContent =
+    state.allLinks.length;
+  document.querySelector('.records__label--read').textContent =
+    state.visitedLinks.length;
 
-  const charts = [
-    { canvas: profilChart, data: createConfigProfil() },
-    { canvas: readWeekChart, data: createConfigRead() },
-    { canvas: jandiChart, data: createConfigJandi() }
+  const chartData = [
+    { data: createConfigProfil() },
+    { data: createConfigJandi() },
+    { data: createConfigRead() }
   ];
 
-  charts.forEach(({ canvas, data }) => {
-    // canvas.getContext('2d').restore();
-    const chart = new Chart(canvas, data);
-    chartInstances = [...chartInstances, chart];
-  });
-
-  // console.log(chartInstances);
-
-  // console.log(getRecentLinks());
-  const cards = state.recentLinks.map(createLinkCard);
-  render.myPage(cards, chartInstances);
-  // charts.forEach(({ canvas, data }) => {
-  // canvas.getContext('2d').restore();
-  // new Chart(canvas, data);
-  // });
-
-  // render.myPage(charts, state.recentLinks);
+  render.myPage(chartData, state.recentLinks.map(createLinkCard));
 };
 
 // Event
