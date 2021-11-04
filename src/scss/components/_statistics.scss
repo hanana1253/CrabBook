@@ -8,12 +8,11 @@ button {
 
 .statistics {
   width: calc(100% - rem(80));
-  height: auto;
+  height: calc(100vh - 10vh);
   padding-left: rem(80);
 }
 .statistics-container {
   width: 100%;
-  min-height: calc(100vh - 62px - rem(14px) * 2);
   // mobile first 임시
   // TODO: 브레이크 포인트 얘기 : min-width?
   // max-width: 414px;
@@ -43,7 +42,7 @@ button {
     padding: 5%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     font-size: 1.5vw;
 
     &__label {
@@ -130,31 +129,6 @@ button {
       rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
     border-radius: rem(8);
     padding: 5%;
-    // &__ul {
-    // }
-    // &__item {
-    //   position: relative;
-    //   border: 1px solid $silver;
-    //   border-radius: 10px;
-    //   padding: rem(12);
-    //   margin: rem(12) 0;
-    //   &--date {
-    //     position: absolute;
-    //     top: rem(12);
-    //     right: rem(12);
-    //     color: $silver;
-    //   }
-    //   &--title {
-    //     font-size: 1.4rem;
-    //     font-weight: 500;
-    //     padding-bottom: rem(10);
-    //   }
-    //   &--description {
-    //   }
-    // }
-    // &__item:hover {
-    //   background: rgba(0, 0, 0, 0.2);
-    // }
   }
 
   .links .linkcard {
@@ -169,14 +143,11 @@ button {
     display: none;
   }
 
-  // canvas {
-  //   height: 100%;
-  //   width: 100%;
-  // }
   @include desktop {
+    height: 100%;
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 0.5fr;
     gap: 5%;
     grid-template-areas:
       'profil records links links'

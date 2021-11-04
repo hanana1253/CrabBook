@@ -11,9 +11,6 @@ const getCountReadLinksByCategory = () =>
     ({ items }) => items.filter(({ readStatus }) => readStatus).length
   );
 
-// const getRecentLinks = () => state.allLinks.slice(-5).reverse();
-
-// TODO: generateColors
 const backgroundColorset = [
   '#dc8583',
   '#d15c5a',
@@ -44,8 +41,6 @@ const createConfigProfil = () => ({
   }
 });
 
-// const DATA_COUNT = 7;
-// const NUMBER_CFG = { count: DATA_COUNT, min: 0, max: 100 };
 const createConfigRead = () => ({
   type: 'bar',
   data: {
@@ -73,7 +68,7 @@ const createConfigRead = () => ({
 
 // Jandi Chart
 const isoDayOfWeek = date => {
-  let weekday = date.getDay(); // 0...6 sun~
+  let weekday = date.getDay(); // 0...6 sun
   weekday = ((weekday + 6) % 7) + 1; // start from monday
   return weekday + ''; // String
 };
@@ -173,7 +168,6 @@ const createDataJandi = () => ({
         const value = c.dataset.data[c.dataIndex].v;
         const alpha = (value || 0.5) / 5;
         return `rgba(158, 41, 39, ${alpha || 0.1})`;
-        // return Chart.helpers.color('green').alpha(alpha).rgbString();
       },
       borderColor(c) {
         const value = c.dataset.data[c.dataIndex].v;
@@ -224,7 +218,6 @@ const createConfigJandi = () => ({
   options: createOptionsJandi()
 });
 
-// fetchCharts는 한 번만
 const fetchCharts = () => {
   document.querySelector('.records__label--scrap').textContent =
     state.allLinks.length;
