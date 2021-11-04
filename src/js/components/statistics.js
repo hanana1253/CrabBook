@@ -19,6 +19,16 @@ const getCountReadLinksByCategory = () =>
 // const getRecentLinks = () => state.allLinks.slice(-5).reverse();
 
 // TODO: generateColors
+const backgroundColorset = [
+  '#dc8583',
+  '#d15c5a',
+  '#c63431',
+  '#9e2927',
+  '#761f1d',
+  '#4f1413',
+  '#3b0f0e',
+  '#270a09'
+];
 
 const createConfigProfil = () => ({
   type: 'doughnut',
@@ -28,18 +38,19 @@ const createConfigProfil = () => ({
       {
         label: 'Scraps by category',
         data: getCountLinksByCategory(),
-        backgroundColor: [
-          // TODO: generateColors
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)'
-        ],
+        backgroundColor: backgroundColorset,
+        // backgroundColor: [
+        //   // TODO: generateColors
+        //   'rgb(255, 99, 132)',
+        //   'rgb(54, 162, 235)',
+        //   'rgb(255, 205, 86)'
+        // ],
         hoverOffset: 4
       }
     ]
   },
   options: {
-    cutout: '80%'
+    cutout: '30%'
   }
 });
 

@@ -34,12 +34,13 @@ button {
       transform: translate(-50%, -50%);
     }
     &__text {
-      position: absolute;
-      top: 72%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 2rem;
+      font-size: 5vw;
       font-weight: 700;
+      background-color: $primary00;
+      box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+        rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+      border-radius: rem(8);
+      padding: 5%;
     }
   }
 
@@ -156,11 +157,17 @@ button {
     grid-template-rows: 1fr 1fr 1fr;
     gap: 5%;
     grid-template-areas:
-      'profil profil profil links links'
+      'profil profilText profilText links links'
       'read read read links links'
       'jandi jandi jandi jandi jandi';
     .profil {
-      grid-area: profil;
+      &__chart {
+        grid-area: profil;
+      }
+      &__text {
+        grid-area: profilText;
+        font-size: rem(40);
+      }
       width: 300px;
       justify-self: center;
     }
@@ -172,7 +179,7 @@ button {
     }
     .jandi {
       grid-area: jandi;
-      margin-bottom: 0;
+      margin-bottom: rem(10);
     }
     .profil,
     .links,
