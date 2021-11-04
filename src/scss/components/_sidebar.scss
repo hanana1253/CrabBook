@@ -51,6 +51,7 @@ main {
   }
   &__heading {
     position: absolute;
+    background: url(../images/logo_crab.svg) no-repeat center;
     right: calc($closedSidebarWidth / 2);
     transform: translateX(50%);
     width: $imgWidth;
