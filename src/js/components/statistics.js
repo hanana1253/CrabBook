@@ -73,6 +73,7 @@ const isoDayOfWeek = date => {
   weekday = ((weekday + 6) % 7) + 1; // start from monday
   return weekday + ''; // String
 };
+
 // 365 네모 만들기
 const generateData = () => {
   const today = new Date(new Date().toString().slice(0, 16));
@@ -104,6 +105,7 @@ const generateData = () => {
 
   return data;
 };
+
 const scalesJandi = {
   y: {
     type: 'time',
@@ -189,6 +191,7 @@ const createDataJandi = () => ({
     }
   ]
 });
+
 const createOptionsJandi = () => ({
   aspectRatio: 5,
   plugins: {
@@ -213,6 +216,7 @@ const createOptionsJandi = () => ({
     }
   }
 });
+
 const createConfigJandi = () => ({
   type: 'matrix',
   data: createDataJandi(),
