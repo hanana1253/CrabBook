@@ -13,9 +13,6 @@ button {
 }
 .statistics-container {
   width: 100%;
-  // mobile first 임시
-  // TODO: 브레이크 포인트 얘기 : min-width?
-  // max-width: 414px;
 
   .profil {
     position: relative;
@@ -143,7 +140,45 @@ button {
     display: none;
   }
 
-  @include desktop {
+  @media only screen and (min-width: 520px) {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 5%;
+    grid-template-areas:
+      'profil links'
+      'records links'
+      'read  links'
+      'jandi jandi';
+    .profil {
+      &__chart {
+        grid-area: profil;
+      }
+      width: 300px;
+      justify-self: center;
+    }
+    .records {
+      grid-area: records;
+    }
+    .links {
+      grid-area: links;
+    }
+    .read {
+      grid-area: read;
+    }
+    .jandi {
+      grid-area: jandi;
+      margin-bottom: rem(10);
+    }
+    .profil,
+    .links,
+    .read,
+    .jandi {
+      margin: 0;
+    }
+  }
+  @media only screen and (min-width: 1320px) {
     height: 100%;
     display: grid;
     grid-template-columns: 1.5fr 1fr 1fr 1fr;
