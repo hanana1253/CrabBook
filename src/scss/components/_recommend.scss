@@ -43,7 +43,7 @@ $recommendHeight: 20vh;
   }
   &.active {
     width: 50vw;
-    height: $recommendHeight;
+    height: fit-content;
     border-radius: rem(5px);
     .recommend__button {
       transform: scale(0.8)
