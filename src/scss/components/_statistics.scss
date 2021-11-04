@@ -7,15 +7,13 @@ button {
 }
 
 .statistics {
-  width: calc(100% - rem(80));
-  height: calc(100vh - 10vh);
+  min-width: 600px;
+  overflow-x: auto;
+  width: 100%;
   padding-left: rem(80);
 }
 .statistics-container {
   width: 100%;
-  // mobile first 임시
-  // TODO: 브레이크 포인트 얘기 : min-width?
-  // max-width: 414px;
 
   .profil {
     position: relative;
@@ -46,11 +44,12 @@ button {
     font-size: 1.5vw;
 
     &__label {
-      font-size: 2vw;
+      font-size: rem(20);
       font-weight: 700;
-      border: 1px solid $primary05;
+      border: 3px solid $primary05;
       border-radius: rem(8);
       text-align: center;
+      margin: rem(12);
 
       &--title {
         padding: 5%;
@@ -146,6 +145,56 @@ button {
   @include desktop {
     height: 100%;
     display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 5%;
+    grid-template-areas:
+      'profil links'
+      'records links'
+      'read  links'
+      'jandi jandi';
+    .profil {
+      &__chart {
+        grid-area: profil;
+      }
+      width: 300px;
+      justify-self: center;
+    }
+    .records {
+      grid-area: records;
+      &__label {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: rem(24);
+        padding-right: 5%;
+        &--scrap,
+        &--read {
+          padding: 2%;
+        }
+      }
+    }
+    .links {
+      grid-area: links;
+      min-width: 350px;
+    }
+    .read {
+      grid-area: read;
+    }
+    .jandi {
+      grid-area: jandi;
+      margin-bottom: rem(10);
+    }
+    .profil,
+    .links,
+    .read,
+    .jandi {
+      margin: 0;
+    }
+  }
+  @media only screen and (min-width: 1520px) {
+    height: 100%;
+    display: grid;
     grid-template-columns: 1.5fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 0.5fr;
     gap: 5%;
@@ -162,6 +211,15 @@ button {
     }
     .records {
       grid-area: records;
+      &__label {
+        display: block;
+        padding-right: 0;
+        font-size: rem(24);
+        &--scrap,
+        &--read {
+          padding: 5%;
+        }
+      }
     }
     .links {
       grid-area: links;
