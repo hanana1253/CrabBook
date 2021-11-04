@@ -175,21 +175,18 @@ const scalesJandi = {
 const createDataJandi = () => ({
   datasets: [
     {
-      label: 'My Matrix',
+      label: 'Daily scraps per year',
       data: generateData(),
       backgroundColor(c) {
         const value = c.dataset.data[c.dataIndex].v;
-        const alpha = (10 + value) / 60;
-        return Chart.helpers.color('green').alpha(alpha).rgbString();
+        const alpha = (value || 0.5) / 5;
+        return `rgba(158, 41, 39, ${alpha || 0.1})`;
+        // return Chart.helpers.color('green').alpha(alpha).rgbString();
       },
       borderColor(c) {
         const value = c.dataset.data[c.dataIndex].v;
-        const alpha = (10 + value) / 60;
-        return Chart.helpers
-          .color('green')
-          .alpha(alpha)
-          .darken(0.3)
-          .rgbString();
+        const alpha = (value || 0.5) / 5;
+        return `rgba(160, 60, 60, ${alpha || 0.1})`;
       },
       borderWidth: 1,
       hoverBackgroundColor: 'yellow',
@@ -217,7 +214,7 @@ const createOptionsJandi = () => ({
         },
         label(context) {
           const v = context.dataset.data[context.dataIndex];
-          return ['day: ' + v.d, 'scrap: ' + v.v.toFixed(2)];
+          return ['day: ' + v.d, 'scrap: ' + v.v.toFixed()];
         }
       }
     }
@@ -235,6 +232,9 @@ const createConfigJandi = () => ({
   options: createOptionsJandi()
 });
 
+let chartInstances = [];
+
+// fetchCharts는 한 번만
 const fetchCharts = () => {
   document.querySelector(
     '.profil__text'
@@ -248,12 +248,15 @@ const fetchCharts = () => {
 
   charts.forEach(({ canvas, data }) => {
     // canvas.getContext('2d').restore();
-    new Chart(canvas, data);
+    const chart = new Chart(canvas, data);
+    chartInstances = [...chartInstances, chart];
   });
+
+  console.log(chartInstances);
 
   // console.log(getRecentLinks());
   const cards = getRecentLinks().map(card => createLinkCard(card));
-  render.myPage(cards);
+  render.myPage(cards, chartInstances);
 };
 
 // Event

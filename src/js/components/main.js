@@ -197,7 +197,7 @@ $form.onsubmit = e => {
 
 document.querySelector('.recommend__button').onclick = async e => {
   const $recommendDiv = e.target.closest('.recommend');
-  if ($recommendDiv.classList.contains('active')){
+  if ($recommendDiv.classList.contains('active')) {
     const $button = $recommendDiv.firstElementChild;
     $recommendDiv.innerHTML = '';
     $recommendDiv.appendChild($button);

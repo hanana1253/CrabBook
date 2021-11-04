@@ -44,6 +44,9 @@ export default (() => {
     });
 
     document.querySelector('.links__ul').appendChild($cards);
+
+    // TODO: need to update data
+
     // chartDatas.forEach(({ canvas, data }) => {
     //   new Chart(canvas, data);
     // });
@@ -61,9 +64,9 @@ export default (() => {
       renderCategory(categories.slice(1), cards.slice(1));
     },
 
-    myPage(chartDatas, cards) {
+    myPage(cards, chartDatas) {
       // renderSidebar(cards && cards[0]);
-      renderMypage(chartDatas);
+      renderMypage(cards);
     },
 
     renderTest($recommendSiteCard) {
