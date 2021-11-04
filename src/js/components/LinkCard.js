@@ -1,8 +1,11 @@
+import axios from 'axios';
+import state from '../store/state';
+
 export default class LinkCard {
   constructor(linkData) {
     this._id = linkData.id;
     this._title = linkData.title;
-    this._description = linkData.description;
+    this._description = linkData.description || '';
     this._url = linkData.url;
     this._img = linkData.img;
     this._tags = linkData.tags;
@@ -10,6 +13,7 @@ export default class LinkCard {
     this._readStatus = linkData.readStatus;
     this._clickCount = linkData.clickCount;
     this._memo = linkData.memo;
+    this._categoryId = linkData.categoryId || 0;
   }
 
   get memo() {
@@ -18,17 +22,45 @@ export default class LinkCard {
 
   set memo(newMemo) {
     this._memo = newMemo;
-    // @todo: request post to server
-    // this.updateMemo();
+    this.updateMemo(newMemo);
   }
 
-  async updateMemo() {
-    const response = await axios.post('/url', {
-      id: this._id,
-      memo: this._memo
-    });
-    if (response.status === 200) return;
-    // @todo: error handling
+  async updateMemo(memo) {
+    try {
+      const response = await axios.patch(
+        `/store/${this._categoryId}/${this._id}/content`,
+        { memo }
+      );
+      if (response.status !== 200) {
+        console.error(response.status);
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async patchTags(tag) {
+    try {
+      const response = await axios.patch(
+        `/store/${this._categoryId}/${this._id}/tag`,
+        { tag }
+      );
+      if (response.status !== 200) {
+        console.error(response.status);
+        return;
+      }
+      this._tags.push(tag);
+      this._cardElement
+        .querySelector('.add-badge')
+        .insertAdjacentHTML(
+          'beforebegin',
+          `<button class="badge">${tag}</button>`
+        );
+      state.setHashtags([...state.hashtags, tag]);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   /**
@@ -36,7 +68,9 @@ export default class LinkCard {
    * @returns {DOMElement}
    */
   get cardElement() {
-    return this.createLinkCardItem();
+    if (this._cardElement) return this._cardElement;
+    this._cardElement = this.createLinkCardItem();
+    return this._cardElement;
   }
 
   /**
@@ -72,8 +106,21 @@ export default class LinkCard {
         ${this._description}
       </div>
       <div class="linkcard__content__tag__container">
-        ${this._tags.map(tag => `<button class="badge">${tag}</button>`)}
+        ${this._tags
+          .map(tag => `<button class="badge">${tag}</button>`)
+          .join('')}
         <button class="badge add-badge">+</button>
+        <div class="linkcard__content__tag__tooltip">
+          <ul class="tag-tooltip">
+            <li class="tag-tooltip__item"><input class="tag-tooltip__input" placeholder="Select or Input"/></li>
+            ${state.hashtags
+              .map(
+                tag =>
+                  `<li class="tag-tooltip__item"><button class="badge">${tag}</button></li>`
+              )
+              .join('')}
+          </ul>
+        </div>
       </div>
       <button class="toggle-card">
         <i class="bx bx-dots-vertical-rounded"></i>
@@ -85,6 +132,29 @@ export default class LinkCard {
         </div>
       </button>
     `;
+
+    const $tagTooltip = $linkInfo.querySelector(
+      '.linkcard__content__tag__tooltip'
+    );
+
+    $linkInfo.querySelector('.add-badge').onclick = () => {
+      $tagTooltip.classList.add('active');
+      $linkInfo.querySelector('.tag-tooltip__input').focus();
+    };
+
+    $linkInfo.querySelector('.tag-tooltip__input').onkeyup = e => {
+      if (e.key !== 'Enter' && e.key !== 'Escape') return;
+      $tagTooltip.classList.remove('active');
+      if (e.key === 'Escape') return;
+      this.patchTags(e.target.value);
+      e.target.value = '';
+    };
+
+    $linkInfo.querySelectorAll('.tag-tooltip__item > .badge').forEach($el => {
+      $el.onclick = () => {
+        $tagTooltip.classList.remove('active');
+      };
+    });
 
     $linkInfo
       .querySelector('.linkcard__show-all')

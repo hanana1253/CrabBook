@@ -1,7 +1,7 @@
 import LinkCard from './LinkCard.js';
 
 const createDropZone = () => {
-  const $dropZone = document.createElement('div');
+  const $dropZone = document.createElement('li');
   $dropZone.className = 'kanban__dropzone';
 
   ['ondragover', 'ondragleave'].forEach(eventProperty => {
@@ -42,6 +42,8 @@ const createCategory = ({ id, title }) => {
 };
 
 const createLinkCard = data => {
+  const $fragment = document.createDocumentFragment();
+
   const linkCard = new LinkCard(data);
   const $linkCard = linkCard.cardElement;
   $linkCard.draggable = true;
@@ -52,9 +54,10 @@ const createLinkCard = data => {
     e.dataTransfer.setData('text/plain', data.id);
   };
 
-  if (data.id !== 0) $linkCard.appendChild(createDropZone());
+  $fragment.appendChild($linkCard);
+  if (data.id !== 0) $fragment.appendChild(createDropZone());
 
-  return $linkCard;
+  return $fragment;
 };
 
 export { createDropZone, createCategory, createLinkCard };
