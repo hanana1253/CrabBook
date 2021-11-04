@@ -67,10 +67,22 @@
         <h2 class="a11y-hidden">내 스크랩 현황</h2>
         <div class="statistics-container">
           <h3 class="a11y-hidden">카테고리별 스크랩 현황</h3>
+
           <div class="profil">
-            <canvas class="profil__chart"></canvas>
-            <img class="profil__img" src="../images/logo_crab.svg" />
-            <div class="profil__text">14/53</div>
+            <div class="chart-container chart-container__profil__chart">
+              <canvas class="profil__chart"></canvas>
+            </div>
+          </div>
+
+          <div class="records">
+            <div class="records__label">
+              <div class="records__label--title">스크랩</div>
+              <div class="records__label--scrap"></div>
+            </div>
+            <div class="records__label">
+              <div class="records__label--title">읽은 글</div>
+              <div class="records__label--read"></div>
+            </div>
           </div>
 
           <!-- 잔디 -->
@@ -88,7 +100,10 @@
               </div> -->
             </div>
 
-            <canvas class="jandi__chart scrap"></canvas>
+            <div class="chart-container chart-container__jandi__chart">
+              <canvas class="jandi__chart scrap"></canvas>
+            </div>
+
             <!-- <canvas class="jandi__chart read"></canvas> -->
           </div>
 
@@ -102,7 +117,7 @@
                 <i class="bx bxs-right-arrow"></i>
               </div> -->
             </div>
-            <div class="read__chart">
+            <div class="chart-container read__chart">
               <canvas class="read__chart--week"></canvas>
             </div>
           </div>
@@ -113,7 +128,7 @@
           <div class="links">
             <div class="head-container">
               <div class="icons">
-                <button class="icons__icon recent active">최근글</button>
+                <button class="icons__icon recent active">최근 스크랩</button>
                 <button class="icons__icon most">Most</button>
               </div>
             </div>
