@@ -14,6 +14,16 @@ const getCountReadLinksByCategory = () =>
 // const getRecentLinks = () => state.allLinks.slice(-5).reverse();
 
 // TODO: generateColors
+const backgroundColorset = [
+  '#dc8583',
+  '#d15c5a',
+  '#c63431',
+  '#9e2927',
+  '#761f1d',
+  '#4f1413',
+  '#3b0f0e',
+  '#270a09'
+];
 
 const createConfigProfil = () => ({
   type: 'doughnut',
@@ -21,20 +31,16 @@ const createConfigProfil = () => ({
     labels: state.categories.map(({ title }) => title),
     datasets: [
       {
-        label: 'Scraps by category',
+        label: '카테고리별 스크랩 현황',
         data: getCountLinksByCategory(),
-        backgroundColor: [
-          // TODO: generateColors
-          'rgb(255, 99, 132)',
-          'rgb(54, 162, 235)',
-          'rgb(255, 205, 86)'
-        ],
+        backgroundColor: backgroundColorset,
         hoverOffset: 4
       }
     ]
   },
   options: {
-    cutout: '80%'
+    cutout: '30%',
+    responsive: true
   }
 });
 
@@ -46,14 +52,14 @@ const createConfigRead = () => ({
     labels: state.categories.map(({ title }) => title),
     datasets: [
       {
-        label: 'scrap',
+        label: '스크랩',
         type: 'bar',
         borderColor: '#e29998',
         data: getCountLinksByCategory(),
         fill: false
       },
       {
-        label: 'read',
+        label: '읽은 글',
         type: 'line',
         backgroundColor: '#9e2927',
         data: getCountReadLinksByCategory()
@@ -61,10 +67,6 @@ const createConfigRead = () => ({
     ]
   },
   options: {
-    title: {
-      display: true,
-      text: '읽은 글과 스크랩한 글'
-    },
     legend: { display: false }
   }
 });
@@ -224,9 +226,10 @@ const createConfigJandi = () => ({
 
 // fetchCharts는 한 번만
 const fetchCharts = () => {
-  document.querySelector(
-    '.profil__text'
-  ).textContent = `${state.visitedLinks.length} / ${state.allLinks.length}`;
+  document.querySelector('.records__label--scrap').textContent =
+    state.allLinks.length;
+  document.querySelector('.records__label--read').textContent =
+    state.visitedLinks.length;
 
   const chartData = [
     { data: createConfigProfil() },
