@@ -140,7 +140,7 @@ app.get('/recommend/:keywordString', (req, res) => {
       const { result } = await ogs({ url: recommendUrl });
       const {
         ogTitle: title,
-        ogUrl,
+        requestUrl: url,
         ogDescription: description,
         ogImage: img
       } = result;
@@ -148,7 +148,7 @@ app.get('/recommend/:keywordString', (req, res) => {
         id: 0,
         title,
         description,
-        url: recommendUrl,
+        url,
         img,
         tags: [],
         createDate: new Date(),
@@ -177,7 +177,7 @@ app.post('/store/link', (req, res) => {
     .then(data => {
       const {
         ogTitle: title,
-        ogUrl,
+        requestUrl: url,
         ogDescription: description,
         ogImage: img
       } = data.result;
@@ -218,7 +218,7 @@ app.post('/store/:toBePlacedCategoryId/:toBePlacedCardIndex', (req, res) => {
     .then(data => {
       const {
         ogTitle: title,
-        ogUrl,
+        requestUrl: url,
         ogDescription: description,
         ogImage: img
       } = data.result;
