@@ -183,6 +183,9 @@ $form.onsubmit = e => {
   document.querySelector('.sidebar__error-msg').textContent = '';
   addLink($input.value);
   $input.value = '';
+  setTimeout(() => {
+    $sidebar.classList.remove('active');
+  }, 2000);
 };
 
 document.querySelector('.recommend__button').onclick = async e => {
@@ -220,24 +223,21 @@ document.querySelector('.recommend__button').onclick = async e => {
   $recommendDiv.classList.add('active');
 };
 
-// window.addEventListener('paste', e => {
-//   // Stop data actually being pasted into div
-//   e.stopPropagation();
-//   e.preventDefault();
+window.addEventListener('paste', e => {
+  // Stop data actually being pasted into div
+  e.stopPropagation();
+  e.preventDefault();
 
-//   // Get pasted data via clipboard API
-//   const clipboardData = e.clipboardData || window.clipboardData;
-//   const pastedData = clipboardData.getData('Text');
-
-//   if (!validUrlRegExp.test(pastedData)) {
-//     alert('유효하지 않은 URL입니다.');
-//     return;
-//   }
-
-//   // @todo: Do something
-//   alert(`붙여 넣은 데이터: ${pastedData}`);
-//   // addLink(pastedData);
-// });
+  // Get pasted data via clipboard API
+  const clipboardData = e.clipboardData || window.clipboardData;
+  const pastedData = clipboardData.getData('Text');
+  
+  // Put pasted data in input and open sidebar
+  const $input = document.querySelector('.sidebar__input');
+  $input.value = pastedData;
+  $input.focus();
+  $sidebar.classList.add('active');
+});
 
 $sidebar.onclick = e => {
   if (!e.target.parentNode.matches('.sidebar__button')) return;
