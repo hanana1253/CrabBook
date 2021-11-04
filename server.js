@@ -145,7 +145,7 @@ app.get('/recommend/:keywordString', (req, res) => {
         ogImage: img
       } = result;
       const recommendCardData = {
-        id: 0,
+        id: url,
         title,
         description,
         url,
@@ -250,38 +250,61 @@ app.post('/store/:toBePlacedCategoryId/:toBePlacedCardIndex', (req, res) => {
     });
 });
 
-app.patch('/store/:currentCategoryId/:currentCardIndex', (req, res) => {
-  const { currentCategoryId, currentCardIndex } = req.params;
-  const { toBePlacedCategoryId, toBePlacedCardIndex } = req.body;
+app.patch(
+  '/store/:currentCategoryId([0-9]+)/:currentCardIndex([0-9]+)',
+  (req, res) => {
+    const { currentCategoryId, currentCardIndex } = req.params;
+    const { toBePlacedCategoryId, toBePlacedCardIndex } = req.body;
 
-  let droppedItem = null;
+    let droppedItem = null;
 
-  store.forEach(({ id, items }) => {
-    if (id === +currentCategoryId)
-      droppedItem = items.splice(currentCardIndex, 1);
-  });
+    store.forEach(({ id, items }) => {
+      if (id === +currentCategoryId)
+        droppedItem = items.splice(currentCardIndex, 1);
+    });
 
-  const index =
-    currentCategoryId === toBePlacedCategoryId &&
-    toBePlacedCardIndex >= 2 &&
-    currentCardIndex < toBePlacedCardIndex
-      ? toBePlacedCardIndex - 1
-      : toBePlacedCardIndex;
+    const index =
+      currentCategoryId === toBePlacedCategoryId &&
+      toBePlacedCardIndex >= 2 &&
+      currentCardIndex < toBePlacedCardIndex
+        ? toBePlacedCardIndex - 1
+        : toBePlacedCardIndex;
 
-  store.forEach(({ id, items }) => {
-    if (id === +toBePlacedCategoryId) items.splice(index, 0, droppedItem[0]);
-  });
+    store.forEach(({ id, items }) => {
+      if (id === +toBePlacedCategoryId) items.splice(index, 0, droppedItem[0]);
+    });
 
-  res.send(store);
-});
+    res.send(store);
+  }
+);
 
-app.patch('/store/:categoryId', (req, res) => {
+app.patch('/store/:categoryId([0-9]+)', (req, res) => {
   const { categoryId } = req.params;
   const { title } = req.body;
 
   store.forEach(category => {
     if (category.id === +categoryId) category.title = title;
   });
+
+  res.send(store);
+});
+
+app.patch('/store/:categoryId([0-9]+)/:cardId/content', (req, res) => {
+  const { categoryId, cardId } = req.params;
+  const content = req.body;
+  const targetCategoryIndex = store.findIndex(category => category.id === +categoryId);
+  store[targetCategoryIndex].items = store[targetCategoryIndex]
+    .items.map(card => card.id === +cardId ? ({ ... card, ...content }): card); 
+
+  res.send(store);
+});
+
+app.patch('/store/:categoryId([0-9]+)/:cardId([0-9]+)/tag', (req, res) => {
+  const { categoryId, cardId } = req.params;
+  const { tag } = req.body;
+  store
+    .find(({ id }) => id === +categoryId)
+    .items.find(({ id }) => id === +cardId).tags.push(tag);
 
   res.send(store);
 });
