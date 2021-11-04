@@ -5,10 +5,17 @@ main {
 button {
   background: transparent;
 }
-.statistics-container {
+
+.statistics {
   width: calc(100% - rem(80));
+  height: auto;
+  padding-left: rem(80);
+}
+.statistics-container {
+  width: 100%;
+
   // mobile first 임시
-  // TODO: 브레이크 포인트 얘기
+  // TODO: 브레이크 포인트 얘기 : min-width?
   // max-width: 414px;
 
   .profil {
@@ -95,7 +102,9 @@ button {
   }
 
   .links {
-    background: $primary02;
+    background-color: $primary00;
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
+      rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
     border-radius: rem(8);
     padding: 5%;
     &__ul {
@@ -125,6 +134,18 @@ button {
     }
   }
 
+  .links .linkcard {
+    &__content {
+      &__memo,
+      &__tag__container {
+        display: none;
+      }
+    }
+  }
+  .links .toggle-card {
+    display: none;
+  }
+
   // canvas {
   //   height: 100%;
   //   width: 100%;
@@ -132,7 +153,7 @@ button {
   @include desktop {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: 1fr 1.5fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     gap: 5%;
     grid-template-areas:
       'profil profil profil links links'
@@ -151,6 +172,7 @@ button {
     }
     .jandi {
       grid-area: jandi;
+      margin-bottom: 0;
     }
     .profil,
     .links,

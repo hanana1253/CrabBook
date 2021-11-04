@@ -1,3 +1,5 @@
+import { createLinkCard } from '../components/Kanban';
+
 export default (() => {
   const $sidebarCardList = document.querySelector('.sidebar__card-list');
 
@@ -35,10 +37,19 @@ export default (() => {
     document.querySelector('.kanban').appendChild($domFramgment);
   };
 
-  const renderMypage = chartDatas => {
-    chartDatas.forEach(({ canvas, data }) => {
-      new Chart(canvas, data);
+  const renderMypage = (cards, chartDatas) => {
+    const $cards = document.createDocumentFragment();
+    cards.forEach(cardData => {
+      $cards.appendChild(cardData);
     });
+
+    document.querySelector('.links__ul').appendChild($cards);
+
+    // TODO: need to update data
+
+    // chartDatas.forEach(({ canvas, data }) => {
+    //   new Chart(canvas, data);
+    // });
   };
 
   const renderRecommend = async $recommendSiteCard => {
@@ -66,11 +77,15 @@ export default (() => {
       renderCategory(categories.slice(1), cards.slice(1));
     },
 
-    myPage(chartDatas, scrapData) {
+    myPage(cards, chartDatas) {
       // renderSidebar(cards && cards[0]);
-      recentScraps(scrapData);
-      renderMypage(chartDatas);
+      renderMypage(cards);
     },
+    // myPage(chartDatas, scrapData) {
+    //   // renderSidebar(cards && cards[0]);
+    //   recentScraps(scrapData);
+    //   renderMypage(chartDatas);
+    // },
 
     renderTest($recommendSiteCard) {
       renderRecommend($recommendSiteCard);

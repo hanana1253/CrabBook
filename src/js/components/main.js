@@ -9,6 +9,8 @@ import { getRandomElements } from '../utils/helper.js';
 // DOM Nodes
 const $sidebar = document.querySelector('.sidebar');
 const $form = document.querySelector('.sidebar__form');
+const $kanban = document.querySelector('.kanban');
+const $statistics = document.querySelector('.statistics');
 
 // Variables
 const validUrlRegExp =
@@ -238,14 +240,22 @@ document.querySelector('.recommend__button').onclick = async e => {
 // });
 
 document.querySelector('.sidebar__button--statistics').onclick = () => {
-  document.querySelector('.kanban').classList.add('hidden');
-  document.querySelector('.statistics').classList.remove('hidden');
+  if (!$statistics.classList.contains('hidden')) return;
+  $kanban.classList.toggle('hidden');
+  $statistics.classList.toggle('hidden');
+  document.querySelector('.recommend').classList.toggle('hidden');
+
   fetchCharts();
 };
 
 document.querySelector('.sidebar__button--kanban').onclick = () => {
-  document.querySelector('.statistics').classList.add('hidden');
-  document.querySelector('.kanban').classList.remove('hidden');
+  if (!$kanban.classList.contains('hidden')) return;
+
+  $kanban.classList.toggle('hidden');
+  $statistics.classList.toggle('hidden');
+  document.querySelector('.recommend').classList.toggle('hidden');
+
+  render.mainPage();
 };
 
 window.ondblclick = e => {

@@ -1,5 +1,6 @@
 import state from '../store/state.js';
 import render from '../view/render.js';
+import { createLinkCard } from './Kanban.js';
 
 // DOM Nodes
 const profilChart = document.querySelector('.profil__chart');
@@ -14,6 +15,8 @@ const getCountReadLinksByCategory = () =>
   state.categories.map(
     ({ items }) => items.filter(({ readStatus }) => readStatus).length
   );
+
+// const getRecentLinks = () => state.allLinks.slice(-5).reverse();
 
 // TODO: generateColors
 
@@ -49,15 +52,15 @@ const createConfigRead = () => ({
     datasets: [
       {
         label: 'scrap',
-        type: 'line',
-        borderColor: '#8e5ea2',
+        type: 'bar',
+        borderColor: '#e29998',
         data: getCountLinksByCategory(),
         fill: false
       },
       {
         label: 'read',
-        type: 'bar',
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        type: 'line',
+        backgroundColor: '#9e2927',
         data: getCountReadLinksByCategory()
       }
     ]
@@ -167,21 +170,18 @@ const scalesJandi = {
 const createDataJandi = () => ({
   datasets: [
     {
-      label: 'My Matrix',
+      label: 'Daily scraps per year',
       data: generateData(),
       backgroundColor(c) {
         const value = c.dataset.data[c.dataIndex].v;
-        const alpha = (10 + value) / 60;
-        return Chart.helpers.color('green').alpha(alpha).rgbString();
+        const alpha = (value || 0.5) / 5;
+        return `rgba(158, 41, 39, ${alpha || 0.1})`;
+        // return Chart.helpers.color('green').alpha(alpha).rgbString();
       },
       borderColor(c) {
         const value = c.dataset.data[c.dataIndex].v;
-        const alpha = (10 + value) / 60;
-        return Chart.helpers
-          .color('green')
-          .alpha(alpha)
-          .darken(0.3)
-          .rgbString();
+        const alpha = (value || 0.5) / 5;
+        return `rgba(160, 60, 60, ${alpha || 0.1})`;
       },
       borderWidth: 1,
       hoverBackgroundColor: 'yellow',
@@ -209,7 +209,7 @@ const createOptionsJandi = () => ({
         },
         label(context) {
           const v = context.dataset.data[context.dataIndex];
-          return ['day: ' + v.d, 'scrap: ' + v.v.toFixed(2)];
+          return ['day: ' + v.d, 'scrap: ' + v.v.toFixed()];
         }
       }
     }
@@ -227,9 +227,10 @@ const createConfigJandi = () => ({
   options: createOptionsJandi()
 });
 
-const fetchCharts = () => {
-  // 1. 차트를 만들기 위한 charts 배열
+let chartInstances = [];
 
+// fetchCharts는 한 번만
+const fetchCharts = () => {
   document.querySelector(
     '.profil__text'
   ).textContent = `${state.visitedLinks.length} / ${state.allLinks.length}`;
@@ -240,12 +241,23 @@ const fetchCharts = () => {
     { canvas: jandiChart, data: createConfigJandi() }
   ];
 
+  charts.forEach(({ canvas, data }) => {
+    // canvas.getContext('2d').restore();
+    const chart = new Chart(canvas, data);
+    chartInstances = [...chartInstances, chart];
+  });
+
+  // console.log(chartInstances);
+
+  // console.log(getRecentLinks());
+  const cards = state.recentLinks.map(createLinkCard);
+  render.myPage(cards, chartInstances);
   // charts.forEach(({ canvas, data }) => {
   // canvas.getContext('2d').restore();
   // new Chart(canvas, data);
   // });
 
-  render.myPage(charts, state.recentLinks);
+  // render.myPage(charts, state.recentLinks);
 };
 
 // Event
