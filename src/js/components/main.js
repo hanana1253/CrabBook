@@ -37,6 +37,7 @@ const setStore = newStore => {
   );
 
   render.mainPage($categories, $cards);
+  fetchCharts();
   document.querySelector('.kanban__add-button').onclick = addCategory;
 };
 
@@ -238,21 +239,21 @@ document.querySelector('.recommend__button').onclick = async e => {
 //   // addLink(pastedData);
 // });
 
-document.querySelector('.sidebar__button--statistics').onclick = () => {
-  if (!$statistics.classList.contains('hidden')) return;
-  $kanban.classList.toggle('hidden');
-  $statistics.classList.toggle('hidden');
-  document.querySelector('.recommend').classList.toggle('hidden');
+$sidebar.onclick = e => {
+  if (!e.target.parentNode.matches('.sidebar__button')) return;
 
-  fetchCharts();
-};
+  const isTarget = regex => !e.target.parentNode.className.match(regex, 'g');
 
-document.querySelector('.sidebar__button--kanban').onclick = () => {
-  if (!$kanban.classList.contains('hidden')) return;
+  [...document.querySelectorAll('main')].forEach($main => {
+    $main.classList.toggle(
+      'hidden',
+      isTarget(new RegExp($main.classList[0], 'g'))
+    );
+    $main.hidden = isTarget(new RegExp($main.classList[0], 'g'));
+  });
 
-  $kanban.classList.toggle('hidden');
-  $statistics.classList.toggle('hidden');
-  document.querySelector('.recommend').classList.toggle('hidden');
+  if (e.target.parentNode.matches('.sidebar__button--statistics'))
+    fetchCharts();
 };
 
 window.ondblclick = e => {
