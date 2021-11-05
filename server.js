@@ -167,8 +167,8 @@ app.get('/recommend/:keywordString', (req, res) => {
       };
       res.send(recommendCardData);
     } catch (e) {
-      console.log(e);
       res.send(null);
+      console.log(e);
     }
   })();
 });
