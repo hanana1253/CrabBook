@@ -125,3 +125,5 @@ src/css/*.map
 refer
 
 public/
+.gitignore
+package-lock.json

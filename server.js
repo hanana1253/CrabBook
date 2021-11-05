@@ -107,12 +107,10 @@ let store = [
 app.use(express.static('src')); // 서버의 루트 디렉토리 (static 파일들)
 app.use(express.json());
 
-// Get Store
 app.get('/store', (req, res) => {
   res.send(store);
 });
 
-// Get Recommended Site
 app.get('/recommend/:keywordString', (req, res) => {
   const { keywordString } = req.params;
   const returnRandomRecommendedUrl = (keywordstring = 'html') => {
@@ -127,7 +125,7 @@ app.get('/recommend/:keywordString', (req, res) => {
         } else {
           $('#rso a').each(function (idx) {
             const href = $(this).attr('href');
-            if (href !=="#") {
+            if (href !== '#') {
               linkList.push(href);
             }
           });
@@ -145,8 +143,10 @@ app.get('/recommend/:keywordString', (req, res) => {
         ogTitle: title,
         requestUrl: url,
         ogDescription: description,
-        ogImage: img
+        ogImage: img,
+        ogUrl
       } = result;
+      console.log(url, ogUrl, recommendUrl);
       const recommendCardData = {
         id: 0,
         title,
@@ -160,7 +160,7 @@ app.get('/recommend/:keywordString', (req, res) => {
           ...img
         },
         tags: [],
-        createDate: new Date(new Date().toString().slice(0, 16)),
+        createDate: new Date(),
         readStatus: false,
         clickCount: 0,
         memo: ''
@@ -173,7 +173,6 @@ app.get('/recommend/:keywordString', (req, res) => {
   })();
 });
 
-// Post new Category
 app.post('/store', (req, res) => {
   const newStore = req.body;
   store = [...store, newStore];
@@ -181,7 +180,6 @@ app.post('/store', (req, res) => {
   res.send(store);
 });
 
-// Post Card from sidebar
 app.post('/store/link', (req, res) => {
   const { url, id } = req.body;
 
@@ -221,7 +219,6 @@ app.post('/store/link', (req, res) => {
     });
 });
 
-// Post Recommend Card to Store
 app.post('/store/:toBePlacedCategoryId/:toBePlacedCardIndex', (req, res) => {
   const { toBePlacedCategoryId, toBePlacedCardIndex } = req.params;
 
@@ -263,7 +260,6 @@ app.post('/store/:toBePlacedCategoryId/:toBePlacedCardIndex', (req, res) => {
     });
 });
 
-// Patch LinkCard Position
 app.patch(
   '/store/:currentCategoryId([0-9]+)/:currentCardIndex([0-9]+)',
   (req, res) => {
@@ -277,7 +273,7 @@ app.patch(
         droppedItem = items.splice(currentCardIndex, 1);
     });
 
-    const nextIndex =
+    const index =
       currentCategoryId === toBePlacedCategoryId &&
       toBePlacedCardIndex >= 2 &&
       currentCardIndex < toBePlacedCardIndex
@@ -285,15 +281,13 @@ app.patch(
         : toBePlacedCardIndex;
 
     store.forEach(({ id, items }) => {
-      if (id === +toBePlacedCategoryId)
-        items.splice(nextIndex, 0, droppedItem[0]);
+      if (id === +toBePlacedCategoryId) items.splice(index, 0, droppedItem[0]);
     });
 
     res.send(store);
   }
 );
 
-// Patch Category Title
 app.patch('/store/:categoryId([0-9]+)', (req, res) => {
   const { categoryId } = req.params;
   const { title } = req.body;
@@ -305,15 +299,12 @@ app.patch('/store/:categoryId([0-9]+)', (req, res) => {
   res.send(store);
 });
 
-// Patch LinkCard Content
 app.patch('/store/:categoryId([0-9]+)/:cardId/content', (req, res) => {
   const { categoryId, cardId } = req.params;
   const content = req.body;
-
   const targetCategoryIndex = store.findIndex(
     category => category.id === +categoryId
   );
-
   store[targetCategoryIndex].items = store[targetCategoryIndex].items.map(
     card => (card.id === +cardId ? { ...card, ...content } : card)
   );
@@ -321,7 +312,6 @@ app.patch('/store/:categoryId([0-9]+)/:cardId/content', (req, res) => {
   res.send(store);
 });
 
-// Patch LinkCard Tag
 app.patch('/store/:categoryId([0-9]+)/:cardId([0-9]+)/tag', (req, res) => {
   const { categoryId, cardId } = req.params;
   const { tag } = req.body;
@@ -333,24 +323,11 @@ app.patch('/store/:categoryId([0-9]+)/:cardId([0-9]+)/tag', (req, res) => {
   res.send(store);
 });
 
-// Delete Category
+// DELETE
 app.delete('/store/:id([0-9]+)', (req, res) => {
   const { id } = req.params;
 
   store = store.filter(category => category.id !== +id);
-
-  res.send(store);
-});
-
-// Delete LinkCard
-app.delete('/store/:categoryId([0-9]+)/:cardId([0-9]+)', (req, res) => {
-  const { categoryId, cardId } = req.params;
-
-  const targetIndex = store.findIndex(category => category.id === +categoryId);
-
-  store[targetIndex].items = store[targetIndex].items.filter(
-    card => card.id !== +cardId
-  );
 
   res.send(store);
 });

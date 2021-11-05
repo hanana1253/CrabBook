@@ -1,7 +1,7 @@
-import axios from 'axios';
-import render from '../view/render.js';
 import '../../scss/style.scss';
+import axios from 'axios';
 import state from '../store/state.js';
+import render from '../view/render.js';
 import { createDropZone, createCategory, createLinkCard } from './Kanban.js';
 import fetchCharts from './statistics.js';
 import { getRandomElements } from '../utils/helper.js';
@@ -9,15 +9,11 @@ import { getRandomElements } from '../utils/helper.js';
 // DOM Nodes
 const $sidebar = document.querySelector('.sidebar');
 const $form = document.querySelector('.sidebar__form');
-const $kanban = document.querySelector('.kanban');
 const $statistics = document.querySelector('.statistics');
 
 // Variables
 const validUrlRegExp =
   /((((https?:\/\/)?)((www).)?\.[A-Za-z0-9.-]+)((?:\/[+~%/.\w-_]*)?\??(?:[-+=&;%@.\w_]*)#?(?:[\w]*))?)/;
-
-// state
-// let store = [];
 
 // Functions
 const generateCategoryId = () =>
@@ -38,7 +34,6 @@ const setStore = newStore => {
 
   render.mainPage($categories, $cards);
   fetchCharts();
-  document.querySelector('.kanban__add-button').onclick = addCategory;
 };
 
 const deleteCategory = async id => {
@@ -152,9 +147,10 @@ window.ondrop = async e => {
 };
 
 window.onclick = e => {
-  if (!e.target.matches('.kanban__column-delete')) return;
+  if (e.target.matches('.kanban__column-delete'))
+    deleteCategory(e.target.parentNode.dataset.id);
 
-  deleteCategory(e.target.parentNode.dataset.id);
+  if (e.target.matches('.kanban__add-button')) addCategory();
 };
 
 // 사이드바 이벤트
@@ -190,6 +186,7 @@ $form.onsubmit = e => {
 
 document.querySelector('.recommend__button').onclick = async e => {
   const $recommendDiv = e.target.closest('.recommend');
+
   if ($recommendDiv.classList.contains('active')) {
     [...$recommendDiv.children].forEach(($child, index) => {
       if (index === 1) $child.remove();
@@ -292,4 +289,18 @@ window.onkeyup = async e => {
   } catch (e) {
     console.error(e);
   }
+};
+
+window.onwheel = e => {
+  if (!e.target.matches('.kanban')) return;
+  document.querySelector('.kanban').scrollLeft += e.deltaY;
+};
+
+// $statistics.onscroll = e => {
+//   // console.log(e.target);
+//   document.body.scrollTop += e.deltaY;
+// };
+
+document.body.onwheel = e => {
+  $statistics.scrollTop += e.deltaY;
 };

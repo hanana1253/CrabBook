@@ -9,7 +9,7 @@
 
 .kanban {
   @include flexbox;
-  padding: rem(30px);
+  padding: rem(24px);
   overflow-x: auto;
   width: 100%;
   min-height: calc(100vh - 62px - rem(14px) * 2);
