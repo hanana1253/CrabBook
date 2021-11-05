@@ -20,12 +20,18 @@
     max-height: 100%;
     height: fit-content;
     border-radius: rem(10px);
-    border: 2px dashed $primary07;
+    border: 2px dashed #ddd;
     font-size: rem(40px);
-    color: $primary07;
+    color: #ddd;
     background-color: $primary00;
     box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px,
       rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      border: 2px dashed $primary07;
+      color: $primary07;
+    }
   }
 
   .kanban__column {
