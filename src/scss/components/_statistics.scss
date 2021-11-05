@@ -16,11 +16,11 @@ button {
 
   .profil {
     position: relative;
-    width: 100%;
+    justify-self: center;
     margin-bottom: rem(30);
     // margin: 0 auto;
     &__chart {
-      width: 100%;
+      width: 90%;
     }
     &__img {
       position: absolute;
@@ -157,7 +157,7 @@ button {
       &__chart {
         grid-area: profil;
       }
-      width: 300px;
+      width: 60%;
       justify-self: center;
     }
     .records {
@@ -206,7 +206,7 @@ button {
       &__chart {
         grid-area: profil;
       }
-      width: 300px;
+      width: 80%;
       justify-self: center;
     }
     .records {
