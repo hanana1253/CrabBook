@@ -12,7 +12,7 @@
   padding: rem(30px);
   overflow-x: auto;
   width: 100%;
-  min-height: calc(100vh - 62px - rem(14px)*2);
+  min-height: calc(100vh - 62px - rem(14px) * 2);
 
   &__add-button {
     min-width: rem(400px);
@@ -108,11 +108,6 @@
   }
 }
 
-// .kanban__item-input {
-//   height: rem(100px);
-//   padding: rem(10px) rem(15px);
-//   box-sizing: border-box;
-//   background: tomato;
-//   border-radius: rem(5px);
-//   cursor: pointer;
-// }
+.links__ul > .kanban__item:not(:last-child) {
+  margin-bottom: rem(20px);
+}

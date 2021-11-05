@@ -166,8 +166,22 @@ export default class LinkCard {
       });
     $linkInfo
       .querySelector('.linkcard__delete')
-      .addEventListener('click', () => {
-        $targetCard.remove();
+      .addEventListener('click', async e => {
+        try {
+          const [categoryId, cardId] = ['.kanban__column', '.kanban__item'].map(
+            selector => e.target.closest(selector).dataset.id
+          );
+
+          const { data: newStore } = await axios.delete(
+            `/store/${categoryId}/${cardId}`
+          );
+
+          state.setCategories(newStore);
+
+          $targetCard.remove();
+        } catch (e) {
+          console.error(e);
+        }
       });
     return $linkInfo;
   }

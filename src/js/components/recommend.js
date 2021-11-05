@@ -9,16 +9,15 @@ const setURL = newURL => {
   console.log(store.url);
 };
 
-
-
 const getUrl = async () => {
-  const getRandomElements = (array, numOfElems = 2) => {
-    return [...array].sort(() => Math.random() - 0.5).slice(0, numOfElems);
-  };
+  const getRandomElements = (array, numOfElems = 2) =>
+    [...array].sort(() => Math.random() - 0.5).slice(0, numOfElems);
+
   try {
     const { data: newURL } = await axios.get(
       `/recommend/${getRandomElements(hashtags).join('+')}`
     );
+
     setURL(newURL);
     document.querySelector('.test').textContent = store.url;
   } catch (e) {

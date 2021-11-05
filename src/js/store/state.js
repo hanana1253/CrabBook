@@ -15,6 +15,10 @@ export default (() => {
       categories = newCategories;
     },
 
+    get allLinks() {
+      return categories.flatMap(({ items }) => items);
+    },
+
     get hashtags() {
       hashtags = this.allLinks.reduce(
         (acc, { tags: cur }) => [...new Set([...acc, ...cur])],
@@ -25,10 +29,6 @@ export default (() => {
 
     setHashtags(newHashtags) {
       hashtags = newHashtags;
-    },
-
-    get allLinks() {
-      return categories.flatMap(({ items }) => items);
     },
 
     get visitedLinks() {

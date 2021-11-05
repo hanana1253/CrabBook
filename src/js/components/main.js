@@ -9,8 +9,6 @@ import { getRandomElements } from '../utils/helper.js';
 // DOM Nodes
 const $sidebar = document.querySelector('.sidebar');
 const $form = document.querySelector('.sidebar__form');
-const $kanban = document.querySelector('.kanban');
-const $statistics = document.querySelector('.statistics');
 
 // Variables
 const validUrlRegExp =
@@ -166,7 +164,6 @@ $sidebar.ondragover = e => {
 
 $sidebar.ondragleave = e => {
   e.preventDefault();
-  // if (e.target.matches('.sidebar, .sidebar *')) return;
   $sidebar.classList.remove('active');
 };
 
@@ -263,6 +260,7 @@ window.ondblclick = e => {
   $input.value = e.target.textContent;
   $input.hidden = false;
   $input.focus();
+  $input.setSelectionRange(0, $input.value.length);
 };
 
 window.onkeyup = async e => {
