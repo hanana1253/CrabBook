@@ -39,7 +39,7 @@ export default (() => {
       const today = new Date(new Date().toString().slice(0, 16));
 
       return this.allLinks.filter(
-        ({ createDate }) => diffDays(new Date(createDate), today) <= 5
+        ({ createDate }) => diffDays(new Date(createDate), today) <= 3
       );
     },
 

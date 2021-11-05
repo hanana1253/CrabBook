@@ -19,6 +19,7 @@ $recommendHeight: 20vh;
   width: $buttonSize;
   height: $buttonSize;
   position: fixed;
+  z-index: 999;
   right: rem(30);
   bottom: rem(30);
   box-shadow: 2px 2px 10px gray;

@@ -74,6 +74,7 @@ main {
     height: $imgWidth;
     border: 2px solid $primary;
     border-radius: 50%;
+    z-index: 999;
     @include desktop {
       transform: translateX(50%);
       right: calc($closedSidebarWidth / 2);
@@ -147,13 +148,11 @@ main {
     }
     @include mobile {
       transform: translate3d(0, 40vh, 0);
-
     }
   }
   &.active &__form {
     @include desktop {
       transform: translate3d($movingX, $movingY, 0);
-
     }
   }
 
