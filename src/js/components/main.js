@@ -217,9 +217,9 @@ document.querySelector('.recommend__button').onclick = async e => {
     }
   };
   $recommendDiv.classList.add('loading');
+  $recommendDiv.querySelector('.recommend__button').disabled = true;
   try {
     const $recommendSiteCard = await getRecommendSiteCard(state.hashtags);
-    console.log($recommendSiteCard);
     if ($recommendSiteCard === null) throw new Error('error');
     $recommendDiv.appendChild($recommendSiteCard);
     $recommendDiv.classList.add('active');
@@ -227,6 +227,7 @@ document.querySelector('.recommend__button').onclick = async e => {
     console.log(e);
   } finally {
     $recommendDiv.classList.remove('loading');
+    $recommendDiv.querySelector('.recommend__button').disabled = false;
   }
 };
 
@@ -238,7 +239,7 @@ window.addEventListener('paste', e => {
   // Get pasted data via clipboard API
   const clipboardData = e.clipboardData || window.clipboardData;
   const pastedData = clipboardData.getData('Text');
-  
+
   // Put pasted data in input and open sidebar
   const $input = document.querySelector('.sidebar__input');
   $input.value = pastedData;
