@@ -11,13 +11,252 @@ let store = [
   {
     id: 0,
     title: 'uncategorized',
+    items: []
+  },
+  {
+    id: 1,
+    title: 'Web Bible 🙏',
     items: [
       {
         id: 1,
+        title: '웹 프로그래밍 튜토리얼 | PoiemaWeb',
+        description: 'Front-end Development Tutorial',
+        url: 'https://poiemaweb.com/',
+        img: {
+          url: 'https://poiemaweb.com/img/poiemaweb.jpg',
+          width: '1200',
+          height: '630',
+          type: 'image/png'
+        },
+        tags: ['web', 'programming'],
+        createDate: '2021-10-04T15:00:00.000Z',
+        readStatus: false,
+        memo: ''
+      },
+      {
+        id: 2,
+        title: 'MDN Web Docs',
+        description:
+          'The MDN Web Docs site provides information about Open Web technologies including HTML, CSS, and APIs for both Web sites and progressive web apps.',
+        url: 'https://developer.mozilla.org/en-US/',
+        img: {
+          url: 'https://developer.mozilla.org/mdn-social-share.0ca9dbda.png',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: ['web'],
+        createDate: '2021-10-23T15:00:00.000Z',
+        readStatus: true,
+        memo: ''
+      },
+      {
+        id: 3,
+        title: 'React – 사용자 인터페이스를 만들기 위한 JavaScript 라이브러리',
+        description: 'A JavaScript library for building user interfaces',
+        url: 'https://ko.reactjs.org/',
+        img: {
+          url: 'https://reactjs.org/logo-og.png',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: ['web', 'react'],
+        createDate: '2021-11-03T15:00:00.000Z',
+        readStatus: false,
+        memo: ''
+      },
+      {
+        id: 8,
+        title: 'JavaScript With Syntax For Types.',
+        description:
+          'TypeScript extends JavaScript by adding types to the language. TypeScript speeds up your development experience by catching errors and providing fixes before you even run your code.',
+        url: 'https://www.typescriptlang.org/',
+        img: {
+          url: '',
+          width: null,
+          height: null,
+          type: ''
+        },
+        tags: [],
+        createDate: '2021-10-25T15:00:00.000Z',
+        readStatus: true,
+        memo: ''
+      }
+    ]
+  },
+  {
+    id: 2,
+    title: "Web chobo's blog 🐥",
+    items: [
+      {
+        id: 4,
+        title: 'Hanana1253 Blog - 성수동 코시생 하나나의 코딩일기',
+        description:
+          '성수동에서 코딩공부하는 하나나의 일상과 공부 기록입니다. Records of what I learned from Coding and Life',
+        url: 'https://hanana1253.github.io/',
+        img: {
+          url: 'https://hanana1253.github.io/images/default.jpg',
+          width: null,
+          height: null,
+          type: 'jpg'
+        },
+        tags: ['web', 'front-end'],
+        createDate: '2021-10-28T15:00:00.000Z',
+        readStatus: true,
+        memo: ''
+      },
+      {
+        id: 5,
+        title: 'sosoyim (쏘쏘임) - velog',
+        description: '무럭무럭 자라는 주니어 프론트엔드 개발자입니다.',
+        url: 'https://velog.io/@sosoyim',
+        img: {
+          url: 'https://images.velog.io/velog.png',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: ['web', 'front-end'],
+        createDate: '2021-10-28T15:00:00.000Z',
+        readStatus: false,
+        memo: ''
+      },
+      {
+        id: 6,
+        title: 'jkpark104 (jkpark104) - velog',
+        url: 'https://velog.io/@jkpark104',
+        img: {
+          url: 'https://images.velog.io/velog.png',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: ['web', 'front-end'],
+        createDate: '2021-10-28T15:00:00.000Z',
+        readStatus: true,
+        memo: ''
+      },
+      {
+        id: 7,
+        title: "hoya's dev blog",
+        description: 'To be a beautiful developer🧑🏻‍💻',
+        url: 'https://hoya-kim.github.io/',
+        img: {
+          url: '',
+          width: null,
+          height: null,
+          type: ''
+        },
+        tags: ['web', 'front-end'],
+        createDate: '2021-10-28T15:00:00.000Z',
+        readStatus: false,
+        memo: ''
+      }
+    ]
+  },
+  {
+    id: 3,
+    title: 'Tools 🔨',
+    items: [
+      {
+        id: 20,
+        title: 'GitHub: Where the world builds software',
+        description:
+          'GitHub is where over 73 million developers shape the future of software, together. Contribute to the open source community, manage your Git repositories, review code like a pro, track bugs and feat...',
+        url: 'https://github.com/',
+        img: {
+          url: 'https://github.githubassets.com/images/modules/site/social-cards/github-social.png',
+          width: '1200',
+          height: '620',
+          type: 'image/png'
+        },
+        tags: [],
+        createDate: '2021-10-25T15:00:00.000Z',
+        readStatus: true,
+        memo: ''
+      },
+      {
+        id: 9,
+        title: 'Visual Studio Code - Code Editing. Redefined',
+        description:
+          'Visual Studio Code is a code editor redefined and optimized for building and debugging modern web and cloud applications.  Visual Studio Code is free and available on your favorite platform - Linux, macOS, and Windows.',
+        url: 'https://code.visualstudio.com/',
+        img: {
+          url: 'https://code.visualstudio.com/opengraphimg/opengraph-home.png',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: [],
+        createDate: '2021-10-22T15:00:00.000Z',
+        readStatus: true,
+        memo: ''
+      },
+      {
+        id: 10,
+        title: 'Slides – Create and share presentations online',
+        description:
+          "Slides is a place for creating, presenting and sharing presentations. The Slides editor is available right in your browser. Unlike traditional presentation software, like PowerPoint, there's no need to download anything.",
+        url: 'https://slides.com/',
+        img: {
+          url: 'https://static.slid.es/logo/slides-logo-495x479.png',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: [],
+        createDate: '2021-10-22T15:00:00.000Z',
+        readStatus: false,
+        memo: ''
+      },
+      {
+        id: 11,
+        title:
+          'Notion – 메모, 작업, 위키, 데이터베이스를 위한 올인원 워크스페이스',
+        description:
+          '매일 쓰는 여러 업무용 앱을 하나로 합친 새로운 도구. 당신과 당신의 팀을 위한 올인원 워크스페이스예요.',
+        url: 'https://www.notion.so/ko-kr/product?utm_source=google&utm_campaign=10805039169&utm_medium=104440699897&utm_content=455555244437&utm_term=notion&targetid=aud-841221518584:kwd-312974742&gclid=CjwKCAjwiY6MBhBqEiwARFSCPpI-mJrFN6LdbSf2it5EkyKKjLuDxvh6JHPI5F0npYy0ojmGAkmr4BoCzSwQAvD_BwE',
+        img: {
+          url: 'https://www.notion.so/front-static/meta/default.png',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: [],
+        createDate: '2021-10-22T15:00:00.000Z',
+        readStatus: false,
+        memo: ''
+      },
+      {
+        id: 15,
+        title: 'GIPHY - Be Animated',
+        description:
+          'GIPHY is the platform that animates your world. Find the GIFs, Clips, and Stickers that make your conversations more positive, more expressive, and more you.',
+        url: 'https://giphy.com/',
+        img: {
+          url: 'https://giphy.com/static/img/giphy-be-animated-logo.gif',
+          width: '517',
+          height: '517',
+          type: 'gif'
+        },
+        tags: [],
+        createDate: '2021-10-24T15:00:00.000Z',
+        readStatus: false,
+        memo: ''
+      }
+    ]
+  },
+  {
+    id: 4,
+    title: 'Portal 🏠',
+    items: [
+      {
+        id: 12,
         title: '네이버',
         description:
           '네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요',
-        url: 'https://www.naver.com/',
+        url: 'http://www.naver.com',
         img: {
           url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png',
           width: null,
@@ -25,40 +264,15 @@ let store = [
           type: 'png'
         },
         tags: [],
-        createDate: new Date(2021, 11, 3),
+        createDate: '2021-10-20T15:00:00.000Z',
         readStatus: false,
-        clickCount: 0,
-        memo: ''
-      }
-    ]
-  },
-  {
-    id: 1,
-    title: 'New Category',
-    items: [
-      {
-        id: 2,
-        title: '네이버',
-        description:
-          '네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요',
-        url: 'https://www.naver.com/',
-        img: {
-          url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png',
-          width: null,
-          height: null,
-          type: 'png'
-        },
-        tags: ['portal', 'daum'],
-        createDate: new Date(2021, 7, 3),
-        readStatus: false,
-        clickCount: 0,
         memo: ''
       },
       {
-        id: 3,
+        id: 13,
         title: 'Daum',
         description: '나의 관심 콘텐츠를 가장 즐겁게 볼 수 있는 Daum',
-        url: 'https://www.daum.net/',
+        url: 'http://www.daum.net',
         img: {
           url: '//i1.daumcdn.net/svc/image/U03/common_icon/5587C4E4012FCD0001',
           width: null,
@@ -66,41 +280,89 @@ let store = [
           type: null
         },
         tags: [],
-        createDate: new Date(2021, 6, 3),
+        createDate: '2021-10-20T15:00:00.000Z',
         readStatus: false,
-        clickCount: 0,
         memo: ''
       }
     ]
   },
   {
-    id: 2,
-    title: 'New Category',
+    id: 5,
+    title: '🎬',
     items: [
       {
-        id: 4,
-        title: '네이버',
+        id: 16,
+        title: 'YouTube',
         description:
-          '네이버 메인에서 다양한 정보와 유용한 컨텐츠를 만나 보세요',
-        url: 'https://www.naver.com/',
+          'YouTube에서 마음에 드는 동영상과 음악을 감상하고, 직접 만든 콘텐츠를 업로드하여 친구, 가족뿐 아니라 전 세계 사람들과 콘텐츠를 공유할 수 있습니다.',
+        url: 'https://www.youtube.com/',
         img: {
-          url: 'https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png',
+          url: 'https://www.youtube.com/img/desktop/yt_1200.png',
           width: null,
           height: null,
           type: 'png'
         },
         tags: [],
-        createDate: new Date(2021, 8, 23),
-        readStatus: false,
-        clickCount: 0,
+        createDate: '2021-10-20T15:00:00.000Z',
+        readStatus: true,
+        memo: ''
+      },
+      {
+        id: 17,
+        title:
+          'Netflix South Korea - Watch TV Shows Online, Watch Movies Online',
+        description:
+          'Watch Netflix movies & TV shows online or stream right to your smart TV, game console, PC, Mac, mobile, tablet and more.',
+        url: 'https://netflix.com/',
+        img: {
+          url: 'https://assets.nflxext.com/ffe/siteui/vlv3/b70b092f-1760-4498-b462-b4ef19907ec7/72fa8b1a-b8d1-4e08-92cc-53a418069108/KR-en-20211101-popsignuptwoweeks-perspective_alpha_website_small.jpg',
+          width: null,
+          height: null,
+          type: 'jpg'
+        },
+
+        tags: [],
+        createDate: '2021-10-20T15:00:00.000Z',
+        readStatus: true,
+        memo: ''
+      },
+      {
+        id: 18,
+        title:
+          '왓챠 - 체르노빌, 킬링이브, 왕좌의 게임 외 10만 편 영화, 드라마 무제한 감상',
+        description:
+          '모든 영화, 드라마, 다큐멘터리, 애니메이션을 언제 어디서나 최고의 화질로 무제한 감상하세요.',
+        url: 'https://watcha.com/',
+        img: {
+          url: 'https://do6ll9a75gxk6.cloudfront.net/images/og.84e274ba21ac6d47d8ad.png',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: [],
+        createDate: '2021-10-27T15:00:00.000Z',
+        readStatus: true,
+        memo: ''
+      },
+      {
+        id: 19,
+        title:
+          '새로운 감동과 가능성을 발견해 보세요 우리가 좋아하는 모든 이야기, 11월 12일 스트리밍 시작',
+        description:
+          '디즈니, 픽사, 마블, 스타워즈, 내셔널지오그래픽, Star를 다 함께 즐길 수 있는 곳. 인기 영화, 고전 작품, 시리즈, 오리지널을 모두 한자리에서 만나보세요.',
+        url: 'https://www.preview.disneyplus.com/ko-kr',
+        img: {
+          url: 'https://static-assets.bamgrid.com/product/disneyplus/images/share-default.14fadd993578b9916f855cebafb71e62.png',
+          width: null,
+          height: null,
+          type: 'png'
+        },
+        tags: [],
+        createDate: '2021-10-27T15:00:00.000Z',
+        readStatus: true,
         memo: ''
       }
     ]
-  },
-  {
-    id: 3,
-    title: 'New Category',
-    items: []
   }
 ];
 
