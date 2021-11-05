@@ -11,6 +11,7 @@ const $sidebar = document.querySelector('.sidebar');
 const $form = document.querySelector('.sidebar__form');
 const $kanban = document.querySelector('.kanban');
 const $statistics = document.querySelector('.statistics');
+const $recommendBtn = document.querySelector('.recommend__button');
 
 // Variables
 const validUrlRegExp =
@@ -188,7 +189,7 @@ $form.onsubmit = e => {
   }, 2000);
 };
 
-document.querySelector('.recommend__button').onclick = async e => {
+$recommendBtn.onclick = async e => {
   const $recommendDiv = e.target.closest('.recommend');
   if ($recommendDiv.classList.contains('active')) {
     [...$recommendDiv.children].forEach(($child, index) => {
@@ -203,7 +204,7 @@ document.querySelector('.recommend__button').onclick = async e => {
     if (keywords.length < 2) {
       const $noHashMsg = document.createElement('p');
       $noHashMsg.classList.add('noHashMsg');
-      $noHashMsg.textContent = '해시태그로 추천사이트를 받아보세요';
+      $noHashMsg.textContent = '해시태그를 입력하고 추천사이트를 받아보세요';
       return $noHashMsg;
     }
 
@@ -220,7 +221,7 @@ document.querySelector('.recommend__button').onclick = async e => {
   $recommendDiv.querySelector('.recommend__button').disabled = true;
   try {
     const $recommendSiteCard = await getRecommendSiteCard(state.hashtags);
-    if ($recommendSiteCard === null) throw new Error('error');
+    if (!$recommendSiteCard) throw new Error('Url Error');
     $recommendDiv.appendChild($recommendSiteCard);
     $recommendDiv.classList.add('active');
   } catch (e) {

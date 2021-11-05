@@ -35,13 +35,15 @@ $recommendHeight: 20vh;
     }
   }
   &.loading {
+    
     .recommend__button {
+
       & > img {
         animation: spin 500ms infinite linear;
       }
     }
   }
-  &.active {
+  &.active {    
     width: 50vw;
     height: fit-content;
     border-radius: rem(5px);
@@ -54,6 +56,10 @@ $recommendHeight: 20vh;
         display: inline-block;
         width: 100%;
       }
+    }
+    .noHashMsg {
+      text-align: center;
+      padding: rem(20);
     }
   }
   .kanban__item {
