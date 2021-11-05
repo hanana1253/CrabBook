@@ -59,6 +59,7 @@ export default (() => {
   const renderRecentLinks = cards => {
     const $cards = document.createDocumentFragment();
     cards.forEach(cardData => {
+      cardData.firstElementChild.draggable = false;
       $cards.appendChild(cardData.firstElementChild);
     });
 
