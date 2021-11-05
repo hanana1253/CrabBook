@@ -115,7 +115,6 @@ app.get('/store', (req, res) => {
 // Get Recommended Site
 app.get('/recommend/:keywordString', (req, res) => {
   const { keywordString } = req.params;
-
   const returnRandomRecommendedUrl = (keywordstring = 'html') => {
     const url = `https://www.google.com/search?q=${keywordstring}&oq=${keywordstring}&aqs=chrome..69i57.6936j0j7&sourceid=chrome&ie=UTF-8`;
     const params = {};
@@ -126,9 +125,11 @@ app.get('/recommend/:keywordString', (req, res) => {
         if (err) {
           reject(err);
         } else {
-          $('#rso > div > div > div > div > a').each(function (idx) {
-            const hrefs = $(this).attr('href');
-            linkList[idx] = hrefs;
+          $('#rso a').each(function (idx) {
+            const href = $(this).attr('href');
+            if (href !=="#") {
+              linkList.push(href);
+            }
           });
           resolve([...linkList].sort(() => Math.random() - 0.5)[0]);
         }
@@ -167,6 +168,7 @@ app.get('/recommend/:keywordString', (req, res) => {
       res.send(recommendCardData);
     } catch (e) {
       console.log(e);
+      res.send(null);
     }
   })();
 });
