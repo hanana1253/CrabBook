@@ -1,7 +1,5 @@
 @use '../utils/' as *;
 
-main {
-}
 button {
   background: transparent;
 }
@@ -9,6 +7,7 @@ button {
 .statistics {
   min-width: 600px;
   overflow-x: auto;
+  overflow-y: hidden;
   width: 100%;
   padding-left: rem(80);
 }
