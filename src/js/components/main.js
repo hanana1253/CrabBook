@@ -9,6 +9,8 @@ import { getRandomElements } from '../utils/helper.js';
 // DOM Nodes
 const $sidebar = document.querySelector('.sidebar');
 const $form = document.querySelector('.sidebar__form');
+const $kanban = document.querySelector('.kanban');
+const $statistics = document.querySelector('.statistics');
 
 // Variables
 const validUrlRegExp =
@@ -138,9 +140,9 @@ window.ondrop = async e => {
           });
 
     const $recommendDiv = document.querySelector('.recommend');
-    const $button = $recommendDiv.firstElementChild;
-    $recommendDiv.innerHTML = '';
-    $recommendDiv.appendChild($button);
+    [...$recommendDiv.children].forEach(($child, index) => {
+      if (index === 1) $child.remove();
+    });
     $recommendDiv.classList.remove('active');
 
     setStore(newStore);
@@ -164,6 +166,7 @@ $sidebar.ondragover = e => {
 
 $sidebar.ondragleave = e => {
   e.preventDefault();
+  // if (e.target.matches('.sidebar, .sidebar *')) return;
   $sidebar.classList.remove('active');
 };
 
@@ -180,14 +183,17 @@ $form.onsubmit = e => {
   document.querySelector('.sidebar__error-msg').textContent = '';
   addLink($input.value);
   $input.value = '';
+  setTimeout(() => {
+    $sidebar.classList.remove('active');
+  }, 2000);
 };
 
 document.querySelector('.recommend__button').onclick = async e => {
   const $recommendDiv = e.target.closest('.recommend');
   if ($recommendDiv.classList.contains('active')) {
-    const $button = $recommendDiv.firstElementChild;
-    $recommendDiv.innerHTML = '';
-    $recommendDiv.appendChild($button);
+    [...$recommendDiv.children].forEach(($child, index) => {
+      if (index === 1) $child.remove();
+    });
     $recommendDiv.classList.remove('active');
     return;
   }
@@ -211,30 +217,34 @@ document.querySelector('.recommend__button').onclick = async e => {
     }
   };
   $recommendDiv.classList.add('loading');
-  const $recommendSiteCard = await getRecommendSiteCard(state.hashtags);
-  $recommendDiv.classList.remove('loading');
-  $recommendDiv.appendChild($recommendSiteCard);
-  $recommendDiv.classList.add('active');
+  try {
+    const $recommendSiteCard = await getRecommendSiteCard(state.hashtags);
+    console.log($recommendSiteCard);
+    if ($recommendSiteCard === null) throw new Error('error');
+    $recommendDiv.appendChild($recommendSiteCard);
+    $recommendDiv.classList.add('active');
+  } catch (e) {
+    console.log(e);
+  } finally {
+    $recommendDiv.classList.remove('loading');
+  }
 };
 
-// window.addEventListener('paste', e => {
-//   // Stop data actually being pasted into div
-//   e.stopPropagation();
-//   e.preventDefault();
+window.addEventListener('paste', e => {
+  // Stop data actually being pasted into div
+  e.stopPropagation();
+  e.preventDefault();
 
-//   // Get pasted data via clipboard API
-//   const clipboardData = e.clipboardData || window.clipboardData;
-//   const pastedData = clipboardData.getData('Text');
-
-//   if (!validUrlRegExp.test(pastedData)) {
-//     alert('유효하지 않은 URL입니다.');
-//     return;
-//   }
-
-//   // @todo: Do something
-//   alert(`붙여 넣은 데이터: ${pastedData}`);
-//   // addLink(pastedData);
-// });
+  // Get pasted data via clipboard API
+  const clipboardData = e.clipboardData || window.clipboardData;
+  const pastedData = clipboardData.getData('Text');
+  
+  // Put pasted data in input and open sidebar
+  const $input = document.querySelector('.sidebar__input');
+  $input.value = pastedData;
+  $input.focus();
+  $sidebar.classList.add('active');
+});
 
 $sidebar.onclick = e => {
   if (!e.target.parentNode.matches('.sidebar__button')) return;
@@ -260,7 +270,6 @@ window.ondblclick = e => {
   $input.value = e.target.textContent;
   $input.hidden = false;
   $input.focus();
-  $input.setSelectionRange(0, $input.value.length);
 };
 
 window.onkeyup = async e => {
